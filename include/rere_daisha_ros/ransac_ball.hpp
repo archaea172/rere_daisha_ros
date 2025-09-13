@@ -3,7 +3,7 @@
 class RansacBall
 {
 public:
-    RansacBall();
+    RansacBall(float r);
 
 private:
     const float ball_r;
