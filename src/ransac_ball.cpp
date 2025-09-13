@@ -6,7 +6,7 @@ RansacBall::RansacBall(float r)
 
 }
 
-std::vector<std::vector<float>> RansacBall::run()
+std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> points)
 {
 
 }

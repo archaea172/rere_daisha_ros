@@ -10,7 +10,7 @@ class RansacBall
 {
 public:
     RansacBall(float r);
-    std::vector<std::vector<float>> run();
+    std::vector<std::vector<float>> run(std::vector<std::vector<float>> points);
 
 private:
     std::vector<int> sampring(uint max_val, uint num);
