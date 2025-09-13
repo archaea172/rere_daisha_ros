@@ -5,3 +5,8 @@ RansacBall::RansacBall(float r)
 {
 
 }
+
+std::vector<std::vector<float>> run()
+{
+    
+}
