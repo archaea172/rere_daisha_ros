@@ -1,13 +1,14 @@
 #include "ransac_ball.hpp"
 
-RansacBall::RansacBall(float r)
-: ball_r(r)
+RansacBall::RansacBall(float r, int max_loop, float threshold, int min_samples)
+: ball_r(r), max_loop(max_loop), threshold(threshold), min_samples(min_samples)
 {
 
 }
 
 std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> points)
 {
+    std::vector<std::vector<float>> candidate_center;
 
 }
 

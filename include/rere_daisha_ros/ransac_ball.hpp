@@ -9,11 +9,14 @@
 class RansacBall
 {
 public:
-    RansacBall(float r);
+    RansacBall(float r, int max_loop, float threshold, int min_samples);
     std::vector<std::vector<float>> run(std::vector<std::vector<float>> points);
 
 private:
     std::vector<int> sampring(uint max_val, uint num);
 
     const float ball_r;
+    const int max_loop;
+    const float threshold;
+    const int min_samples;
 };
