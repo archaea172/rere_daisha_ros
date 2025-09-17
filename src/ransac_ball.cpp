@@ -37,15 +37,22 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
             center1[0] = m_x - h*u_x;
             center1[1] = m_y - h*u_y;
 
+            std::vector<int> inlier_index_candidate0;
+            std::vector<int> inlier_index_candidate1;
             for (size_t j = 0; j < points.size(); j++)
             {
-                std::vector<int> inlier_index_in;
                 float dist0 = std::hypot(center0[0] - points[j][0], center0[1] - points[j][1]);
-                if ((dist0 > this->ball_r - this->threshold) && (dist0 < this->ball_r + this->threshold)) 
+                if ((dist0 > this->ball_r - this->threshold) && (dist0 < this->ball_r + this->threshold)) inlier_index_candidate0.push_back(j);
                 float dist1 = std::hypot(center1[0] - points[j][0], center1[1] - points[j][1]);
+                if ((dist1 > this->ball_r - this->threshold) && (dist1 < this->ball_r + this->threshold)) inlier_index_candidate1.push_back(j);
             }
+
+            if (inlier_index_candidate0.size() > this->min_samples) candidate_center.push_back(center0);
+            if (inlier_index_candidate1.size() > this->min_samples) candidate_center.push_back(center1);
         }
     }
+
+    return candidate_center;
 }
 
 std::vector<int> RansacBall::sampring(uint max_val, uint num)
