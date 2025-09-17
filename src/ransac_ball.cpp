@@ -10,6 +10,10 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
 {
     std::vector<std::vector<float>> candidate_center;
 
+    for (size_t i = 0; i < this->max_loop; i++)
+    {
+        std::vector<int> sampring_index = this->sampring(points.size(), 2);
+    }
 }
 
 std::vector<int> RansacBall::sampring(uint max_val, uint num)
