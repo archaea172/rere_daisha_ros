@@ -29,8 +29,12 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
             float u_x = -dy/d;
             float u_y =  dx/d;
 
+            std::vector<float> center0(2);
             std::vector<float> center1(2);
-            
+            center0[0] = m_x + h*u_x;
+            center0[1] = m_y + h*u_y;
+            center1[0] = m_x - h*u_x;
+            center1[1] = m_y - h*u_y;
         }
     }
 }
