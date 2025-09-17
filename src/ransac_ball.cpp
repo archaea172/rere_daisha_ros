@@ -9,6 +9,7 @@ RansacBall::RansacBall(float r, int max_loop, float threshold, int min_samples)
 std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> points)
 {
     std::vector<std::vector<float>> candidate_center;
+    std::vector<int> inlier_index;
 
     for (size_t i = 0; i < this->max_loop; i++)
     {
@@ -36,7 +37,6 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
             center1[0] = m_x - h*u_x;
             center1[1] = m_y - h*u_y;
 
-            std::vector<int> inlier_index;
             for (size_t j = 0; j < points.size(); j++)
             {
                 std::vector<int> inlier_index_in;
