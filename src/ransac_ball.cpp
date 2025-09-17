@@ -47,8 +47,16 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
                 if ((dist1 > this->ball_r - this->threshold) && (dist1 < this->ball_r + this->threshold)) inlier_index_candidate1.push_back(j);
             }
 
-            if (inlier_index_candidate0.size() > this->min_samples) candidate_center.push_back(center0);
-            if (inlier_index_candidate1.size() > this->min_samples) candidate_center.push_back(center1);
+            if (inlier_index_candidate0.size() > this->min_samples) 
+            {
+                candidate_center.push_back(center0);
+                std::copy(inlier_index_candidate0.begin(), inlier_index_candidate0.end(), std::back_inserter(inlier_index));
+            }
+            if (inlier_index_candidate1.size() > this->min_samples) 
+            {
+                candidate_center.push_back(center1);
+                std::copy(inlier_index_candidate1.begin(), inlier_index_candidate1.end(), std::back_inserter(inlier_index));
+            }
         }
     }
 
