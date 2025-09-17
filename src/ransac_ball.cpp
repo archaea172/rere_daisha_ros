@@ -23,7 +23,14 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
         if (d >= 2*this->ball_r);
         else
         {
-            float m_x = 
+            float m_x = (point0[0] + point1[0]) / 2;
+            float m_y = (point0[1] + point1[1]) / 2;
+            float h = std::sqrt(std::pow(this->ball_r, 2) - std::pow(d/2, 2));
+            float u_x = -dy/d;
+            float u_y =  dx/d;
+
+            std::vector<float> center1(2);
+            
         }
     }
 }
