@@ -36,10 +36,12 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
             center1[0] = m_x - h*u_x;
             center1[1] = m_y - h*u_y;
 
-            std::vector<int> inliner_index;
+            std::vector<int> inlier_index;
             for (size_t j = 0; j < points.size(); j++)
             {
+                std::vector<int> inlier_index_in;
                 float dist0 = std::hypot(center0[0] - points[j][0], center0[1] - points[j][1]);
+                if ((dist0 > this->ball_r - this->threshold) && (dist0 < this->ball_r + this->threshold)) 
                 float dist1 = std::hypot(center1[0] - points[j][0], center1[1] - points[j][1]);
             }
         }
