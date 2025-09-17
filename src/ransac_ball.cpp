@@ -13,6 +13,18 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
     for (size_t i = 0; i < this->max_loop; i++)
     {
         std::vector<int> sampring_index = this->sampring(points.size(), 2);
+        std::vector<float> point0 = candidate_center[sampring_index[0]];
+        std::vector<float> point1 = candidate_center[sampring_index[1]];
+
+        float dx = point1[0] - point0[0];
+        float dy = point1[1] - point0[1];
+        float d = std::sqrt(std::pow(dx, 2) + std::pow(dy, 2));
+
+        if (d >= 2*this->ball_r);
+        else
+        {
+            float m_x = 
+        }
     }
 }
 
