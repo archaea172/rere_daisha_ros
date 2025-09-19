@@ -9,15 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
-
-add_executable(debug_node
-  src/debug.cpp
-)
-
-install(
-  TARGETS debug_node
-  DESTINATION lib/${PROJECT_NAME}
-)
+find_package(OpenCV REQUIRED)
 
 install(
   DIRECTORY include/
@@ -31,6 +23,19 @@ add_library(ransac_ball
 target_include_directories(ransac_ball PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
   $<INSTALL_INTERFACE:include>
+)
+
+include_directories(
+  ${OpenCV_INCLUDE_DIRS}
+)
+
+add_executable(debug_node
+  src/debug.cpp
+)
+
+install(
+  TARGETS debug_node
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 target_link_libraries(debug_node
