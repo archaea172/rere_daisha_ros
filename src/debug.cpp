@@ -3,7 +3,7 @@
 #include <cmath>
 #include <random>
 
-std::vector<std::vector<float>> generateCirclePointCloud(double radius, int num_points, double noise_level) {
+std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_points, float noise_level) {
     std::vector<std::vector<float>> point_cloud;
     point_cloud.reserve(num_points); // メモリを事前に確保
 
