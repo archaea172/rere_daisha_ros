@@ -42,7 +42,7 @@ std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_p
 
 int main()
 {
-    auto test_ransac = RansacBall(50, 100, 3, 10);
+    auto test_ransac = RansacBall(50, 100, 10, 10);
     std::vector<std::vector<float>> point_cloud;
 
     for (int i = 0; i < 4; i++)
@@ -61,6 +61,14 @@ int main()
         point.x = point_cloud[i][0];
         point.y = point_cloud[i][1];
         cv::Scalar dot_S(0, 255, 255);
+        cv::circle(img, point, 2, dot_S, -1, cv::LINE_AA);
+    }    
+    for (size_t i = 0; i < (size_t)circle_center.size(); i++)
+    {
+        cv::Point2f point;
+        point.x = circle_center[i][0];
+        point.y = circle_center[i][1];
+        cv::Scalar dot_S(255, 0, 255);
         cv::circle(img, point, 2, dot_S, -1, cv::LINE_AA);
     }
     cv::imshow("img", img);
