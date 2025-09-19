@@ -5,8 +5,6 @@
 #include <numeric>
 #include <algorithm>
 
-#include <iostream>
-
 class RansacBall
 {
 public:
