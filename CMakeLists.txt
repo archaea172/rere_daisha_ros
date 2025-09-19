@@ -7,9 +7,35 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+
+add_executable(debug_node
+  src/debug.cpp
+)
+
+install(
+  TARGETS debug_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+
+add_library(ransac_ball
+  src/ransac_ball.cpp
+)
+
+target_include_directories(ransac_ball PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
+  $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(debug_node
+  ransac_ball
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
