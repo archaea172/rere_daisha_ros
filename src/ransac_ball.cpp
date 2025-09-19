@@ -8,14 +8,14 @@ RansacBall::RansacBall(float r, int max_loop, float threshold, int min_samples)
 
 std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> points)
 {
+    if (points.size() < 2) {
+        return {};
+    }
     std::vector<std::vector<float>> candidate_center;
     std::vector<int> inlier_index;
 
     for (size_t i = 0; i < (size_t)this->max_loop; i++)
     {
-        if (points.size() < 2) {
-            return {};
-        }
         std::vector<int> sampring_index = this->sampring(points.size(), 2);
         std::vector<float> point0 = points[sampring_index[0]];
         std::vector<float> point1 = points[sampring_index[1]];
