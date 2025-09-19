@@ -3,6 +3,7 @@
 #include <cmath>
 #include <random>
 #include <opencv2/opencv.hpp>
+#include <iostream>
 
 std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_points, float noise_level) {
     std::vector<std::vector<float>> point_cloud;
@@ -46,6 +47,17 @@ int main()
     std::vector<std::vector<float>> point_cloud = generateCirclePointCloud(200, 500, 10);
     std::vector<std::vector<float>> circle_center = test_ransac.run(point_cloud);
 
+    cv::Mat img = cv::Mat::zeros(500, 500, CV_8UC3);
 
+    // point cloud
+    for (size_t i = 0; i < (size_t)point_cloud.size(); i++)
+    {
+        cv::Point2f point;
+        point.x = point_cloud[i][0];
+        point.y = point_cloud[i][1];
+        cv::Scalar dot_S(0, 255, 255);
+        cv::circle(img, point, 2, dot_S, -1, cv::LINE_AA);
+    }
+    cv::imshow("img", img);
     return 0;
 }
