@@ -12,17 +12,21 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
         return {};
     }
     std::vector<std::vector<float>> candidate_center;
-    // std::vector<int> inlier_index;
+    std::vector<int> remaining_index(points.size());
+    std::iota(remaining_index.begin(), remaining_index.end(), 0);
+    int loop_count = 0;
 
-    for (size_t i = 0; i < (size_t)this->max_loop; i++)
+    while (remaining_index.size() >= 2 && loop_count< this->max_loop)
     {
-        std::vector<int> sampring_index = this->sampring(points.size(), 2);
-        std::vector<float> point0 = points[sampring_index[0]];
-        std::vector<float> point1 = points[sampring_index[1]];
+        loop_count++;
+        std::vector<int> sampring_index_from_list = this->sampring(remaining_index.size(), 2);
+
+        std::vector<float> point0 = points[sampring_index_from_list[0]];
+        std::vector<float> point1 = points[sampring_index_from_list[1]];
 
         float dx = point1[0] - point0[0];
         float dy = point1[1] - point0[1];
-        float d = std::sqrt(std::pow(dx, 2) + std::pow(dy, 2));
+        float d = std::hypot(dx, dy);
 
         if (d < 2*this->ball_r)
         {
@@ -54,12 +58,24 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
             if (inlier_index_candidate0.size() > (size_t)this->min_samples) 
             {
                 candidate_center.push_back(center0);
-                // std::copy(inlier_index_candidate0.begin(), inlier_index_candidate0.end(), std::back_inserter(inlier_index));
+                std::sort(inlier_index_candidate0.begin(), inlier_index_candidate0.end());
+
+                auto it = std::remove_if(remaining_index.begin(), remaining_index.end(),
+                [&](int index) {
+                    return std::binary_search(inlier_index_candidate0.begin(), inlier_index_candidate0.end(), index);
+                });
+                remaining_index.erase(it, remaining_index.end());
             }
             if (inlier_index_candidate1.size() > (size_t)this->min_samples) 
             {
                 candidate_center.push_back(center1);
-                // std::copy(inlier_index_candidate1.begin(), inlier_index_candidate1.end(), std::back_inserter(inlier_index));
+                std::sort(inlier_index_candidate1.begin(), inlier_index_candidate1.end());
+
+                auto it = std::remove_if(remaining_index.begin(), remaining_index.end(),
+                [&](int index) {
+                    return std::binary_search(inlier_index_candidate1.begin(), inlier_index_candidate1.end(), index);
+                });
+                remaining_index.erase(it, remaining_index.end());
             }
         }
     }
