@@ -5,7 +5,7 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 
-std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_points, float noise_level) {
+std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_points, float noise_level, int dist) {
     std::vector<std::vector<float>> point_cloud;
     point_cloud.reserve(num_points); // メモリを事前に確保
 
@@ -30,8 +30,8 @@ std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_p
         
         // ノイズを加えた最終的な座標
         std::vector<float> point = {
-            perfect_x + (float)d(gen), // x座標 + ノイズ
-            perfect_y + (float)d(gen)  // y座標 + ノイズ
+            dist + perfect_x + (float)d(gen), // x座標 + ノイズ
+            dist + perfect_y + (float)d(gen)  // y座標 + ノイズ
         };
         
         point_cloud.push_back(point);
@@ -42,9 +42,14 @@ std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_p
 
 int main()
 {
-    auto test_ransac = RansacBall(200, 100, 0.3, 10);
+    auto test_ransac = RansacBall(50, 100, 3, 10);
+    std::vector<std::vector<float>> point_cloud;
 
-    std::vector<std::vector<float>> point_cloud = generateCirclePointCloud(200, 500, 10);
+    for (int i = 0; i < 4; i++)
+    {
+        std::vector<std::vector<float>> pointf = generateCirclePointCloud(50, 20, 10, i*100);
+        std::copy(pointf.begin(), pointf.end(), std::back_inserter(point_cloud));
+    }
     std::vector<std::vector<float>> circle_center = test_ransac.run(point_cloud);
 
     cv::Mat img = cv::Mat::zeros(500, 500, CV_8UC3);
@@ -59,5 +64,6 @@ int main()
         cv::circle(img, point, 2, dot_S, -1, cv::LINE_AA);
     }
     cv::imshow("img", img);
+    cv::waitKey(0);
     return 0;
 }
