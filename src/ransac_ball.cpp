@@ -12,7 +12,7 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
         return {};
     }
     std::vector<std::vector<float>> candidate_center;
-    std::vector<int> inlier_index;
+    // std::vector<int> inlier_index;
 
     for (size_t i = 0; i < (size_t)this->max_loop; i++)
     {
@@ -54,12 +54,12 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
             if (inlier_index_candidate0.size() > (size_t)this->min_samples) 
             {
                 candidate_center.push_back(center0);
-                std::copy(inlier_index_candidate0.begin(), inlier_index_candidate0.end(), std::back_inserter(inlier_index));
+                // std::copy(inlier_index_candidate0.begin(), inlier_index_candidate0.end(), std::back_inserter(inlier_index));
             }
             if (inlier_index_candidate1.size() > (size_t)this->min_samples) 
             {
                 candidate_center.push_back(center1);
-                std::copy(inlier_index_candidate1.begin(), inlier_index_candidate1.end(), std::back_inserter(inlier_index));
+                // std::copy(inlier_index_candidate1.begin(), inlier_index_candidate1.end(), std::back_inserter(inlier_index));
             }
         }
     }
@@ -71,9 +71,8 @@ std::vector<int> RansacBall::sampring(uint max_val, uint num)
     if (num > max_val) {
         return {};
     }
-    int min_val = 0;
-    std::vector<int> numbers(max_val - min_val + 1);
-    std::iota(numbers.begin(), numbers.end(), min_val);
+    std::vector<int> numbers(max_val);
+    std::iota(numbers.begin(), numbers.end(), 0);
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle(numbers.begin(), numbers.end(), g);
