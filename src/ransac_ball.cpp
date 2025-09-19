@@ -45,13 +45,10 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
             std::vector<int> inlier_index_candidate1;
             for (size_t j = 0; j < (size_t)points.size(); j++)
             {
-                if (std::find(inlier_index.begin(), inlier_index.end(), j) == inlier_index.end())
-                {
-                    float dist0 = std::hypot(center0[0] - points[j][0], center0[1] - points[j][1]);
-                    if ((dist0 > this->ball_r - this->threshold) && (dist0 < this->ball_r + this->threshold)) inlier_index_candidate0.push_back(j);
-                    float dist1 = std::hypot(center1[0] - points[j][0], center1[1] - points[j][1]);
-                    if ((dist1 > this->ball_r - this->threshold) && (dist1 < this->ball_r + this->threshold)) inlier_index_candidate1.push_back(j);
-                }
+                float dist0 = std::hypot(center0[0] - points[j][0], center0[1] - points[j][1]);
+                if ((dist0 > this->ball_r - this->threshold) && (dist0 < this->ball_r + this->threshold)) inlier_index_candidate0.push_back(j);
+                float dist1 = std::hypot(center1[0] - points[j][0], center1[1] - points[j][1]);
+                if ((dist1 > this->ball_r - this->threshold) && (dist1 < this->ball_r + this->threshold)) inlier_index_candidate1.push_back(j);
             }
 
             if (inlier_index_candidate0.size() > (size_t)this->min_samples) 
@@ -66,7 +63,6 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
             }
         }
     }
-
     return candidate_center;
 }
 
