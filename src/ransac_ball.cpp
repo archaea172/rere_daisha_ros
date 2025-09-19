@@ -13,6 +13,9 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
 
     for (size_t i = 0; i < (size_t)this->max_loop; i++)
     {
+        if (points.size() < 2) {
+            return {};
+        }
         std::vector<int> sampring_index = this->sampring(points.size(), 2);
         std::vector<float> point0 = points[sampring_index[0]];
         std::vector<float> point1 = points[sampring_index[1]];
