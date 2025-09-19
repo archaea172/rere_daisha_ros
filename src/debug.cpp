@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <random>
+#include <opencv2/opencv.hpp>
 
 std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_points, float noise_level) {
     std::vector<std::vector<float>> point_cloud;

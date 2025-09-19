@@ -40,6 +40,7 @@ install(
 
 target_link_libraries(debug_node
   ransac_ball
+  ${OpenCV_LIBRARIES}
 )
 
 if(BUILD_TESTING)
