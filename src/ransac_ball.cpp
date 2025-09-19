@@ -11,7 +11,7 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
     std::vector<std::vector<float>> candidate_center;
     std::vector<int> inlier_index;
 
-    for (size_t i = 0; i < this->max_loop; i++)
+    for (size_t i = 0; i < (size_t)this->max_loop; i++)
     {
         std::vector<int> sampring_index = this->sampring(points.size(), 2);
         std::vector<float> point0 = candidate_center[sampring_index[0]];
@@ -39,7 +39,7 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
 
             std::vector<int> inlier_index_candidate0;
             std::vector<int> inlier_index_candidate1;
-            for (size_t j = 0; j < points.size(); j++)
+            for (size_t j = 0; j < (size_t)points.size(); j++)
             {
                 if (std::find(inlier_index.begin(), inlier_index.end(), j) != inlier_index.end());
                 else
@@ -51,12 +51,12 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
                 }
             }
 
-            if (inlier_index_candidate0.size() > this->min_samples) 
+            if (inlier_index_candidate0.size() > (size_t)this->min_samples) 
             {
                 candidate_center.push_back(center0);
                 std::copy(inlier_index_candidate0.begin(), inlier_index_candidate0.end(), std::back_inserter(inlier_index));
             }
-            if (inlier_index_candidate1.size() > this->min_samples) 
+            if (inlier_index_candidate1.size() > (size_t)this->min_samples) 
             {
                 candidate_center.push_back(center1);
                 std::copy(inlier_index_candidate1.begin(), inlier_index_candidate1.end(), std::back_inserter(inlier_index));
