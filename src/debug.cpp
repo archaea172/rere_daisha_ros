@@ -3,13 +3,8 @@
 #include <cmath>
 #include <random>
 
-struct Point2D
-{
-    double x, y;
-};
-
-std::vector<Point2D> generateCirclePointCloud(double radius, int num_points, double noise_level) {
-    std::vector<Point2D> point_cloud;
+std::vector<std::vector<float>> generateCirclePointCloud(double radius, int num_points, double noise_level) {
+    std::vector<std::vector<float>> point_cloud;
     point_cloud.reserve(num_points); // メモリを事前に確保
 
     // C++11以降のモダンな乱数生成器
@@ -32,7 +27,7 @@ std::vector<Point2D> generateCirclePointCloud(double radius, int num_points, dou
         double perfect_y = radius * std::sin(theta);
         
         // ノイズを加えた最終的な座標
-        Point2D point = {
+        std::vector<float> point = {
             perfect_x + d(gen), // x座標 + ノイズ
             perfect_y + d(gen)  // y座標 + ノイズ
         };
