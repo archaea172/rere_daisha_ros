@@ -42,12 +42,12 @@ std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_p
 
 int main()
 {
-    auto test_ransac = RansacBall(50, 100, 10, 10);
+    auto test_ransac = RansacBall(50, 100, 15, 10);
     std::vector<std::vector<float>> point_cloud;
 
     for (int i = 0; i < 4; i++)
     {
-        std::vector<std::vector<float>> pointf = generateCirclePointCloud(50, 20, 10, i*100);
+        std::vector<std::vector<float>> pointf = generateCirclePointCloud(50, 30, 10, i*150);
         std::copy(pointf.begin(), pointf.end(), std::back_inserter(point_cloud));
     }
     std::vector<std::vector<float>> circle_center = test_ransac.run(point_cloud);
