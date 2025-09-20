@@ -21,8 +21,11 @@ std::vector<std::vector<float>> RansacBall::run(std::vector<std::vector<float>> 
         loop_count++;
         std::vector<int> sampring_index_from_list = this->sampring(remaining_index.size(), 2);
 
-        std::vector<float> point0 = points[sampring_index_from_list[0]];
-        std::vector<float> point1 = points[sampring_index_from_list[1]];
+        int original_point_index0 = remaining_index[sampring_index_from_list[0]];
+        int original_point_index1 = remaining_index[sampring_index_from_list[1]];
+
+        std::vector<float> point0 = points[original_point_index0];
+        std::vector<float> point1 = points[original_point_index1];
 
         float dx = point1[0] - point0[0];
         float dy = point1[1] - point0[1];
