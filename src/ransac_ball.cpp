@@ -61,22 +61,22 @@ std::vector<std::vector<float>> RansacBall::run(const std::vector<std::vector<fl
             if (inlier_index_candidate0.size() > (size_t)this->min_samples) 
             {
                 candidate_center.push_back(center0);
-                std::sort(inlier_index_candidate0.begin(), inlier_index_candidate0.end());
+                std::unordered_set<int> inliers_to_remove(inlier_index_candidate0.begin(), inlier_index_candidate0.end());
 
                 auto it = std::remove_if(remaining_index.begin(), remaining_index.end(),
                 [&](int index) {
-                    return std::binary_search(inlier_index_candidate0.begin(), inlier_index_candidate0.end(), index);
+                    return inliers_to_remove.count(index) > 0;
                 });
                 remaining_index.erase(it, remaining_index.end());
             }
             if (inlier_index_candidate1.size() > (size_t)this->min_samples) 
             {
                 candidate_center.push_back(center1);
-                std::sort(inlier_index_candidate1.begin(), inlier_index_candidate1.end());
+                std::unordered_set<int> inliers_to_remove(inlier_index_candidate1.begin(), inlier_index_candidate1.end());
 
                 auto it = std::remove_if(remaining_index.begin(), remaining_index.end(),
                 [&](int index) {
-                    return std::binary_search(inlier_index_candidate1.begin(), inlier_index_candidate1.end(), index);
+                    return inliers_to_remove.count(index) > 0;
                 });
                 remaining_index.erase(it, remaining_index.end());
             }

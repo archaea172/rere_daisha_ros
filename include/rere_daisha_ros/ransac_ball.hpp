@@ -4,6 +4,7 @@
 #include <random>
 #include <numeric>
 #include <algorithm>
+#include <unordered_set>
 
 class RansacBall
 {
