@@ -5,6 +5,8 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 
+#include <chrono>
+
 std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_points, float noise_level, int dist) {
     std::vector<std::vector<float>> point_cloud;
     point_cloud.reserve(num_points); // メモリを事前に確保
@@ -47,10 +49,19 @@ int main()
 
     for (int i = 0; i < 4; i++)
     {
-        std::vector<std::vector<float>> pointf = generateCirclePointCloud(50, 30, 10, i*150);
+        std::vector<std::vector<float>> pointf = generateCirclePointCloud(50, 50, 10, i*150);
         std::copy(pointf.begin(), pointf.end(), std::back_inserter(point_cloud));
     }
+
+    auto start = 
+    std::chrono::high_resolution_clock::now();
     std::vector<std::vector<float>> circle_center = test_ransac.run(point_cloud);
+    auto end = 
+    std::chrono::high_resolution_clock::now();
+    auto duration =
+    std::chrono::duration_cast<std::chrono::nanoseconds>
+    (end - start);
+    std::cout << duration.count() << std::endl;
 
     cv::Mat img = cv::Mat::zeros(500, 500, CV_8UC3);
 
