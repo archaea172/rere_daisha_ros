@@ -8,7 +8,8 @@ RansacBall::RansacBall(float r, int max_loop, float threshold, int min_samples)
 
 std::vector<std::vector<float>> RansacBall::run(const std::vector<std::vector<float>> &points)
 {
-    if (points.size() < 2) {
+    if (points.size() < 2)
+    {
         return {};
     }
     std::vector<std::vector<float>> candidate_center;
