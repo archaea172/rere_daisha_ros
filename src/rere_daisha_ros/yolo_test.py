@@ -12,4 +12,9 @@ def main_yolo_test():
 
     img = cv2.imread(img_path)
     results = model(img)
-    results.show()
+    
+    annotated_img = results[0].plot()
+    cv2.resize(annotated_img, (100, 100))
+    cv2.imshow("yolo", annotated_img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
