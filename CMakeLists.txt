@@ -48,6 +48,11 @@ target_link_libraries(debug_node
   ${OpenCV_LIBRARIES}
 )
 
+install(
+  DIRECTORY weights images
+  DESTINATION share/${PROJECT_NAME}
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
