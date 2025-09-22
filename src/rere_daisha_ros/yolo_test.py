@@ -27,6 +27,19 @@ def main_yolo_test():
         [-0.5, -0.5, 0]
     ])*ballsize
 
+    height = results[0].orig_shape[0]
+    width = results[0].orig_shape[1]
+    cx = width/2
+    cy = height/2
+    fx = width
+    fy = width
+    camera_matrix = np.array([
+        [fx, 0, cx],
+        [0, fy, cy],
+        [0, 0, 1]
+    ], dtype=np.float32)
+    dist_coeffs = np.zeros((4, 1), dtype=np.float32)
+
     for box in results[0].boxes:
         xyxy = box.xyxy[0].cpu().numpy()
         class_id = int(box.cls[0].cpu().numpy())
@@ -36,5 +49,18 @@ def main_yolo_test():
             continue
 
         x1, y1, x2, y2 = xyxy
+        image_points = np.array([
+            [x1, y1],
+            [x2, y1], 
+            [x2, y2],
+            [x1, y2]
+        ], dtype=np.float32)
+
+        success, rvec, tvec = cv2.solvePnP(
+            obj_points, 
+            image_points, 
+            camera_matrix, 
+            dist_coeffs
+        )
         
         print(x1, y1, x2, y2)
