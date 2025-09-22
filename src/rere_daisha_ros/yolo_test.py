@@ -1,7 +1,7 @@
 import cv2
 import os
 from ament_index_python.packages import get_package_share_directory
-
+import numpy as np
 from ultralytics import YOLO
 
 def main_yolo_test():
@@ -18,12 +18,23 @@ def main_yolo_test():
     cv2.imshow("yolo", annotated_img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+    ballsize = 10
+    obj_points = np.array([
+        [-0.5,  0.5, 0],
+        [ 0.5,  0.5, 0],
+        [ 0.5, -0.5, 0],
+        [-0.5, -0.5, 0]
+    ])*ballsize
+
     for box in results[0].boxes:
         xyxy = box.xyxy[0].cpu().numpy()
         class_id = int(box.cls[0].cpu().numpy())
         label = model.names[class_id]
         score = float(box.conf[0].cpu().numpy())
+        if score < 0.25:
+            continue
 
-        print(xyxy)
-        print(label)
-        print(score)
+        x1, y1, x2, y2 = xyxy
+        
+        print(x1, y1, x2, y2)
