@@ -32,8 +32,8 @@ std::vector<std::vector<float>> generateCirclePointCloud(float radius, int num_p
         
         // ノイズを加えた最終的な座標
         std::vector<float> point = {
-            dist + perfect_x + (float)d(gen), // x座標 + ノイズ
-            dist + perfect_y + (float)d(gen)  // y座標 + ノイズ
+            dist + perfect_x,// + (float)d(gen), // x座標 + ノイズ
+            dist + perfect_y// + (float)d(gen)  // y座標 + ノイズ
         };
         
         point_cloud.push_back(point);

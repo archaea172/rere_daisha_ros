@@ -62,5 +62,8 @@ def main_yolo_test():
             camera_matrix, 
             dist_coeffs
         )
-        
-        print(x1, y1, x2, y2)
+        if success:
+            print(label)
+            print(rvec)
+            print(tvec)
+            print('---')
