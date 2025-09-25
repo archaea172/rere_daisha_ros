@@ -32,4 +32,10 @@ def generate_launch_description():
     )
     ld.add_action(realsense_launch)
 
+    # lidar
+
+    # yolo
+
+    # ransac
+
     return ld
