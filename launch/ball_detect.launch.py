@@ -2,7 +2,7 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
 import os
 from ament_index_python.packages import get_package_share_directory
-
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
     name_space = 'daisha'
 
@@ -13,4 +13,20 @@ def generate_launch_description():
         get_package_share_directory('realsense2_camera'),
         'launch',
         'rs_launch.py'
+    )
+    realsense_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(realsense_launch_file),
+        launch_arguments={
+            'camera_namespace': name_space,
+            'camera_name': 'D435',
+            'enable_rgbd': 'true',
+            'enable_sync': 'true',
+            'align_depth.enable': 'true',
+            'enable_color': 'true',
+            'enable_depth': 'true',
+            'enable_gyro': 'true',
+            'enable_accel': 'true',
+            'device_type': 'd435',
+            'pointcloud.enable': 'true'   
+        }.items()
     )
