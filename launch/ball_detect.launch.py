@@ -30,3 +30,6 @@ def generate_launch_description():
             'pointcloud.enable': 'true'   
         }.items()
     )
+    ld.add_action(realsense_launch)
+
+    return ld
