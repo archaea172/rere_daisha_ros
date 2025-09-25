@@ -49,7 +49,7 @@ target_link_libraries(debug_node
 )
 
 install(
-  DIRECTORY weights images
+  DIRECTORY weights images launch
   DESTINATION share/${PROJECT_NAME}
 )
 
