@@ -36,41 +36,42 @@ def generate_launch_description():
     ld.add_action(realsense_launch)
 
     # lidar
-    lidar_group = GroupAction(
-        actions=[
-            # グループ内のアクションに'daisha'名前空間を適用
-            PushRosNamespace(name_space),
+    # Lifecycle manager configuration file
+    lc_mgr_config_path = os.path.join(
+        get_package_share_directory('ldlidar_node'),
+        'params',
+        'lifecycle_mgr.yaml'
+    )   
 
-            # Lidar Node
-            Node(
-                package='ldlidar_node',
-                executable='ldlidar_node',
-                name='ldlidar_node',  # lifecycle_managerが名前でノードを特定できるようにnameを設定
-                output='screen',
-                parameters=[{
-                    'serial_port': '/dev/ttyUSB0',
-                    'topic_name': 'scan',
-                    'lidar_frame': 'ldlidar_link',
-                    'range_threshold': 0.005
-                }]
-            ),
-            
-            # Lifecycle Manager
-            # lidar_nodeと同じグループに入れることで、同じ名前空間で動作する
-            Node(
-                package='nav2_lifecycle_manager',
-                executable='lifecycle_manager',
-                name='lifecycle_manager',
-                output='screen',
-                parameters=[
-                    {'autostart': True},
-                    # lifecycle_managerは同じnamespace内のノード名を探すので、これでOK
-                    {'node_names': ['ldlidar_node']}
-                ]
-            )
+    # Lifecycle manager node
+    lc_mgr_node = Node(
+        namespace=name_space,
+        package='nav2_lifecycle_manager',
+        executable='lifecycle_manager',
+        name='lifecycle_manager',
+        output='screen',
+        parameters=[
+            # YAML files
+            lc_mgr_config_path  # Parameters
         ]
+    ) 
+
+    # Include LDLidar launch
+    ldlidar_launch = IncludeLaunchDescription(
+        launch_description_source=PythonLaunchDescriptionSource([
+            get_package_share_directory('ldlidar_node'),
+            '/launch/ldlidar_bringup.launch.py'
+        ]),
+        launch_arguments={
+            'node_name': 'ldlidar_node'
+        }.items()
     )
-    ld.add_action(lidar_group)
+
+    # Launch Nav2 Lifecycle Manager
+    ld.add_action(lc_mgr_node)
+
+    # Call LDLidar launch
+    ld.add_action(ldlidar_launch)
 
     # yolo
 
