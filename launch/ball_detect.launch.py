@@ -36,24 +36,30 @@ def generate_launch_description():
     ld.add_action(realsense_launch)
 
     # lidar
-    ldlidar_pkg_dir = get_package_share_directory('ldlidar_node')
-    ldlidar_launch_file = os.path.join(
-        ldlidar_pkg_dir,
-        'launch',
-        'ldlidar_with_mgr.launch.py'
+    ldlidar_node = Node(
+        package='ldlidar_node',
+        executable='ldlidar_node',
+        name='ldlidar_node',
+        namespace='daisha',
+        output='screen',
+        parameters=[{
+            'serial_port': '/dev/ttyUSB0',
+            'topic_name': 'scan',
+            'lidar_frame': 'ldlidar_link',
+            'range_threshold': 0.005
+        }]
     )
-    ldlidar_group = GroupAction(
-        actions=[
-            PushRosNamespace(name_space),
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(ldlidar_launch_file),
-                launch_arguments={
-                    'serial_port': '/dev/ttyUSB0'
-                }.items()
-            ),
-        ]
+    lifecycle_manager = Node(
+        package='nav2_lifecycle_manager',
+        executable='lifecycle_manager',
+        name='lifecycle_manager',
+        namespace='daisha',
+        output='screen',
+        parameters=[{'autostart': True},
+                    {'node_names': ['ldlidar_node']}]
     )
-    ld.add_action(ldlidar_group)
+    ld.add_action(ldlidar_node)
+    ld.add_action(lifecycle_manager)
 
     # yolo
 
