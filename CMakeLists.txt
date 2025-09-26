@@ -59,9 +59,14 @@ target_link_libraries(ransac_ball_node
   ransac_ball
 )
 
-ament_target_dependencies(twist_converter 
+ament_target_dependencies(ransac_ball_node
   rclcpp
   rclcpp_lifecycle
+)
+
+install(
+  TARGETS ransac_ball_node
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 install(
