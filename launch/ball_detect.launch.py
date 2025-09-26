@@ -5,6 +5,8 @@ from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import PushRosNamespace
 from launch_ros.actions import Node
+from launch.substitutions import PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
     name_space = 'daisha'
@@ -36,7 +38,16 @@ def generate_launch_description():
     ld.add_action(realsense_launch)
 
     # lidar
-    
+
+    ldlidar_node = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution(
+                [FindPackageShare("ldlidar_node"), "launch", "ldlidar_with_mgr.launch.py"]
+            )
+        ),
+        #launch_arguments={"params_file": ldlidar_params}.items(),
+    )
+    ld.add_action(ldlidar_node)
 
     # yolo
 
