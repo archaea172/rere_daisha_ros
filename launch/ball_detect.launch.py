@@ -37,7 +37,7 @@ def generate_launch_description():
     ldlidar_launch_file = os.path.join(
         ldlidar_pkg_dir,
         'launch',
-        'ldlidar_bringup.launch.py'
+        'ldlidar_with_mgr.launch.py'
     )
     ldlidar_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(ldlidar_launch_file),
