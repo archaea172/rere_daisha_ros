@@ -33,6 +33,19 @@ def generate_launch_description():
     ld.add_action(realsense_launch)
 
     # lidar
+    ldlidar_pkg_dir = get_package_share_directory('ldlidar_node')
+    ldlidar_launch_file = os.path.join(
+        ldlidar_pkg_dir,
+        'launch',
+        'ldlidar_bringup.launch.py'
+    )
+    ldlidar_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(ldlidar_launch_file),
+        launch_arguments={
+            'node_namespace': 'daisha'
+        }.items(),
+    )
+    ld.add_action(ldlidar_launch)
 
     # yolo
 
