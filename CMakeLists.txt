@@ -45,18 +45,23 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
+target_link_libraries(debug_node
+  ransac_ball
+  ${OpenCV_LIBRARIES}
+)
+
 add_executable(ransac_ball_node
   src/ransac_ball_node.cpp
   include/${PROJECT_NAME}/ransac_ball_node.hpp
 )
+
+target_link_libraries(ransac_ball_node
+  ransac_ball
+)
+
 ament_target_dependencies(twist_converter 
   rclcpp
   rclcpp_lifecycle
-)
-
-target_link_libraries(debug_node
-  ransac_ball
-  ${OpenCV_LIBRARIES}
 )
 
 install(
