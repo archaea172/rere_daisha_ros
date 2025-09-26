@@ -36,43 +36,7 @@ def generate_launch_description():
     ld.add_action(realsense_launch)
 
     # lidar
-    # Lifecycle manager configuration file
-    lc_mgr_config_path = os.path.join(
-        get_package_share_directory('ldlidar_node'),
-        'params',
-        'lifecycle_mgr.yaml'
-    )   
-
-    # Lifecycle manager node
-    lc_mgr_node = Node(
-        namespace=name_space,
-        package='nav2_lifecycle_manager',
-        executable='lifecycle_manager',
-        name='lifecycle_manager',
-        output='screen',
-        parameters=[
-            # YAML files
-            lc_mgr_config_path  # Parameters
-        ]
-    ) 
-
-    # Include LDLidar launch
-    ldlidar_launch = IncludeLaunchDescription(
-        launch_description_source=PythonLaunchDescriptionSource([
-            get_package_share_directory('ldlidar_node'),
-            '/launch/ldlidar_bringup.launch.py'
-        ]),
-        launch_arguments={
-            'node_name': 'ldlidar_node',
-            'namespace': name_space
-        }.items()
-    )
-
-    # Launch Nav2 Lifecycle Manager
-    ld.add_action(lc_mgr_node)
-
-    # Call LDLidar launch
-    ld.add_action(ldlidar_launch)
+    
 
     # yolo
 
