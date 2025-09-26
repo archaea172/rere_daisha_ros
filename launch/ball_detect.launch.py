@@ -63,7 +63,8 @@ def generate_launch_description():
             '/launch/ldlidar_bringup.launch.py'
         ]),
         launch_arguments={
-            'node_name': 'ldlidar_node'
+            'node_name': 'ldlidar_node',
+            'namespace': name_space
         }.items()
     )
 
