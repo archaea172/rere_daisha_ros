@@ -39,7 +39,6 @@ def generate_launch_description():
     ldlidar_node = Node(
         package='ldlidar_node',
         executable='ldlidar_node',
-        name='ldlidar_node',
         namespace='daisha',
         output='screen',
         parameters=[{
