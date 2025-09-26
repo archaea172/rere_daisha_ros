@@ -1,8 +1,10 @@
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, GroupAction
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.actions import PushRosNamespace
+
 def generate_launch_description():
     name_space = 'daisha'
 
@@ -39,13 +41,18 @@ def generate_launch_description():
         'launch',
         'ldlidar_with_mgr.launch.py'
     )
-    ldlidar_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(ldlidar_launch_file),
-        launch_arguments={
-            'node_namespace': 'daisha'
-        }.items(),
+    ldlidar_group = GroupAction(
+        actions=[
+            PushRosNamespace(name_space),
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(ldlidar_launch_file),
+                launch_arguments={
+                    'serial_port': '/dev/ttyUSB0'
+                }.items()
+            ),
+        ]
     )
-    ld.add_action(ldlidar_launch)
+    ld.add_action(ldlidar_group)
 
     # yolo
 
