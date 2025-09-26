@@ -10,5 +10,14 @@ using namespace std::chrono_literals;
 
 class RansacBallNode : public rclcpp_lifecycle::LifecycleNode
 {
+public:
+    /*type define begin*/
+    using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
+    /*type define end*/
+
+    /*class func begin*/
+    RansacBallNode();
+    /*class func end*/
+private:
 
 };
