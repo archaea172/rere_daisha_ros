@@ -19,7 +19,6 @@ public:
     RansacBallNode();
     /*class func end*/
 private:
-
     /*lifecycle callback begin*/
     CallbackReturn on_configure(const rclcpp_lifecycle::State &state);
     CallbackReturn on_activate(const rclcpp_lifecycle::State &state);
@@ -28,4 +27,8 @@ private:
     CallbackReturn on_error(const rclcpp_lifecycle::State &state);
     CallbackReturn on_shutdown(const rclcpp_lifecycle::State &state);
     /*lifecycle callback end*/
+
+    /*ransac begin*/
+    std::unique_ptr<RansacBall> ransac_ball;
+    /*ransac end*/
 };
