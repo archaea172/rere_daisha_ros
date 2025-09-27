@@ -70,8 +70,6 @@ RansacBallNode::CallbackReturn RansacBallNode::on_shutdown(const rclcpp_lifecycl
 
 void RansacBallNode::lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr rxdata)
 {
-    size_t point_num = rxdata->ranges.size();
-
     std::vector<std::vector<float>> points;
     size_t index = 0;
     for (float angle = rxdata->angle_min; angle <= rxdata->angle_max; angle+=rxdata->angle_increment)
@@ -84,7 +82,16 @@ void RansacBallNode::lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr
     }
     std::vector<std::vector<float>> ball_centers = this->ransac_ball->run(points);
 
-    
+    sensor_msgs::msg::PointCloud txdata;
+    for (size_t i = 0; i < ball_centers.size(); i++)
+    {
+        geometry_msgs::msg::Point32 point_txdata;
+        point_txdata.x = ball_centers[i][0];
+        point_txdata.y = ball_centers[i][1];
+        point_txdata.z = this->height;
+        txdata.points.push_back(point_txdata);
+    }
+    if (ball_position_publisher->is_activated()) ball_position_publisher->publish(txdata);
 }
 
 int main()

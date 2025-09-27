@@ -9,6 +9,7 @@
 
 #include "sensor_msgs/msg/laser_scan.hpp"
 #include "sensor_msgs/msg/point_cloud.hpp"
+#include "geometry_msgs/msg/point.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -55,5 +56,7 @@ private:
     int max_loop;
     float threshold;
     int min_samples;
+
+    float height;
     /*value end*/
 };
