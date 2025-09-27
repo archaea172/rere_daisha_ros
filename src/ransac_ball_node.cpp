@@ -5,10 +5,10 @@ RansacBallNode::RansacBallNode()
 {
     /*ransac initialize begin*/
     ransac_ball = std::make_unique<RansacBall>(
-        ball_r,
-        max_loop,
-        threshold,
-        min_samples
+        this->ball_r,
+        this->max_loop,
+        this->threshold,
+        this->min_samples
     );
     /*ransac initialize end*/
 }
