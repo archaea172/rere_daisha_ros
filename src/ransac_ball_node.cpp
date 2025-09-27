@@ -11,6 +11,13 @@ RansacBallNode::RansacBallNode()
         this->min_samples
     );
     /*ransac initialize end*/
+
+    /*node func initialize begin*/
+    this->ball_position_publisher = this->create_publisher<sensor_msgs::msg::PointCloud>(
+        std::string("ball_position_ransac"),
+        rclcpp::SystemDefaultsQoS()
+    );
+    /*node func initialize end*/
 }
 
 int main()
