@@ -68,6 +68,11 @@ RansacBallNode::CallbackReturn RansacBallNode::on_shutdown(const rclcpp_lifecycl
     return CallbackReturn::SUCCESS;
 }
 
+void RansacBallNode::lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr rxdata)
+{
+    
+}
+
 int main()
 {
 
