@@ -31,6 +31,14 @@ RansacBallNode::CallbackReturn RansacBallNode::on_configure(const rclcpp_lifecyc
 
 RansacBallNode::CallbackReturn RansacBallNode::on_activate(const rclcpp_lifecycle::State &state)
 {
+    /*node func begin*/
+    this->ball_position_publisher->on_activate();
+    lidar_subscriber = this->create_subscription<sensor_msgs::msg::LaserScan>(
+        std::string("scan"),
+        rclcpp::SystemDefaultsQoS(),
+        std::bind(&RansacBallNode::lidar_callback, this, _1)
+    );
+    /*node func end*/
     return CallbackReturn::SUCCESS;
 }
 
