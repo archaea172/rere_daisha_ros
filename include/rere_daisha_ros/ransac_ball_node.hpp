@@ -30,7 +30,8 @@ private:
     CallbackReturn on_shutdown(const rclcpp_lifecycle::State &state);
     /*lifecycle callback end*/
 
-    /*ransac begin*/
+    /*node value begin*/
     std::unique_ptr<RansacBall> ransac_ball;
-    /*ransac end*/
+    rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr lidar_subscriber;
+    /*node value end*/
 };
