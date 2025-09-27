@@ -45,11 +45,13 @@ RansacBallNode::CallbackReturn RansacBallNode::on_activate(const rclcpp_lifecycl
 RansacBallNode::CallbackReturn RansacBallNode::on_deactivate(const rclcpp_lifecycle::State &state)
 {
     this->ball_position_publisher->on_deactivate();
+    this->lidar_subscriber.reset();
     return CallbackReturn::SUCCESS;
 }
 
 RansacBallNode::CallbackReturn RansacBallNode::on_cleanup(const rclcpp_lifecycle::State &state)
 {
+    this->lidar_subscriber.reset();
     return CallbackReturn::SUCCESS;
 }
 
@@ -61,6 +63,8 @@ RansacBallNode::CallbackReturn RansacBallNode::on_error(const rclcpp_lifecycle::
 
 RansacBallNode::CallbackReturn RansacBallNode::on_shutdown(const rclcpp_lifecycle::State &state)
 {
+    this->lidar_subscriber.reset();
+    this->ball_position_publisher.reset();
     return CallbackReturn::SUCCESS;
 }
 
