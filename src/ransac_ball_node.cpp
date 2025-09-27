@@ -94,6 +94,16 @@ void RansacBallNode::lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr
     if (ball_position_publisher->is_activated()) ball_position_publisher->publish(txdata);
 }
 
+rcl_interfaces::msg::SetParametersResult RansacBallNode::parameters_callback(
+    const std::vector<rclcpp::Parameter> &parameters
+)
+{
+    rcl_interfaces::msg::SetParametersResult result;
+    result.successful = true;
+    result.reason = "success";
+    return result;
+}
+
 int main()
 {
 
