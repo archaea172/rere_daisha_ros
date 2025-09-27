@@ -35,9 +35,16 @@ private:
     std::unique_ptr<RansacBall> ransac_ball;
     rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr lidar_subscriber;
     rclcpp_lifecycle::LifecyclePublisher<sensor_msgs::msg::PointCloud>::SharedPtr ball_position_publisher;
+    OnSetParametersCallbackHandle::SharedPtr parameter_callback_hanle_;
     /*node value end*/
 
     /*subscribe callback begin*/
     void lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr rxdata);
     /*subscribe callback end*/
+    
+    /*parameter callback begin*/
+    rcl_interfaces::msg::SetParametersResult parameters_callback(
+        const std::vector<rclcpp::Parameter> &parameters
+    );
+    /*parameter callback end*/
 };
