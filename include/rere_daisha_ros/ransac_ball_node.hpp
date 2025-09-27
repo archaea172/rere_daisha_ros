@@ -47,4 +47,11 @@ private:
         const std::vector<rclcpp::Parameter> &parameters
     );
     /*parameter callback end*/
+
+    /*value begin*/
+    float ball_r;
+    int max_loop;
+    float threshold;
+    int min_samples;
+    /*value end*/
 };
