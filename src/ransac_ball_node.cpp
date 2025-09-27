@@ -24,6 +24,37 @@ RansacBallNode::RansacBallNode()
     /*node func initialize end*/
 }
 
+RansacBallNode::CallbackReturn RansacBallNode::on_configure(const rclcpp_lifecycle::State &state)
+{
+    return CallbackReturn::SUCCESS;
+}
+
+RansacBallNode::CallbackReturn RansacBallNode::on_activate(const rclcpp_lifecycle::State &state)
+{
+    return CallbackReturn::SUCCESS;
+}
+
+RansacBallNode::CallbackReturn RansacBallNode::on_deactivate(const rclcpp_lifecycle::State &state)
+{
+    return CallbackReturn::SUCCESS;
+}
+
+RansacBallNode::CallbackReturn RansacBallNode::on_cleanup(const rclcpp_lifecycle::State &state)
+{
+    return CallbackReturn::SUCCESS;
+}
+
+RansacBallNode::CallbackReturn RansacBallNode::on_error(const rclcpp_lifecycle::State &state)
+{
+    return CallbackReturn::SUCCESS;
+}
+
+
+RansacBallNode::CallbackReturn RansacBallNode::on_shutdown(const rclcpp_lifecycle::State &state)
+{
+    return CallbackReturn::SUCCESS;
+}
+
 int main()
 {
 
