@@ -15,6 +15,7 @@ find_package(ament_cmake_python REQUIRED)
 find_package(realsense2_camera REQUIRED)
 find_package(ldlidar_node REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
@@ -64,6 +65,7 @@ ament_target_dependencies(ransac_ball_node
   rclcpp
   rclcpp_lifecycle
   sensor_msgs
+  geometry_msgs
 )
 
 install(
