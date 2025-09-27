@@ -70,7 +70,11 @@ RansacBallNode::CallbackReturn RansacBallNode::on_shutdown(const rclcpp_lifecycl
 
 void RansacBallNode::lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr rxdata)
 {
-    
+    size_t point_num = rxdata->ranges.size();
+    for (size_t i = 0; i < point_num; i++)
+    {
+        
+    }
 }
 
 int main()
