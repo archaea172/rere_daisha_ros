@@ -44,6 +44,7 @@ RansacBallNode::CallbackReturn RansacBallNode::on_activate(const rclcpp_lifecycl
 
 RansacBallNode::CallbackReturn RansacBallNode::on_deactivate(const rclcpp_lifecycle::State &state)
 {
+    this->ball_position_publisher->on_deactivate();
     return CallbackReturn::SUCCESS;
 }
 
