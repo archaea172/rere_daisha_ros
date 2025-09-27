@@ -17,6 +17,10 @@ RansacBallNode::RansacBallNode()
         std::string("ball_position_ransac"),
         rclcpp::SystemDefaultsQoS()
     );
+    
+    this->parameter_callback_hanle_ = this->add_on_set_parameters_callback(
+        std::bind(&RansacBallNode::parameters_callback, this, _1)
+    );
     /*node func initialize end*/
 }
 
