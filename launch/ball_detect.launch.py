@@ -45,7 +45,7 @@ def generate_launch_description():
                 [FindPackageShare("ldlidar_node"), "launch", "ldlidar_with_mgr.launch.py"]
             )
         ),
-        #launch_arguments={"params_file": ldlidar_params}.items(),
+        launch_arguments={"node_ns": name_space}.items(),
     )
     ld.add_action(ldlidar_node)
 
