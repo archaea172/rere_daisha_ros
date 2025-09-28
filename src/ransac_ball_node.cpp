@@ -3,6 +3,13 @@
 RansacBallNode::RansacBallNode()
 : rclcpp_lifecycle::LifecycleNode(std::string("ransac_ball_node"))
 {
+    /*parameter declare begin*/
+    this->declare_parameter<double>("ball_r", 0.04);
+    this->declare_parameter<double>("max_loop", 100);
+    this->declare_parameter<double>("threshold", 0.2);
+    this->declare_parameter<double>("min_samples", 40);
+    /*parameter declare end*/
+
     /*ransac initialize begin*/
     ransac_ball = std::make_unique<RansacBall>(
         this->ball_r,
