@@ -144,12 +144,38 @@ rcl_interfaces::msg::SetParametersResult RansacBallNode::parameters_callback(
             if (param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
             {
                 this->ransac_ball->set_max_loop(param.as_int());
-                RCLCPP_INFO(this->get_logger(), "Parameter 'max_iterations' changed to: %d", param.as_int());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'max_loop' changed to: %d", param.as_int());
             }
             else
             {
                 result.successful = false;
                 result.reason = "Invalid type for parameter 'max_loop'.";
+            }
+        }
+        else if (param.get_name() == "threshold")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+            {
+                this->ransac_ball->set_threshold(param.as_double());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'threshold' changed to: %f", param.as_double());
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for parameter 'threshold'.";
+            }
+        }
+        else if (param.get_name() == "min_samples")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
+            {
+                this->ransac_ball->set_min_samples(param.as_int());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'min_samples' changed to: %d", param.as_int());
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for parameter 'min_samples'.";
             }
         }
     }
