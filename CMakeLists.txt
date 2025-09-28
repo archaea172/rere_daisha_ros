@@ -74,7 +74,7 @@ install(
 )
 
 install(
-  DIRECTORY weights images launch config
+  DIRECTORY weights images launch config worlds hooks
   DESTINATION share/${PROJECT_NAME}
 )
 
