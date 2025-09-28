@@ -14,7 +14,7 @@ public:
 
     void set_ball_r(float new_ball_r);
     void set_max_loop(int new_max_loop);
-    void set_threshold(float threshold);
+    void set_threshold(float new_threshold);
     void set_min_samples(int new_min_samples);
 
 private:
