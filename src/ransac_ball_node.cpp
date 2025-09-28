@@ -10,6 +10,13 @@ RansacBallNode::RansacBallNode()
     this->declare_parameter<double>("min_samples", 40);
     /*parameter declare end*/
 
+    /*parameter set begin*/
+    this->ball_r = (float)this->get_parameter("ball_r").as_double();
+    this->max_loop = (float)this->get_parameter("max_loop").as_double();
+    this->threshold = (float)this->get_parameter("threshold").as_double();
+    this->min_samples = (float)this->get_parameter("min_samples").as_double();
+    /*parameter set end*/
+
     /*ransac initialize begin*/
     ransac_ball = std::make_unique<RansacBall>(
         this->ball_r,
