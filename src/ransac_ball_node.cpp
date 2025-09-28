@@ -144,7 +144,7 @@ rcl_interfaces::msg::SetParametersResult RansacBallNode::parameters_callback(
             if (param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
             {
                 this->ransac_ball->set_max_loop(param.as_int());
-                RCLCPP_INFO(this->get_logger(), "Parameter 'max_loop' changed to: %d", param.as_int());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'max_loop' changed to: %ld", param.as_int());
             }
             else
             {
@@ -170,7 +170,7 @@ rcl_interfaces::msg::SetParametersResult RansacBallNode::parameters_callback(
             if (param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
             {
                 this->ransac_ball->set_min_samples(param.as_int());
-                RCLCPP_INFO(this->get_logger(), "Parameter 'min_samples' changed to: %d", param.as_int());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'min_samples' changed to: %ld", param.as_int());
             }
             else
             {
