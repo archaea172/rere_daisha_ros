@@ -1,0 +1,6 @@
+/**:
+  ros__parameters:
+    ball_r: 0.04
+    max_loop: 100.0
+    threshold: 0.2
+    min_samples: 40.0

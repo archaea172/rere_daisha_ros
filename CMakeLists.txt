@@ -74,7 +74,7 @@ install(
 )
 
 install(
-  DIRECTORY weights images launch
+  DIRECTORY weights images launch config
   DESTINATION share/${PROJECT_NAME}
 )
 

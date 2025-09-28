@@ -3,6 +3,20 @@
 RansacBallNode::RansacBallNode()
 : rclcpp_lifecycle::LifecycleNode(std::string("ransac_ball_node"))
 {
+    /*parameter declare begin*/
+    this->declare_parameter<double>("ball_r", 0.04);
+    this->declare_parameter<double>("max_loop", 100);
+    this->declare_parameter<double>("threshold", 0.2);
+    this->declare_parameter<double>("min_samples", 40);
+    /*parameter declare end*/
+
+    /*parameter set begin*/
+    this->ball_r = (float)this->get_parameter("ball_r").as_double();
+    this->max_loop = (float)this->get_parameter("max_loop").as_double();
+    this->threshold = (float)this->get_parameter("threshold").as_double();
+    this->min_samples = (float)this->get_parameter("min_samples").as_double();
+    /*parameter set end*/
+
     /*ransac initialize begin*/
     ransac_ball = std::make_unique<RansacBall>(
         this->ball_r,
@@ -101,10 +115,78 @@ rcl_interfaces::msg::SetParametersResult RansacBallNode::parameters_callback(
     rcl_interfaces::msg::SetParametersResult result;
     result.successful = true;
     result.reason = "success";
+
+    for (const auto &param : parameters)
+    {
+        if (param.get_name() == "ball_r")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+            {
+                if (param.as_double() > 0.0)
+                {
+                    this->ransac_ball->set_ball_r(param.as_double());
+                    RCLCPP_INFO(this->get_logger(), "Parameter 'ball_radius' changed to: %f", param.as_double());
+                }
+                else
+                {
+                    result.successful = false;
+                    result.reason = "ball_radius must be positive.";
+                }
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for ball_radius";
+            }
+        }
+        else if (param.get_name() == "max_loop")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
+            {
+                this->ransac_ball->set_max_loop(param.as_int());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'max_loop' changed to: %ld", param.as_int());
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for parameter 'max_loop'.";
+            }
+        }
+        else if (param.get_name() == "threshold")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+            {
+                this->ransac_ball->set_threshold(param.as_double());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'threshold' changed to: %f", param.as_double());
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for parameter 'threshold'.";
+            }
+        }
+        else if (param.get_name() == "min_samples")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
+            {
+                this->ransac_ball->set_min_samples(param.as_int());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'min_samples' changed to: %ld", param.as_int());
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for parameter 'min_samples'.";
+            }
+        }
+    }
     return result;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-
+    rclcpp::init(argc, argv);
+    std::shared_ptr<RansacBallNode> node = std::make_shared<RansacBallNode>();
+    rclcpp::spin(node->get_node_base_interface());
+    rclcpp::shutdown();
+    return 0;
 }
