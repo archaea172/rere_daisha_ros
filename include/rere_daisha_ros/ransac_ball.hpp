@@ -15,8 +15,8 @@ public:
 private:
     std::vector<int> sampring(uint max_val, uint num);
 
-    const float ball_r;
-    const int max_loop;
-    const float threshold;
-    const int min_samples;
+    float ball_r;
+    int max_loop;
+    float threshold;
+    int min_samples;
 };
