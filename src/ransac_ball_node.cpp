@@ -115,6 +115,44 @@ rcl_interfaces::msg::SetParametersResult RansacBallNode::parameters_callback(
     rcl_interfaces::msg::SetParametersResult result;
     result.successful = true;
     result.reason = "success";
+
+    for (const auto &param : parameters)
+    {
+        if (param.get_name() == "ball_r")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+            {
+                if (param.as_double() > 0.0)
+                {
+                    this->ransac_ball->set_ball_r(param.as_double());
+                    RCLCPP_INFO(this->get_logger(), "Parameter 'ball_radius' changed to: %f", param.as_double());
+                }
+                else
+                {
+                    result.successful = false;
+                    result.reason = "ball_radius must be positive.";
+                }
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for ball_radius";
+            }
+        }
+        else if (param.get_name() == "max_loop")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
+            {
+                this->ransac_ball->set_max_loop(param.as_int());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'max_iterations' changed to: %d", param.as_int());
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for parameter 'max_loop'.";
+            }
+        }
+    }
     return result;
 }
 
