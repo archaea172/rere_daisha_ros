@@ -161,7 +161,7 @@
             <geometry>
             <mesh>
                 <scale>1 1 1</scale>
-                <uri>package://inrof_sim/worlds/meshs/InrofField.stl</uri>
+                <uri>package://rere_daisha_ros/worlds/meshs/InrofField.stl</uri>
             </mesh>
             </geometry>
             <surface>
@@ -178,7 +178,7 @@
             <geometry>
             <mesh>
                 <scale>1 1 1</scale>
-                <uri>package://inrof_sim/worlds/meshs/InrofField.dae</uri>
+                <uri>package://rere_daisha_ros/worlds/meshs/InrofField.dae</uri>
             </mesh>
             </geometry>
         </visual>
