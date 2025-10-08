@@ -12,6 +12,17 @@ def generate_launch_description():
         'worlds',
         'inrof_field.sdf'
     ])
+    
+
+    spawn_balls_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(
+                get_package_share_directory('rere_daisha_ros'),
+                'launch',
+                'spawn_random_balls.launch.py'
+            )
+        )
+    )
 
     return LaunchDescription([
         IncludeLaunchDescription(
