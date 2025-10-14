@@ -23,6 +23,7 @@ class Rdk_YOLO(Node):
         )
         weights_path = os.path.join(package_share_directory, 'weights', 'best_bayese_640x640_nv12.bin')
 
+        self.coco_names = ['blue_ball', 'red_ball', 'yellow_ball']
         self.model = Ultralytics_YOLO_Detect_Bayese_YUV420SP(weights_path, 3, 0.4, 0.8, 16, [8, 16 ,32])
         self.subscriber_rs()
         
@@ -37,4 +38,25 @@ class Rdk_YOLO(Node):
         outputs = self.model.c2numpy(self.model.forward(input_tensor))
         results = self.model.postProcess(outputs)
 
-        
+        ball_size = 0.065
+        objPoints = np.array([
+            [-0.5,  0.5, 0],
+            [ 0.5,  0.5, 0],
+            [ 0.5, -0.5, 0],
+            [-0.5, -0.5, 0]
+        ]) * ball_size
+        for class_id, score, x1, y1, x2, y2 in results:
+            corner = np.array([
+                [x1, y1, 0],
+                [x2, y1, 0],
+                [x2, y2, 0],
+                [x1, y2, 0]
+            ])
+
+            retval, rvec, tvec = cv2.solvePnP(
+                objPoints,
+                corner,
+                camera_matrix,
+                distCoeffs
+            )
+            self.get_logger().info('%s' % self.)
