@@ -59,4 +59,17 @@ class Rdk_YOLO(Node):
                 camera_matrix,
                 distCoeffs
             )
-            self.get_logger().info('%s' % self.)
+            self.get_logger().info('%s' % self.coco_names[class_id])
+
+
+def main_ball_detect():
+    rclpy.init()
+    rdk_yolo = Rdk_YOLO()
+    try:
+        rclpy.spin(rdk_yolo)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        rdk_yolo.destroy_node()
+        if rclpy.ok():
+            rclpy.shutdown()
