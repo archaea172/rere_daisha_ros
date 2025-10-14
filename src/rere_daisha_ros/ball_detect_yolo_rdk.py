@@ -40,29 +40,35 @@ class Rdk_YOLO(Node):
         input_tensor = self.model.preprocess_yuv420sp(cv_img)
         outputs = self.model.c2numpy(self.model.forward(input_tensor))
         results = self.model.postProcess(outputs)
+        # self.get_logger().info('detect finish')
 
-        ball_size = 0.065
-        objPoints = np.array([
-            [-0.5,  0.5, 0],
-            [ 0.5,  0.5, 0],
-            [ 0.5, -0.5, 0],
-            [-0.5, -0.5, 0]
-        ]) * ball_size
-        for class_id, score, x1, y1, x2, y2 in results:
-            corner = np.array([
-                [x1, y1, 0],
-                [x2, y1, 0],
-                [x2, y2, 0],
-                [x1, y2, 0]
-            ])
+        if results is not None:
+            ball_size = 0.065
+            objPoints = np.array([
+                [-0.5,  0.5, 0],
+                [ 0.5,  0.5, 0],
+                [ 0.5, -0.5, 0],
+                [-0.5, -0.5, 0]
+            ]) * ball_size
+            for class_id, score, x1, y1, x2, y2 in results:
+                corner = np.array([
+                    [x1, y1],
+                    [x2, y1],
+                    [x2, y2],
+                    [x1, y2]
+                ], dtype=np.float32)
 
-            retval, rvec, tvec = cv2.solvePnP(
-                objPoints,
-                corner,
-                camera_matrix,
-                distCoeffs
-            )
-            self.get_logger().info('%s' % self.coco_names[class_id])
+                retval, rvec, tvec = cv2.solvePnP(
+                    objPoints,
+                    corner,
+                    camera_matrix,
+                    distCoeffs
+                )
+                x = tvec[0]
+                y = tvec[1]*(-1/2) + 0.03
+                z = tvec[2]*(-1/2) - 0.1938
+                zahyo = str(x) + ',' + str(y) + ',' + str(z)
+                self.get_logger().info('%s' %zahyo)
 
 
 def main_ball_detect():
