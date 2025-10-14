@@ -21,11 +21,11 @@ class Rdk_YOLO(Node):
             self.rs_callback,
             10
         )
+        package_share_directory = get_package_share_directory('rere_daisha_ros')
         weights_path = os.path.join(package_share_directory, 'weights', 'best_bayese_640x640_nv12.bin')
 
         self.coco_names = ['blue_ball', 'red_ball', 'yellow_ball']
         self.model = Ultralytics_YOLO_Detect_Bayese_YUV420SP(weights_path, 3, 0.4, 0.8, 16, [8, 16 ,32])
-        self.subscriber_rs()
         
     def rs_callback(self, rxdata):
         # receive data

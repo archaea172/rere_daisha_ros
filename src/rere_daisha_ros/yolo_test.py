@@ -2,7 +2,10 @@ import cv2
 import os
 from ament_index_python.packages import get_package_share_directory
 import numpy as np
-from ultralytics import YOLO
+try:
+    from ultralytics import YOLO
+except:
+    pass
 
 def main_yolo_test():
     package_share_directory = get_package_share_directory('rere_daisha_ros')
