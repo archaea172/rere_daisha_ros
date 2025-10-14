@@ -3,7 +3,7 @@ from rclpy.node import Node
 
 from realsense2_camera_msgs.msg import RGBD
 from rere_daisha_msgs.msg import BallPositionArray, BallPosition
-from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Point
 
 import cv2
 from cv_bridge import CvBridge
@@ -58,7 +58,6 @@ class Rdk_YOLO(Node):
         results = self.model.postProcess(outputs)
         # self.get_logger().info('detect finish')
 
-        txdata = BallPositionArray()
         if results is not None:
             ball_size = 0.065
             objPoints = np.array([
@@ -67,6 +66,7 @@ class Rdk_YOLO(Node):
                 [ 0.5, -0.5, 0],
                 [-0.5, -0.5, 0]
             ]) * ball_size
+            txdata = BallPositionArray()
             for class_id, score, x1, y1, x2, y2 in results:
                 corner = np.array([
                     [x1, y1],
@@ -84,6 +84,15 @@ class Rdk_YOLO(Node):
                 p_robot = self.R_robot_cam@tvec + self.t_robot_cam
                 coords = p_robot.flatten()
                 x, y, z = coords[0], coords[1], coords[2]
+                pose = Point()
+                pose.x = float(x)
+                pose.y = float(y)
+                pose.z = float(z)
+                ballposition = BallPosition()
+                ballposition.position = pose
+                ballposition.class_id = int(class_id)
+                txdata.balls.append(ballposition)
+            self.publisher_ball_pos.publish(txdata)
                 
                 
 
