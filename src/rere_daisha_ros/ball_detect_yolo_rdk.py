@@ -2,6 +2,7 @@ import rclpy
 from rclpy.node import Node
 
 from realsense2_camera_msgs.msg import RGBD
+from rere_daisha_msgs.msg import BallPositionArray
 
 import cv2
 from cv_bridge import CvBridge
@@ -19,6 +20,11 @@ class Rdk_YOLO(Node):
             RGBD,
             "/camera/camera/rgbd",
             self.rs_callback,
+            10
+        )
+        self.publisher_ball_pos = self.create_publisher(
+            BallPositionArray,
+            "ball_position_yolo",
             10
         )
         package_share_directory = get_package_share_directory('rere_daisha_ros')
@@ -51,6 +57,7 @@ class Rdk_YOLO(Node):
         results = self.model.postProcess(outputs)
         # self.get_logger().info('detect finish')
 
+        txdata = BallPositionArray()
         if results is not None:
             ball_size = 0.065
             objPoints = np.array([
@@ -73,12 +80,10 @@ class Rdk_YOLO(Node):
                     camera_matrix,
                     distCoeffs
                 )
-                p_robot = self.R_robot_cam@tvec - self.t_robot_cam
+                p_robot = self.R_robot_cam@tvec + self.t_robot_cam
                 coords = p_robot.flatten()
                 x, y, z = coords[0], coords[1], coords[2]
-
-                zahyo = str(x) + ',' + str(y) + ',' + str(z)
-                self.get_logger().info('%s' %zahyo)
+                
 
 
 def main_ball_detect():
