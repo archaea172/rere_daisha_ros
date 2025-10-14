@@ -76,9 +76,11 @@ install(
 )
 
 install(
-  DIRECTORY weights images launch config
+  DIRECTORY weights images launch config worlds hooks
   DESTINATION share/${PROJECT_NAME}
 )
+
+ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/hooks/${PROJECT_NAME}.dsv.in")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
