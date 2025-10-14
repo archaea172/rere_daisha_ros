@@ -16,9 +16,11 @@ find_package(realsense2_camera REQUIRED)
 find_package(ldlidar_node REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(rere_daisha_msgs REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
+install(PROGRAMS scripts/ball_detect_yolo.py DESTINATION lib/${PROJECT_NAME})
 
 install(
   DIRECTORY include/
