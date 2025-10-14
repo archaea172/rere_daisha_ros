@@ -19,6 +19,7 @@ find_package(geometry_msgs REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
+install(PROGRAMS scripts/ball_detect_yolo.py DESTINATION lib/${PROJECT_NAME})
 
 install(
   DIRECTORY include/
