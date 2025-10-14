@@ -29,6 +29,15 @@ class Rdk_YOLO(Node):
 
         self.subscriber_rs
         self.get_logger().info('configure finish')
+
+        theta = np.deg2rad(-120)
+        c, s = np.cos(theta), np.sin(theta)
+        self.R_robot_cam = np.array([
+            [1, 0,  0],
+            [0, c, -s],
+            [0, s,  c]
+        ])
+        self.t_robot_cam = np.array([[0], [-0.03], [0.1938]])
         
     def rs_callback(self, rxdata):
         # receive data
@@ -64,9 +73,10 @@ class Rdk_YOLO(Node):
                     camera_matrix,
                     distCoeffs
                 )
-                x = tvec[0]
-                y = tvec[1]*(-1/2) + 0.03
-                z = tvec[2]*(-1/2) - 0.1938
+                p_robot = self.R_robot_cam@tvec - self.t_robot_cam
+                coords = p_robot.flatten()
+                x, y, z = coords[0], coords[1], coords[2]
+
                 zahyo = str(x) + ',' + str(y) + ',' + str(z)
                 self.get_logger().info('%s' %zahyo)
 
