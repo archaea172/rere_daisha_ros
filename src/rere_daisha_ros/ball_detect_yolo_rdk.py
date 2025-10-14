@@ -2,7 +2,8 @@ import rclpy
 from rclpy.node import Node
 
 from realsense2_camera_msgs.msg import RGBD
-from rere_daisha_msgs.msg import BallPositionArray
+from rere_daisha_msgs.msg import BallPositionArray, BallPosition
+from geometry_msgs.msg import Pose
 
 import cv2
 from cv_bridge import CvBridge
@@ -83,6 +84,7 @@ class Rdk_YOLO(Node):
                 p_robot = self.R_robot_cam@tvec + self.t_robot_cam
                 coords = p_robot.flatten()
                 x, y, z = coords[0], coords[1], coords[2]
+                
                 
 
 
