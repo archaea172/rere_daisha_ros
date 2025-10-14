@@ -26,6 +26,9 @@ class Rdk_YOLO(Node):
 
         self.coco_names = ['blue_ball', 'red_ball', 'yellow_ball']
         self.model = Ultralytics_YOLO_Detect_Bayese_YUV420SP(weights_path, 3, 0.4, 0.8, 16, [8, 16 ,32])
+
+        self.subscriber_rs
+        self.get_logger().info('configure finish')
         
     def rs_callback(self, rxdata):
         # receive data
