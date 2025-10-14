@@ -88,3 +88,70 @@ class Ultralytics_YOLO_Detect_Bayese_YUV420SP():
         outputs = [dnnTensor.buffer for dnnTensor in outputs]
         return outputs
     
+    def postProcess(self, outputs):
+        
+        # 1. モデルからの単一出力を取得し、形状を整える
+        # original shape: (1, 7, 8400, 1) -> transposed shape: (8400, 7)
+        output_data = outputs[0].squeeze().transpose()
+
+        # 2. 信頼度の低いバウンディングボックスをフィルタリング
+        # 4列目以降がクラススコアなので、行ごとの最大値を取得
+        scores = np.max(output_data[:, 4:], axis=1)
+        # スコアが閾値を超えているものだけを残す
+        mask = scores > self.SCORE_THRESHOLD
+        filtered_data = output_data[mask]
+        
+        if not filtered_data.any():
+            return []
+
+        # 3. 残ったデータからボックス、スコア、クラスIDを抽出
+        filtered_boxes = filtered_data[:, :4] # cx, cy, w, h
+        filtered_scores = filtered_data[:, 4:]
+        
+        # 各ボックスの最終的な信頼度とクラスIDを取得
+        confidences = np.max(filtered_scores, axis=1)
+        class_ids = np.argmax(filtered_scores, axis=1)
+
+        # 4. バウンディングボックスの形式を (cx, cy, w, h) から (x, y, w, h) に変換
+        # NMSBoxesは (x, y, w, h) 形式を要求するため
+        x = filtered_boxes[:, 0] - filtered_boxes[:, 2] / 2
+        y = filtered_boxes[:, 1] - filtered_boxes[:, 3] / 2
+        w = filtered_boxes[:, 2]
+        h = filtered_boxes[:, 3]
+        cv_boxes = np.column_stack((x, y, w, h))
+
+        # 5. Non-Maximum Suppression (NMS) を実行して重複ボックスを削除
+        indices = cv2.dnn.NMSBoxes(cv_boxes.tolist(), confidences.tolist(), self.SCORE_THRESHOLD, self.NMS_THRESHOLD)
+
+        if len(indices) == 0:
+            return []
+
+        # 6. 最終結果をフォーマットする
+        results = []
+        for i in indices.flatten():
+            # (cx, cy, w, h) から (x1, y1, x2, y2) を計算
+            cx, cy, width, height = filtered_boxes[i]
+            x1 = cx - width / 2
+            y1 = cy - height / 2
+            x2 = cx + width / 2
+            y2 = cy + height / 2
+            
+            # 元の画像座標系に変換
+            x1_final = int((x1 - self.x_shift) / self.x_scale)
+            y1_final = int((y1 - self.y_shift) / self.y_scale)
+            x2_final = int((x2 - self.x_shift) / self.x_scale)
+            y2_final = int((y2 - self.y_shift) / self.y_scale)
+            
+            # 座標が画像範囲内に収まるようにクリッピング
+            x1_final = max(0, min(x1_final, self.img_w))
+            y1_final = max(0, min(y1_final, self.img_h))
+            x2_final = max(0, min(x2_final, self.img_w))
+            y2_final = max(0, min(y2_final, self.img_h))
+
+            # クラスIDと信頼度を取得
+            class_id = class_ids[i]
+            confidence = confidences[i]
+            
+            results.append((class_id, confidence, x1_final, y1_final, x2_final, y2_final))
+
+        return results
