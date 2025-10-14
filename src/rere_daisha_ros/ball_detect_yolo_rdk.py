@@ -32,3 +32,9 @@ class Rdk_YOLO(Node):
         cameramatrix_r = np.array(rxdata.rgb_camera_info.k)
         camera_matrix = cameramatrix_r.reshape((3, 3))
         distCoeffs = np.array(rxdata.rgb_camera_info.d)
+
+        input_tensor = self.model.preprocess_yuv420sp(cv_img)
+        outputs = self.model.c2numpy(self.model.forward(input_tensor))
+        results = self.model.postProcess(outputs)
+
+        
