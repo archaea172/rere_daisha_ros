@@ -8,6 +8,7 @@ from hobot_dnn import pyeasy_dnn as dnn
 
 class Ultralytics_YOLO_Detect_Bayese_YUV420SP():
     def __init__(self, model_path, classes_num, nms_thres, score_thres, reg, strides):
+        self.quantize_model = dnn.load(model_path)
         #init
         self.REG = reg
         self.CLASSES_NUM = classes_num
