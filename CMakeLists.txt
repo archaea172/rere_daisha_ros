@@ -12,9 +12,15 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(ament_cmake_python REQUIRED)
+find_package(realsense2_camera REQUIRED)
+find_package(ldlidar_node REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(rere_daisha_msgs REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
+install(PROGRAMS scripts/ball_detect_yolo.py DESTINATION lib/${PROJECT_NAME})
 
 install(
   DIRECTORY include/
@@ -48,10 +54,33 @@ target_link_libraries(debug_node
   ${OpenCV_LIBRARIES}
 )
 
+add_executable(ransac_ball_node
+  src/ransac_ball_node.cpp
+  include/${PROJECT_NAME}/ransac_ball_node.hpp
+)
+
+target_link_libraries(ransac_ball_node
+  ransac_ball
+)
+
+ament_target_dependencies(ransac_ball_node
+  rclcpp
+  rclcpp_lifecycle
+  sensor_msgs
+  geometry_msgs
+)
+
 install(
-  DIRECTORY weights images
+  TARGETS ransac_ball_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY weights images launch config worlds hooks
   DESTINATION share/${PROJECT_NAME}
 )
+
+ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/hooks/${PROJECT_NAME}.dsv.in")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

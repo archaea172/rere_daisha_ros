@@ -99,3 +99,23 @@ std::vector<int> RansacBall::sampring(uint max_val, uint num)
     std::vector<int> return_numbers(numbers.begin(), numbers.begin() + num);
     return return_numbers;
 }
+
+void RansacBall::set_ball_r(float new_ball_r)
+{
+    this->ball_r = new_ball_r;
+}
+
+void RansacBall::set_max_loop(int new_max_loop)
+{
+    this->max_loop = new_max_loop;
+}
+
+void RansacBall::set_threshold(float new_threshold)
+{
+    this->threshold = new_threshold;
+}
+
+void RansacBall::set_min_samples(int new_min_samples)
+{
+    this->min_samples = new_min_samples;
+}
