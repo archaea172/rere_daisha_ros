@@ -55,7 +55,7 @@ def generate_launch_description():
         ),
         launch_arguments={"node_ns": name_space}.items(),
     )
-    # ld.add_action(ldlidar_node)
+    ld.add_action(ldlidar_node)
 
     # yolo
 
