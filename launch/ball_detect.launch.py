@@ -95,4 +95,8 @@ def generate_launch_description():
         )
     )
 
+    ld.add_action(ransac_node)
+    ld.add_action(ransac_configure_event_handler)
+    ld.add_action(ransac_activate_event_handler)
+
     return ld
