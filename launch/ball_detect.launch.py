@@ -17,6 +17,7 @@ import launch_ros
 
 def generate_launch_description():
     name_space = 'daisha'
+    pkg_path = get_package_share_directory('rere_daisha_ros')
 
     ld = LaunchDescription()
 
@@ -54,15 +55,18 @@ def generate_launch_description():
         ),
         launch_arguments={"node_ns": name_space}.items(),
     )
-    ld.add_action(ldlidar_node)
+    # ld.add_action(ldlidar_node)
 
     # yolo
 
     # ransac
+    param_file = os.path.join(pkg_path, 'config', 'ransac_params.yaml')
     ransac_node = LifecycleNode(
-        package='rere_daisha',
+        package='rere_daisha_ros',
         executable='ransac_ball_node',
-        namespace=name_space
+        namespace=name_space,
+        parameters=[param_file],
+        name='ransac_ball_node'
     )
 
     ransac_configure_event_handler = RegisterEventHandler(
