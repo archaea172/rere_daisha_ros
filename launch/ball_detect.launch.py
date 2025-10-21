@@ -1,5 +1,5 @@
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, GroupAction, EmitEvent, RegisterEventHandle
+from launch.actions import IncludeLaunchDescription, GroupAction, EmitEvent, RegisterEventHandler
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -65,7 +65,7 @@ def generate_launch_description():
         namespace=name_space
     )
 
-    ransac_configure_event_handler = RegisterEventHandle(
+    ransac_configure_event_handler = RegisterEventHandler(
         OnProcessStart(
             target_action=ransac_node,
             on_start=[
@@ -73,6 +73,22 @@ def generate_launch_description():
                     event=ChangeState(
                         lifecycle_node_matcher=launch.events.matches_action(ransac_node),
                         transition_id=lifecycle_msgs.msg.Transition.TRANSITION_CONFIGURE,
+                    )
+                )
+            ]
+        )
+    )
+
+    ransac_activate_event_handler = RegisterEventHandler(
+        OnStateTransition(
+            target_lifecycle_node=ransac_node,
+            start_state='configuring',
+            goal_state='inactive',
+            entities=[
+                EmitEvent(
+                    event=ChangeState(
+                        lifecycle_node_matcher=launch.events.matches_action(ransac_node),
+                        transition_id=lifecycle_msgs.msg.Transition.TRANSITION_ACTIVATE,
                     )
                 )
             ]
