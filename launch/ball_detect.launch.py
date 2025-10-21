@@ -12,6 +12,8 @@ from launch_ros.actions import LifecycleNode
 from launch_ros.event_handlers import OnStateTransition
 from launch_ros.events.lifecycle import ChangeState
 import lifecycle_msgs.msg
+import launch
+import launch_ros
 
 def generate_launch_description():
     name_space = 'daisha'
@@ -57,5 +59,24 @@ def generate_launch_description():
     # yolo
 
     # ransac
+    ransac_node = LifecycleNode(
+        package='rere_daisha',
+        executable='ransac_ball_node',
+        namespace=name_space
+    )
+
+    ransac_configure_event_handler = RegisterEventHandle(
+        OnProcessStart(
+            target_action=ransac_node,
+            on_start=[
+                EmitEvent(
+                    event=ChangeState(
+                        lifecycle_node_matcher=launch.events.matches_action(ransac_node),
+                        transition_id=lifecycle_msgs.msg.Transition.TRANSITION_CONFIGURE,
+                    )
+                )
+            ]
+        )
+    )
 
     return ld
