@@ -78,6 +78,23 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# partly ransac
+add_executable(ransac_ball_partly_node
+  src/ransac_ball_partly.cpp
+  include/${PROJECT_NAME}/ransac_ball_partly.cpp
+)
+
+target_link_libraries(ransac_ball_partly_node
+  ransac_ball
+)
+
+ament_target_dependencies(ransac_ball_partly_node
+  rclcpp
+  rclcpp_lifecycle
+  sensor_msgs
+  rere_daisha_msgs
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks
