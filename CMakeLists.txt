@@ -27,6 +27,7 @@ install(
   DESTINATION include
 )
 
+# ransac library
 add_library(ransac_ball
   src/ransac_ball.cpp
 )
@@ -40,6 +41,7 @@ include_directories(
   ${OpenCV_INCLUDE_DIRS}
 )
 
+# debug node
 add_executable(debug_node
   src/debug.cpp
 )
@@ -54,6 +56,7 @@ target_link_libraries(debug_node
   ${OpenCV_LIBRARIES}
 )
 
+# ransac ball node
 add_executable(ransac_ball_node
   src/ransac_ball_node.cpp
   include/${PROJECT_NAME}/ransac_ball_node.hpp
@@ -75,6 +78,7 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# add install
 install(
   DIRECTORY weights images launch config worlds hooks
   DESTINATION share/${PROJECT_NAME}
