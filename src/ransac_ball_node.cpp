@@ -91,7 +91,7 @@ void RansacBallNode::lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr
         float x = std::cos(angle)*rxdata->ranges[index];
         float y = std::sin(angle)*rxdata->ranges[index];
         std::vector<float> point = {x, y};
-        if (x > 0) points.push_back(point);
+        if (y > 0) points.push_back(point);
         index++;
     }
     std::vector<std::vector<float>> ball_centers = this->ransac_ball->run(points);
