@@ -5,16 +5,16 @@ RansacBallNode::RansacBallNode()
 {
     /*parameter declare begin*/
     this->declare_parameter<double>("ball_r", 0.04);
-    this->declare_parameter<double>("max_loop", 100);
+    this->declare_parameter<int>("max_loop", 100);
     this->declare_parameter<double>("threshold", 0.2);
-    this->declare_parameter<double>("min_samples", 40);
+    this->declare_parameter<int>("min_samples", 40);
     /*parameter declare end*/
 
     /*parameter set begin*/
     this->ball_r = (float)this->get_parameter("ball_r").as_double();
-    this->max_loop = (float)this->get_parameter("max_loop").as_double();
+    this->max_loop = this->get_parameter("max_loop").as_int();
     this->threshold = (float)this->get_parameter("threshold").as_double();
-    this->min_samples = (float)this->get_parameter("min_samples").as_double();
+    this->min_samples = this->get_parameter("min_samples").as_int();
     /*parameter set end*/
 
     /*ransac initialize begin*/
@@ -91,7 +91,7 @@ void RansacBallNode::lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr
         float x = std::cos(angle)*rxdata->ranges[index];
         float y = std::sin(angle)*rxdata->ranges[index];
         std::vector<float> point = {x, y};
-        points.push_back(point);
+        if (y > 0) points.push_back(point);
         index++;
     }
     std::vector<std::vector<float>> ball_centers = this->ransac_ball->run(points);
