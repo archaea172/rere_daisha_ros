@@ -81,7 +81,7 @@ install(
 # partly ransac
 add_executable(ransac_ball_partly_node
   src/ransac_ball_partly.cpp
-  include/${PROJECT_NAME}/ransac_ball_partly.cpp
+  include/${PROJECT_NAME}/ransac_ball_partly.hpp
 )
 
 target_link_libraries(ransac_ball_partly_node
