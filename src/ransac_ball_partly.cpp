@@ -108,6 +108,80 @@ void RansacBallPartlyNode::ball_callback(const rere_daisha_msgs::msg::BallPositi
     this->ball_position_array_ = &rxdata;
 }
 
+rcl_interfaces::msg::SetParametersResult RansacBallNode::parameters_callback(
+    const std::vector<rclcpp::Parameter> &parameters
+)
+{
+    rcl_interfaces::msg::SetParametersResult result;
+    result.successful = true;
+    result.reason = "success";
+
+    for (const auto &param : parameters)
+    {
+        if (param.get_name() == "ball_r")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+            {
+                if (param.as_double() > 0.0)
+                {
+                    this->ransac_ball->set_ball_r(param.as_double());
+                    RCLCPP_INFO(this->get_logger(), "Parameter 'ball_radius' changed to: %f", param.as_double());
+                }
+                else
+                {
+                    result.successful = false;
+                    result.reason = "ball_radius must be positive.";
+                }
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for ball_radius";
+            }
+        }
+        else if (param.get_name() == "max_loop")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
+            {
+                this->ransac_ball->set_max_loop(param.as_int());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'max_loop' changed to: %ld", param.as_int());
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for parameter 'max_loop'.";
+            }
+        }
+        else if (param.get_name() == "threshold")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+            {
+                this->ransac_ball->set_threshold(param.as_double());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'threshold' changed to: %f", param.as_double());
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for parameter 'threshold'.";
+            }
+        }
+        else if (param.get_name() == "min_samples")
+        {
+            if (param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
+            {
+                this->ransac_ball->set_min_samples(param.as_int());
+                RCLCPP_INFO(this->get_logger(), "Parameter 'min_samples' changed to: %ld", param.as_int());
+            }
+            else
+            {
+                result.successful = false;
+                result.reason = "Invalid type for parameter 'min_samples'.";
+            }
+        }
+    }
+    return result;
+}
+
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
