@@ -24,6 +24,14 @@ RansacBallPartlyNode::RansacBallPartlyNode()
         this->min_samples
     );
     /*ransac initialize end*/
+
+    /*node func initialize begin*/
+    this->nearest_ball_position = this->create_publisher
+    
+    this->parameter_callback_hanle_ = this->add_on_set_parameters_callback(
+        std::bind(&RansacBallNode::parameters_callback, this, _1)
+    );
+    /*node func initialize end*/
 }
 
 int main(int argc, char *argv[])
