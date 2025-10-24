@@ -191,7 +191,7 @@ rcl_interfaces::msg::SetParametersResult RansacBallNode::parameters_callback(
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    std::shared_ptr<RansacBallNode> node = std::make_shared<RansacBallPartlyNode>();
+    std::shared_ptr<RansacBallPartlyNode> node = std::make_shared<RansacBallPartlyNode>();
     rclcpp::spin(node->get_node_base_interface());
     rclcpp::shutdown();
     return 0;
