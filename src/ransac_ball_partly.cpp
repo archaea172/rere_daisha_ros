@@ -153,6 +153,8 @@ void RansacBallPartlyNode::ransac_timer_callback()
             std::vector<float> = {point_x, point_y};
         }
     }
+
+    rere_daisha_msgs::msg::BallPosition txdata;
 }
 
 rcl_interfaces::msg::SetParametersResult RansacBallPartlyNode::parameters_callback(
