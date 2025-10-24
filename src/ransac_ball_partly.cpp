@@ -78,6 +78,11 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_cleanup(const rclc
     return CallbackReturn::SUCCESS;
 }
 
+RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_error(const rclcpp_lifecycle::State &state)
+{
+    return CallbackReturn::SUCCESS;
+}
+
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
