@@ -40,6 +40,7 @@ private:
     rclcpp::Subscription<rere_daisha_msgs::msg::BallPositionArray>::SharedPtr ball_yolo_subscriber;
     rclcpp_lifecycle::LifecyclePublisher<rere_daisha_msgs::msg::BallPosition>::SharedPtr nearest_ball_position;
     rclcpp::TimerBase::SharedPtr ransac_timer;
+    OnSetParametersCallbackHandle::SharedPtr parameter_callback_hanle_;
     /*node value end*/
 
     /*subscriber callback begin*/
@@ -65,7 +66,7 @@ private:
     /*value end*/
 
     /*receive value beign*/
-    sensor_msgs::msg::LaserScan::SharedPtr scan_;
-    rere_daisha_msgs::msg::BallPositionArray::SharedPtr ball_position_array_;
+    sensor_msgs::msg::LaserScan scan_;
+    rere_daisha_msgs::msg::BallPositionArray ball_position_array_;
     /*receive value end*/
 };

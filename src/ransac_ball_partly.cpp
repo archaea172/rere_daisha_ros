@@ -1,6 +1,7 @@
 #include "ransac_ball_partly.hpp"
 
 RansacBallPartlyNode::RansacBallPartlyNode()
+: rclcpp_lifecycle::LifecycleNode(std::string("ransac_ball_partly_node"))
 {
     /*parameter declare begin*/
     this->declare_parameter<double>("ball_r", 0.04);
@@ -32,7 +33,7 @@ RansacBallPartlyNode::RansacBallPartlyNode()
     );
     
     this->parameter_callback_hanle_ = this->add_on_set_parameters_callback(
-        std::bind(&RansacBallNode::parameters_callback, this, _1)
+        std::bind(&RansacBallPartlyNode::parameters_callback, this, _1)
     );
     /*node func initialize end*/
 }
@@ -56,7 +57,7 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_activate(const rcl
     this->ball_yolo_subscriber = this->create_subscription<rere_daisha_msgs::msg::BallPositionArray>(
         std::string("ball_position_yolo"),
         rclcpp::SystemDefaultsQoS(),
-        std::bind(&RansacBallPartlyNode::ball_callback, this, _1
+        std::bind(&RansacBallPartlyNode::ball_callback, this, _1)
     );
 
     this->ransac_timer = this->create_wall_timer(
@@ -100,21 +101,21 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_shutdown(const rcl
 
 void RansacBallPartlyNode::lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr rxdata)
 {
-    this->scan_ = &rxdata;
+    this->scan_ = *rxdata;
 }
 
 void RansacBallPartlyNode::ball_callback(const rere_daisha_msgs::msg::BallPosition::SharedPtr rxdata)
 {
-    this->ball_position_array_ = &rxdata;
+    this->ball_position_array_ = *rxdata;
 }
 
 void RansacBallPartlyNode::ransac_timer_callback()
 {
-    if (this->scan_ != nullptr) return;
-    else if (this->ball_position_array_ != nullptr) return;
+    if (this->scan_.header.stamp.sec == 0) return;
+    else if (this->ball_position_array_.balls.empty()) return;
 }
 
-rcl_interfaces::msg::SetParametersResult RansacBallNode::parameters_callback(
+rcl_interfaces::msg::SetParametersResult RansacBallPartlyNode::parameters_callback(
     const std::vector<rclcpp::Parameter> &parameters
 )
 {
