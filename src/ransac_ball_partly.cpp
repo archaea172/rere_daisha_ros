@@ -58,6 +58,13 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_activate(const rcl
         rclcpp::SystemDefaultsQoS(),
         std::bind(&RansacBallPartlyNode::ball_callback, this, _1
     );
+
+    this->ransac_timer = this->create_wall_timer(
+        0.01s,
+        std::bind(&RansacBallPartlyNode::ransac_timer_callback, this)
+    );
+
+    this
     /*node func end*/
 
     return CallbackReturn::SUCCESS;
