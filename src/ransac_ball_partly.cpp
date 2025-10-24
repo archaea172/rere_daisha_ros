@@ -47,10 +47,16 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_activate(const rcl
     /*node func begin*/
     this->nearest_ball_position->on_activate();
     
-    lidar_subscriber = this->create_subscription<sensor_msgs::msg::LaserScan>(
+    this->lidar_subscriber = this->create_subscription<sensor_msgs::msg::LaserScan>(
         std::string("scan"),
         rclcpp::SystemDefaultsQoS(),
         std::bind(&RansacBallPartlyNode::lidar_callback, this, _1)
+    );
+
+    this->ball_yolo_subscriber = this->create_subscription<rere_daisha_msgs::msg::BallPositionArray>(
+        std::string("ball_position_yolo"),
+        rclcpp::SystemDefaultsQoS(),
+        std::bind(&RansacBallPartlyNode::ball_callback, this, _1
     );
     /*node func end*/
 
