@@ -40,4 +40,8 @@ private:
     rclcpp::Subscription<rere_daisha_msgs::msg::BallPositionArray>::SharedPtr ball_yolo_subscriber;
     rclcpp_lifecycle::LifecyclePublisher<rere_daisha_msgs::msg::BallPosition>::SharedPtr nearest_ball_position;
     /*node value end*/
+
+    /*subscriber callback begin*/
+
+    /*subscriber callback end*/
 };
