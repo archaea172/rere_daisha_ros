@@ -49,7 +49,7 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_activate(const rcl
     this->nearest_ball_position->on_activate();
     
     this->lidar_subscriber = this->create_subscription<sensor_msgs::msg::LaserScan>(
-        std::string("scan"),
+        std::string("/ldlidar_node/scan"),
         rclcpp::SystemDefaultsQoS(),
         std::bind(&RansacBallPartlyNode::lidar_callback, this, _1)
     );
@@ -149,7 +149,6 @@ void RansacBallPartlyNode::ransac_timer_callback()
     float angle = this->scan_.angle_min;
     for (size_t i = 0; i < this->scan_.ranges.size(); i++)
     {
-        angle += this->scan_.angle_increment;
         if (angle > nearest_ball_rad - nearest_ball_field_rad)
         {
             float point_x = this->scan_.ranges[i]*std::cos(angle);
@@ -158,10 +157,14 @@ void RansacBallPartlyNode::ransac_timer_callback()
             nearest_ball_points.push_back(point);
         }
         else if (angle < nearest_ball_rad - nearest_ball_field_rad) break;
+
+        angle += this->scan_.angle_increment;
     }
 
     rere_daisha_msgs::msg::BallPosition txdata;
     txdata.class_id = this->ball_position_array_.balls[nearest_index].class_id;
+
+    if (nearest_ball_points.empty()) return;
 
     std::vector<std::vector<float>> ball_centers = this->ransac_ball->run(nearest_ball_points);
     if (ball_centers.empty())
