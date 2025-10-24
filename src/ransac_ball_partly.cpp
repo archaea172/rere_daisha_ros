@@ -122,6 +122,11 @@ void RansacBallPartlyNode::ransac_timer_callback()
         float ball_y = this->ball_position_array_.balls[i].position.y;
         
         float length = std::hypot(ball_x, ball_y);
+        if (nearest_length == 0) nearest_length = length;
+        else if (nearest_length > length)
+        {
+            nearest_length = length;
+        }
     }
 }
 
