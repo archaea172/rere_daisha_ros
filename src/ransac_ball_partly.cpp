@@ -145,7 +145,11 @@ void RansacBallPartlyNode::ransac_timer_callback()
     float angle = this->scan_.angle_min;
     for (size_t i = 0; i < this->scan_.ranges.size(); i++)
     {
-
+        angle += this->scan_.angle_increment;
+        if (angle > nearest_ball_rad - nearest_ball_field_rad)
+        {
+            float point_x;
+        }
     }
 }
 
