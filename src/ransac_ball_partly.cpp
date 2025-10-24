@@ -123,7 +123,11 @@ void RansacBallPartlyNode::ransac_timer_callback()
         float ball_y = this->ball_position_array_.balls[i].position.y;
         
         float length = std::hypot(ball_x, ball_y);
-        if (nearest_length == 0) nearest_length = length;
+        if (nearest_length == 0)
+        {
+            nearest_length = length;
+            nearest_index = i;
+        }
         else if (nearest_length > length)
         {
             nearest_length = length;
@@ -136,8 +140,8 @@ void RansacBallPartlyNode::ransac_timer_callback()
 
     float nearest_ball_rad = std::atan2(nearest_ball_y, nearest_ball_x);
     
-    while (ball_rad > 2*M_PI) nearest_ball_rad -= 2*M_PI;
-    while (ball_rad < 0) nearest_ball_rad += 2*M_PI;
+    while (nearest_ball_rad > 2*M_PI) nearest_ball_rad -= 2*M_PI;
+    while (nearest_ball_rad < 0) nearest_ball_rad += 2*M_PI;
 
     float nearest_ball_field_rad = atan(this->ball_r/nearest_length);
 
@@ -164,6 +168,11 @@ void RansacBallPartlyNode::ransac_timer_callback()
     {
         txdata.position.x = nearest_ball_points[0][0];
         txdata.position.y = nearest_ball_points[0][1];
+    }
+    else
+    {
+        txdata.position.x = ball_centers[0][0];
+        txdata.position.y = ball_centers[0][1];
     }
 
     if (this->nearest_ball_position->is_activated()) this->nearest_ball_position->publish(txdata);
