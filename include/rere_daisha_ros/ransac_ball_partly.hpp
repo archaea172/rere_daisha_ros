@@ -42,7 +42,8 @@ private:
     /*node value end*/
 
     /*subscriber callback begin*/
-
+    void lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr rxdata);    
+    void ball_callback(const rere_daisha_msgs::msg::BallPosition::SharedPtr rxdata);
     /*subscriber callback end*/
     
     /*parameter callback begin*/
@@ -50,4 +51,11 @@ private:
         const std::vector<rclcpp::Parameter> &parameters
     );
     /*parameter callback end*/
+
+    /*value begin*/
+    float ball_r;
+    int max_loop;
+    float threshold;
+    int min_samples;
+    /*value end*/
 };
