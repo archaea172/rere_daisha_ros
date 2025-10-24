@@ -157,6 +157,7 @@ void RansacBallPartlyNode::ransac_timer_callback()
     }
 
     rere_daisha_msgs::msg::BallPosition txdata;
+    txdata.class_id = this->ball_position_array_.balls[nearest_index].class_id;
 }
 
 rcl_interfaces::msg::SetParametersResult RansacBallPartlyNode::parameters_callback(
