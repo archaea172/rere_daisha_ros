@@ -133,6 +133,11 @@ void RansacBallPartlyNode::ransac_timer_callback()
 
     float nearest_ball_x = this->ball_position_array_.balls[nearest_index].position.x;
     float nearest_ball_y = this->ball_position_array_.balls[nearest_index].position.y;
+
+    float nearest_ball_rad = std::atan2(nearest_ball_y, nearest_ball_x);
+    
+    while (ball_rad > 2*M_PI) nearest_ball_rad -= 2*M_PI;
+    while (ball_rad < 0) nearest_ball_rad += 2*M_PI;
 }
 
 rcl_interfaces::msg::SetParametersResult RansacBallPartlyNode::parameters_callback(
