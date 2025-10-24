@@ -148,7 +148,9 @@ void RansacBallPartlyNode::ransac_timer_callback()
         angle += this->scan_.angle_increment;
         if (angle > nearest_ball_rad - nearest_ball_field_rad)
         {
-            float point_x;
+            float point_x = this->scan_.ranges[i]*std::cos(angle);
+            float point_y = this->scan_.ranges[i]*std::sin(angle);
+            std::vector<float> = {point_x, point_y};
         }
     }
 }
