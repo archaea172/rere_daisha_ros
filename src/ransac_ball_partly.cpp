@@ -156,10 +156,15 @@ void RansacBallPartlyNode::ransac_timer_callback()
         else if (angle < nearest_ball_rad - nearest_ball_field_rad) break;
     }
 
-    std::vector<std::vector<float>> ball_centers = this->ransac_ball->run(nearest_ball_points);
-
     rere_daisha_msgs::msg::BallPosition txdata;
     txdata.class_id = this->ball_position_array_.balls[nearest_index].class_id;
+
+    std::vector<std::vector<float>> ball_centers = this->ransac_ball->run(nearest_ball_points);
+    if (ball_centers.empty())
+    {
+        txdata.position.x = nearest_ball_points[0][0];
+        txdata.position.y = nearest_ball_points[0][1];
+    }
 
     if (this->nearest_ball_position->is_activated()) this->nearest_ball_position->publish(txdata);
 }
