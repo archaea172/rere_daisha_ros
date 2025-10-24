@@ -63,8 +63,6 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_activate(const rcl
         0.01s,
         std::bind(&RansacBallPartlyNode::ransac_timer_callback, this)
     );
-
-    this
     /*node func end*/
 
     return CallbackReturn::SUCCESS;
@@ -75,6 +73,7 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_deactivate(const r
     this->nearest_ball_position->on_deactivate();
     this->lidar_subscriber.reset();
     this->ball_yolo_subscriber.reset();
+    this->ransac_timer.reset();
     return CallbackReturn::SUCCESS;
 }
 
@@ -82,6 +81,7 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_cleanup(const rclc
 {
     this->lidar_subscriber.reset();
     this->ball_yolo_subscriber.reset();
+    this->ransac_timer.reset();
     return CallbackReturn::SUCCESS;
 }
 
@@ -94,6 +94,7 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_shutdown(const rcl
 {
     this->lidar_subscriber.reset();
     this->ball_yolo_subscriber.reset();
+    this->ransac_timer.reset();
     return CallbackReturn::SUCCESS;
 }
 
