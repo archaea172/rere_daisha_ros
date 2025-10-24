@@ -63,4 +63,9 @@ private:
     float threshold;
     int min_samples;
     /*value end*/
+
+    /*receive value beign*/
+    sensor_msgs::msg::LaserScan::SharedPtr scan_;
+    rere_daisha_msgs::msg::BallPositionArray::SharedPtr ball_position_array_;
+    /*receive value end*/
 };
