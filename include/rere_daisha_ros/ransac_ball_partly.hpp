@@ -49,6 +49,7 @@ private:
 
     /*timer callback begin*/
     void ransac_timer_callback();
+    /*timer callback end*/
     
     /*parameter callback begin*/
     rcl_interfaces::msg::SetParametersResult parameters_callback(
