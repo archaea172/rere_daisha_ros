@@ -138,6 +138,8 @@ void RansacBallPartlyNode::ransac_timer_callback()
     
     while (ball_rad > 2*M_PI) nearest_ball_rad -= 2*M_PI;
     while (ball_rad < 0) nearest_ball_rad += 2*M_PI;
+
+    float nearest_ball_field_rad = 2*atan(this->ball_r/nearest_length);
 }
 
 rcl_interfaces::msg::SetParametersResult RansacBallPartlyNode::parameters_callback(
