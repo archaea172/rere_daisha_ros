@@ -95,6 +95,11 @@ ament_target_dependencies(ransac_ball_partly_node
   rere_daisha_msgs
 )
 
+install(
+  TARGETS ransac_ball_partly_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks
