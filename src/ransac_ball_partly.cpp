@@ -37,6 +37,12 @@ RansacBallPartlyNode::RansacBallPartlyNode()
     /*node func initialize end*/
 }
 
+RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_configure(const rclcpp_lifecycle::State &state)
+{
+    return CallbackReturn::SUCCESS;
+}
+
+
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
