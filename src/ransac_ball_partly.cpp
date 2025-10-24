@@ -71,6 +71,12 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_deactivate(const r
     return CallbackReturn::SUCCESS;
 }
 
+RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_cleanup(const rclcpp_lifecycle::State &state)
+{
+    this->lidar_subscriber.reset();
+    this->ball_yolo_subscriber.reset();
+    return CallbackReturn::SUCCESS;
+}
 
 int main(int argc, char *argv[])
 {
