@@ -108,6 +108,12 @@ void RansacBallPartlyNode::ball_callback(const rere_daisha_msgs::msg::BallPositi
     this->ball_position_array_ = &rxdata;
 }
 
+void RansacBallPartlyNode::ransac_timer_callback()
+{
+    if (this->scan_ != nullptr) return;
+    else if (this->ball_position_array_ != nullptr) return;
+}
+
 rcl_interfaces::msg::SetParametersResult RansacBallNode::parameters_callback(
     const std::vector<rclcpp::Parameter> &parameters
 )
