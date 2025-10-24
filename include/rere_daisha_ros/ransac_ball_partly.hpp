@@ -44,4 +44,10 @@ private:
     /*subscriber callback begin*/
 
     /*subscriber callback end*/
+    
+    /*parameter callback begin*/
+    rcl_interfaces::msg::SetParametersResult parameters_callback(
+        const std::vector<rclcpp::Parameter> &parameters
+    );
+    /*parameter callback end*/
 };
