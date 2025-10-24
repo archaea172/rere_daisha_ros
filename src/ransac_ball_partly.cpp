@@ -115,6 +115,7 @@ void RansacBallPartlyNode::ransac_timer_callback()
     else if (this->ball_position_array_.balls.empty()) return;
 
     float nearest_length = 0;
+    size_t nearest_index;
     
     for (size_t i = 0; i < this->ball_position_array_.balls.size(); i++)
     {
@@ -126,8 +127,12 @@ void RansacBallPartlyNode::ransac_timer_callback()
         else if (nearest_length > length)
         {
             nearest_length = length;
+            nearest_index = i;
         }
     }
+
+    float nearest_ball_x = this->ball_position_array_.balls[nearest_index].position.x;
+    float nearest_ball_y = this->ball_position_array_.balls[nearest_index].position.y;
 }
 
 rcl_interfaces::msg::SetParametersResult RansacBallPartlyNode::parameters_callback(
