@@ -178,7 +178,11 @@ void RansacBallPartlyNode::ransac_timer_callback()
         txdata.position.y = ball_centers[0][1];
     }
 
-    if (this->nearest_ball_position->is_activated()) this->nearest_ball_position->publish(txdata);
+    if (this->nearest_ball_position->is_activated())
+    {
+        this->nearest_ball_position->publish(txdata);
+        
+    }
 }
 
 rcl_interfaces::msg::SetParametersResult RansacBallPartlyNode::parameters_callback(
