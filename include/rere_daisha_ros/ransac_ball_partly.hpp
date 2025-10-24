@@ -39,12 +39,16 @@ private:
     rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr lidar_subscriber;
     rclcpp::Subscription<rere_daisha_msgs::msg::BallPositionArray>::SharedPtr ball_yolo_subscriber;
     rclcpp_lifecycle::LifecyclePublisher<rere_daisha_msgs::msg::BallPosition>::SharedPtr nearest_ball_position;
+    rclcpp::TimerBase::SharedPtr ransac_timer;
     /*node value end*/
 
     /*subscriber callback begin*/
     void lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr rxdata);    
     void ball_callback(const rere_daisha_msgs::msg::BallPosition::SharedPtr rxdata);
     /*subscriber callback end*/
+
+    /*timer callback begin*/
+    void ransac_timer_callback();
     
     /*parameter callback begin*/
     rcl_interfaces::msg::SetParametersResult parameters_callback(
