@@ -120,6 +120,9 @@ void RansacBallPartlyNode::ransac_timer_callback()
         float ball_x = this->ball_position_array_.balls[i].position.x;
         float ball_y = this->ball_position_array_.balls[i].position.y;
         float ball_rad = std::atan2(ball_y, ball_x);
+        while (ball_rad > 2*M_PI) ball_rad -= 2*M_PI;
+        while (ball_rad < 0) ball_rad += 2*M_PI;
+        
         float length = std::hypot(ball_x, ball_y);
     }
 }
