@@ -26,7 +26,10 @@ RansacBallPartlyNode::RansacBallPartlyNode()
     /*ransac initialize end*/
 
     /*node func initialize begin*/
-    this->nearest_ball_position = this->create_publisher
+    this->nearest_ball_position = this->create_publisher<rere_daisha_msgs::msg::BallPosition>(
+        std::string("nearest_ball_position"),
+        rclcpp::SystemDefaultsQoS()
+    );
     
     this->parameter_callback_hanle_ = this->add_on_set_parameters_callback(
         std::bind(&RansacBallNode::parameters_callback, this, _1)
