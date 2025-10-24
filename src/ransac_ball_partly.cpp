@@ -141,7 +141,7 @@ void RansacBallPartlyNode::ransac_timer_callback()
 
     float nearest_ball_field_rad = atan(this->ball_r/nearest_length);
 
-    std::vector<std::vector<float>> nearest_ball_point;
+    std::vector<std::vector<float>> nearest_ball_points;
     float angle = this->scan_.angle_min;
     for (size_t i = 0; i < this->scan_.ranges.size(); i++)
     {
@@ -150,8 +150,10 @@ void RansacBallPartlyNode::ransac_timer_callback()
         {
             float point_x = this->scan_.ranges[i]*std::cos(angle);
             float point_y = this->scan_.ranges[i]*std::sin(angle);
-            std::vector<float> = {point_x, point_y};
+            std::vector<float> point = {point_x, point_y};
+            nearest_ball_points.push_back(point);
         }
+        else if (angle < nearest_ball_rad - nearest_ball_field_rad) break;
     }
 
     rere_daisha_msgs::msg::BallPosition txdata;
