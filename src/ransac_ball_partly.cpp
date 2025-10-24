@@ -140,7 +140,13 @@ void RansacBallPartlyNode::ransac_timer_callback()
     while (ball_rad < 0) nearest_ball_rad += 2*M_PI;
 
     float nearest_ball_field_rad = atan(this->ball_r/nearest_length);
-    
+
+    std::vector<std::vector<float>> nearest_ball_point;
+    float angle = this->scan_.angle_min;
+    for (size_t i = 0; i < this->scan_.ranges.size(); i++)
+    {
+
+    }
 }
 
 rcl_interfaces::msg::SetParametersResult RansacBallPartlyNode::parameters_callback(
