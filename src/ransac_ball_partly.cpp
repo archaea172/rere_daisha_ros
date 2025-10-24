@@ -113,6 +113,15 @@ void RansacBallPartlyNode::ransac_timer_callback()
 {
     if (this->scan_.header.stamp.sec == 0) return;
     else if (this->ball_position_array_.balls.empty()) return;
+
+    
+    for (size_t i = 0; i < this->ball_position_array_.balls.size(); i++)
+    {
+        float ball_x = this->ball_position_array_.balls[i].position.x;
+        float ball_y = this->ball_position_array_.balls[i].position.y;
+        float ball_rad = std::atan2(ball_y, ball_x);
+        float length = std::hypot(ball_x, ball_y);
+    }
 }
 
 rcl_interfaces::msg::SetParametersResult RansacBallPartlyNode::parameters_callback(
