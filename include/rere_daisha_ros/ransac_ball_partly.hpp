@@ -45,7 +45,7 @@ private:
 
     /*subscriber callback begin*/
     void lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr rxdata);    
-    void ball_callback(const rere_daisha_msgs::msg::BallPosition::SharedPtr rxdata);
+    void ball_callback(const rere_daisha_msgs::msg::BallPositionArray::SharedPtr rxdata);
     /*subscriber callback end*/
 
     /*timer callback begin*/

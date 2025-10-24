@@ -104,7 +104,7 @@ void RansacBallPartlyNode::lidar_callback(const sensor_msgs::msg::LaserScan::Sha
     this->scan_ = *rxdata;
 }
 
-void RansacBallPartlyNode::ball_callback(const rere_daisha_msgs::msg::BallPosition::SharedPtr rxdata)
+void RansacBallPartlyNode::ball_callback(const rere_daisha_msgs::msg::BallPositionArray::SharedPtr rxdata)
 {
     this->ball_position_array_ = *rxdata;
 }
