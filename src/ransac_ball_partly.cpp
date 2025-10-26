@@ -114,8 +114,8 @@ void RansacBallPartlyNode::ransac_timer_callback()
     if (this->scan_.header.stamp.sec == 0) return;
     else if (this->ball_position_array_.balls.empty()) return;
 
-    float nearest_length = 0;
-    size_t nearest_index;
+    float nearest_length = std::numeric_limits<float>::max();
+    size_t nearest_index = 0;
     
     for (size_t i = 0; i < this->ball_position_array_.balls.size(); i++)
     {
@@ -123,12 +123,8 @@ void RansacBallPartlyNode::ransac_timer_callback()
         float ball_y = this->ball_position_array_.balls[i].position.y;
         
         float length = std::hypot(ball_x, ball_y);
-        if (nearest_length == 0)
-        {
-            nearest_length = length;
-            nearest_index = i;
-        }
-        else if (nearest_length > length)
+        
+        if (nearest_length > length)
         {
             nearest_length = length;
             nearest_index = i;
@@ -147,19 +143,19 @@ void RansacBallPartlyNode::ransac_timer_callback()
 
     float min_angle_limit = nearest_ball_rad - nearest_ball_field_rad;
     float max_angle_limit = nearest_ball_rad + nearest_ball_field_rad;
-    
+
     std::vector<std::vector<float>> nearest_ball_points;
     float angle = this->scan_.angle_min;
     for (size_t i = 0; i < this->scan_.ranges.size(); i++)
     {
-        if (angle > nearest_ball_rad - nearest_ball_field_rad)
+        if (angle >= min_angle_limit && angle <= max_angle_limit)
         {
             float point_x = this->scan_.ranges[i]*std::cos(angle);
             float point_y = this->scan_.ranges[i]*std::sin(angle);
             std::vector<float> point = {point_x, point_y};
             nearest_ball_points.push_back(point);
         }
-        else if (angle < nearest_ball_rad - nearest_ball_field_rad) break;
+        else if (angle > max_angle_limit) break;
 
         angle += this->scan_.angle_increment;
     }
@@ -172,8 +168,8 @@ void RansacBallPartlyNode::ransac_timer_callback()
     std::vector<std::vector<float>> ball_centers = this->ransac_ball->run(nearest_ball_points);
     if (ball_centers.empty())
     {
-        txdata.position.x = nearest_ball_points[0][0];
-        txdata.position.y = nearest_ball_points[0][1];
+        txdata.position.x = nearest_ball_x;
+        txdata.position.y = nearest_ball_y;
     }
     else
     {
