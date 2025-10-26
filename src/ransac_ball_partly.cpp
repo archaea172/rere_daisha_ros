@@ -145,6 +145,9 @@ void RansacBallPartlyNode::ransac_timer_callback()
 
     float nearest_ball_field_rad = atan(this->ball_r/nearest_length);
 
+    float min_angle_limit = nearest_ball_rad - nearest_ball_field_rad;
+    float max_angle_limit = nearest_ball_rad + nearest_ball_field_rad;
+    
     std::vector<std::vector<float>> nearest_ball_points;
     float angle = this->scan_.angle_min;
     for (size_t i = 0; i < this->scan_.ranges.size(); i++)
