@@ -61,7 +61,7 @@ RansacBallPartlyNode::CallbackReturn RansacBallPartlyNode::on_activate(const rcl
     );
 
     this->ransac_timer = this->create_wall_timer(
-        0.01s,
+        0.1s,
         std::bind(&RansacBallPartlyNode::ransac_timer_callback, this)
     );
     /*node func end*/
