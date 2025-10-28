@@ -35,16 +35,8 @@ class Rdk_YOLO(Node):
         self.model = Ultralytics_YOLO_Detect_Bayese_YUV420SP(weights_path, 3, 0.4, 0.8, 16, [8, 16 ,32])
 
         self.subscriber_rs
+        self.frame_id = 'camera_frame'
         self.get_logger().info('configure finish')
-
-        theta = np.deg2rad(-120)
-        c, s = np.cos(theta), np.sin(theta)
-        self.R_robot_cam = np.array([
-            [1, 0,  0],
-            [0, c, -s],
-            [0, s,  c]
-        ])
-        self.t_robot_cam = np.array([[0], [-0.03], [0.1938]])
         
     def rs_callback(self, rxdata):
         # receive data
@@ -67,6 +59,8 @@ class Rdk_YOLO(Node):
                 [-0.5, -0.5, 0]
             ]) * ball_size
             txdata = BallPositionArray()
+            txdata.header.stamp = self.get_clock().now().to_msg()
+            txdata.header.frame_id = self.frame_id
             for class_id, score, x1, y1, x2, y2 in results:
                 corner = np.array([
                     [x1, y1],
@@ -81,13 +75,10 @@ class Rdk_YOLO(Node):
                     camera_matrix,
                     distCoeffs
                 )
-                p_robot = self.R_robot_cam@tvec + self.t_robot_cam
-                coords = p_robot.flatten()
-                x, y, z = coords[0], coords[1], coords[2]
                 pose = Point()
-                pose.x = float(x)
-                pose.y = float(y)
-                pose.z = float(z)
+                pose.x = float(tvec[0])
+                pose.y = float(tvec[1])
+                pose.z = float(tvec[2])
                 ballposition = BallPosition()
                 ballposition.position = pose
                 ballposition.class_id = int(class_id)
