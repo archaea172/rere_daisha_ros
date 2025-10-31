@@ -7,6 +7,9 @@ import os
 
 
 def generate_launch_description():
+
+    ld = LaunchDescription()
+
     world_file_path = PathJoinSubstitution([
         get_package_share_directory('rere_daisha_ros'),
         'worlds',
@@ -19,7 +22,7 @@ def generate_launch_description():
             launch_arguments=[
                 ('gz_args', world_file_path)]
         )
-    
+    ld.add_action(sim_node)
 
     spawn_balls_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -30,7 +33,6 @@ def generate_launch_description():
             )
         )
     )
-
-    ld = LaunchDescription()
+    # ld.add_action(spawn_balls_cmd)
 
     return ld
