@@ -15,5 +15,19 @@ def generate_launch_description():
         namespace=name_space
     )
     ld.add_action(yolo_rdk_node)
-    
+
+    # カメラ用のtf
+    tf2_camera_node = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='base_to_camera_static_publisher',
+            arguments=[
+                '0.2', '0.0', '0.1',
+                '0.0', '-0.785398', '0.0',
+                'base_link', 
+                'camera_link'
+            ]
+    )
+    ld.add_action(tf2_camera_node)
+
     return ld
