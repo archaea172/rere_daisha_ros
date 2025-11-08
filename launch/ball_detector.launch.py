@@ -9,5 +9,11 @@ def generate_launch_description():
     ld = LaunchDescription()
 
     # yolo
-    yolo_rdk_node = Node()
+    yolo_rdk_node = Node(
+        package='rere_daisha_ros',
+        executable='ball_detect_yolo_rdk.py',
+        namespace=name_space
+    )
+    ld.add_action(yolo_rdk_node)
+    
     return ld
