@@ -80,11 +80,7 @@ class Rdk_YOLO(Node):
     def rs_callback(self, rxdata: RGBD) -> None:
         cv_img = self._rgbd_to_cv(rxdata)
         camera_matrix, dist_coeffs = self._camera_parameters(rxdata)
-        detections = self._run_model(cv_img)
-
-        if not detections:
-            return
-
+        detections = self._run_model(cv_img) or []
         msg = self._build_ball_positions(detections, camera_matrix, dist_coeffs)
         self.publisher_ball_pos.publish(msg)
 
