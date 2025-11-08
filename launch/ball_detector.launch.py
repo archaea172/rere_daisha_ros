@@ -13,10 +13,10 @@ def generate_launch_description():
     # yolo
     yolo_rdk_node = Node(
         package='rere_daisha_ros',
-        executable='ball_detect_yolo_rdk.py',
+        executable='ball_detect_yolo.py',
         namespace=name_space
     )
-    ld.add_action(yolo_rdk_node)
+    # ld.add_action(yolo_rdk_node)
 
     # カメラ用のtf
     rad = 120
@@ -27,7 +27,7 @@ def generate_launch_description():
         name='base_to_camera_static_publisher',
             arguments=[
                 '0.0', '-0.03', '0.1938',
-                str(theta), '0.0', '0.0',
+                '0.0', '0.0', str(theta),
                 'base_link', 
                 'camera_link'
             ]
