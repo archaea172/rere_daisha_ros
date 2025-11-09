@@ -16,10 +16,9 @@ using namespace std::chrono_literals;
 
 class BallConverterListenerNode : public rclcpp::Node
 {
-
-private:
-    BallConverterListenerNode();
 public:
+    BallConverterListenerNode();
+private:
     void yolo_ball_callback(const rere_daisha_msgs::msg::BallPositionArray::SharedPtr rxdata);
 
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_{nullptr};
