@@ -19,7 +19,7 @@ def generate_launch_description():
     # ld.add_action(yolo_rdk_node)
 
     # カメラ用のtf
-    rad = 120
+    rad = -120
     theta = np.deg2rad(rad)
     tf2_camera_node = Node(
         package='tf2_ros',
