@@ -22,7 +22,25 @@ void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::
     std::string target_frame = "base_link";
 
     geometry_msgs::msg::TransformStamped transform_stamped;
-
+    transform_stamped = tf_buffer_->lookupTransform(
+        target_frame,
+        source_frame,
+        tf2::TimePointZero
+    );
+    
+    try
+    {
+        for (size_t i = 0; i < rxdata->balls.size(); i++)
+        {
+            geometry_msgs::msg::Point point_in_target;
+            tf2::doTransform(rxdata->balls[i].position, point_in_target, transform_stamped);
+        }
+    }
+    catch(const tf2::TransformException & ex)
+    {
+        RCLCPP_WARN(this->get_logger(), "TF変換失敗: %s", ex.what());
+    }
+    
 }
 
 int main(int argc, char * argv[])
