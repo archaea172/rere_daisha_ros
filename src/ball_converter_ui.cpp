@@ -22,11 +22,18 @@ void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::
     std::string target_frame = "base_link";
 
     geometry_msgs::msg::TransformStamped transform_stamped;
-    transform_stamped = tf_buffer_->lookupTransform(
-        target_frame,
-        source_frame,
-        tf2::TimePointZero
-    );
+    try
+    {
+        transform_stamped = tf_buffer_->lookupTransform(
+            target_frame,
+            source_frame,
+            tf2::TimePointZero
+        );
+    }
+    catch(const tf2::TransformException & ex)
+    {
+        RCLCPP_WARN(this->get_logger(), "フレームを見つけられません: %s", ex.what());
+    }
 
     rere_daisha_msgs::msg::BallPositionArray txdata = *rxdata;
 
@@ -36,6 +43,7 @@ void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::
         {
             geometry_msgs::msg::Point point_in_target;
             tf2::doTransform(rxdata->balls[i].position, point_in_target, transform_stamped);
+            txdata.balls[i].position = point_in_target;
         }
     }
     catch(const tf2::TransformException & ex)
@@ -43,6 +51,7 @@ void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::
         RCLCPP_WARN(this->get_logger(), "TF変換失敗: %s", ex.what());
     }
     
+    this->ball_yolo_ui_publisher.publish(txdata);
 }
 
 int main(int argc, char * argv[])
