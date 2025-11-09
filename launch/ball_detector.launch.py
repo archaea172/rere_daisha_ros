@@ -34,12 +34,4 @@ def generate_launch_description():
     )
     ld.add_action(tf2_camera_node)
 
-    # converter
-    tf_camera_lister = Node(
-        package='rere_daisha_ros',
-        executable='ball_converter_listener_node',
-        namespace=name_space
-    )
-    ld.add_action(tf_camera_lister)
-
     return ld
