@@ -1,103 +1,155 @@
-import rclpy
-from rclpy.node import Node
-
-from realsense2_camera_msgs.msg import RGBD
-from rere_daisha_msgs.msg import BallPositionArray, BallPosition
-from geometry_msgs.msg import Point
+import os
+from typing import Iterable, Optional, Sequence, Tuple
 
 import cv2
-from cv_bridge import CvBridge
 import numpy as np
-import os
+import rclpy
 from ament_index_python.packages import get_package_share_directory
+from cv_bridge import CvBridge
+from geometry_msgs.msg import Point
+from rclpy.node import Node
+from realsense2_camera_msgs.msg import RGBD
 
-from  .ball_detect_rdk import Ultralytics_YOLO_Detect_Bayese_YUV420SP
+from rere_daisha_msgs.msg import BallPosition, BallPositionArray
+
+from .ball_detect_rdk import Ultralytics_YOLO_Detect_Bayese_YUV420SP
+
 
 class Rdk_YOLO(Node):
+    """ROS2 node that publishes YOLO-based ball positions."""
+
+    NODE_NAME = "rdk_yolo"
+    CAMERA_TOPIC = "/camera/camera/rgbd"
+    OUTPUT_TOPIC = "ball_position_yolo"
+    FRAME_ID = "camera_link"
+    BALL_DIAMETER_M = 0.065
+    MODEL_CLASSES = ["blue_ball", "red_ball", "yellow_ball"]
+    MODEL_THRESHOLD = 0.4
+    MODEL_IOU = 0.8
+    MODEL_BATCH = 16
+    MODEL_STRIDES = [8, 16, 32]
+
     def __init__(self):
+        super().__init__(self.NODE_NAME)
         self.bridge = CvBridge()
-        super().__init__('rdk_yolo')
         self.subscriber_rs = self.create_subscription(
             RGBD,
-            "/camera/camera/rgbd",
+            self.CAMERA_TOPIC,
             self.rs_callback,
             10
         )
         self.publisher_ball_pos = self.create_publisher(
             BallPositionArray,
-            "ball_position_yolo",
+            self.OUTPUT_TOPIC,
             10
         )
-        package_share_directory = get_package_share_directory('rere_daisha_ros')
-        weights_path = os.path.join(package_share_directory, 'weights', 'best_bayese_640x640_nv12.bin')
+        self.model = self._create_model()
+        self.obj_points = self._build_obj_points()
 
-        self.coco_names = ['blue_ball', 'red_ball', 'yellow_ball']
-        self.model = Ultralytics_YOLO_Detect_Bayese_YUV420SP(weights_path, 3, 0.4, 0.8, 16, [8, 16 ,32])
+        self.get_logger().info("RDK YOLO configured")
 
-        self.subscriber_rs
-        self.get_logger().info('configure finish')
+    def _create_model(self) -> Ultralytics_YOLO_Detect_Bayese_YUV420SP:
+        package_share_directory = get_package_share_directory("rere_daisha_ros")
+        weights_path = os.path.join(
+            package_share_directory,
+            "weights",
+            "best_bayese_640x640_nv12.bin",
+        )
+        return Ultralytics_YOLO_Detect_Bayese_YUV420SP(
+            weights_path,
+            len(self.MODEL_CLASSES),
+            self.MODEL_THRESHOLD,
+            self.MODEL_IOU,
+            self.MODEL_BATCH,
+            self.MODEL_STRIDES,
+        )
 
-        theta = np.deg2rad(-120)
-        c, s = np.cos(theta), np.sin(theta)
-        self.R_robot_cam = np.array([
-            [1, 0,  0],
-            [0, c, -s],
-            [0, s,  c]
-        ])
-        self.t_robot_cam = np.array([[0], [-0.03], [0.1938]])
-        
-    def rs_callback(self, rxdata):
-        # receive data
-        cv_img = self.bridge.imgmsg_to_cv2(rxdata.rgb, "bgr8")
-        cameramatrix_r = np.array(rxdata.rgb_camera_info.k)
-        camera_matrix = cameramatrix_r.reshape((3, 3))
-        distCoeffs = np.array(rxdata.rgb_camera_info.d)
+    def _build_obj_points(self) -> np.ndarray:
+        """Return square corner points scaled to the ball diameter."""
+        square = np.array(
+            [
+                [-0.5, 0.5, 0.0],
+                [0.5, 0.5, 0.0],
+                [0.5, -0.5, 0.0],
+                [-0.5, -0.5, 0.0],
+            ],
+            dtype=np.float32,
+        )
+        return square * self.BALL_DIAMETER_M
 
+    def rs_callback(self, rxdata: RGBD) -> None:
+        cv_img = self._rgbd_to_cv(rxdata)
+        camera_matrix, dist_coeffs = self._camera_parameters(rxdata)
+        detections = self._run_model(cv_img) or []
+        msg = self._build_ball_positions(detections, camera_matrix, dist_coeffs)
+        self.publisher_ball_pos.publish(msg)
+
+    def _rgbd_to_cv(self, rxdata: RGBD) -> np.ndarray:
+        return self.bridge.imgmsg_to_cv2(rxdata.rgb, "bgr8")
+
+    def _camera_parameters(self, rxdata: RGBD) -> Tuple[np.ndarray, np.ndarray]:
+        camera_matrix = np.array(rxdata.rgb_camera_info.k, dtype=np.float64).reshape(3, 3)
+        dist_coeffs = np.array(rxdata.rgb_camera_info.d, dtype=np.float64)
+        return camera_matrix, dist_coeffs
+
+    def _run_model(self, cv_img: np.ndarray) -> Optional[Sequence[Sequence[float]]]:
         input_tensor = self.model.preprocess_yuv420sp(cv_img)
         outputs = self.model.c2numpy(self.model.forward(input_tensor))
-        results = self.model.postProcess(outputs)
-        # self.get_logger().info('detect finish')
+        return self.model.postProcess(outputs)
 
-        if results is not None:
-            ball_size = 0.065
-            objPoints = np.array([
-                [-0.5,  0.5, 0],
-                [ 0.5,  0.5, 0],
-                [ 0.5, -0.5, 0],
-                [-0.5, -0.5, 0]
-            ]) * ball_size
-            txdata = BallPositionArray()
-            for class_id, score, x1, y1, x2, y2 in results:
-                corner = np.array([
-                    [x1, y1],
-                    [x2, y1],
-                    [x2, y2],
-                    [x1, y2]
-                ], dtype=np.float32)
+    def _build_ball_positions(
+        self,
+        detections: Iterable[Sequence[float]],
+        camera_matrix: np.ndarray,
+        dist_coeffs: np.ndarray,
+    ) -> BallPositionArray:
+        msg = BallPositionArray()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        msg.header.frame_id = self.FRAME_ID
 
-                retval, rvec, tvec = cv2.solvePnP(
-                    objPoints,
-                    corner,
-                    camera_matrix,
-                    distCoeffs
-                )
-                p_robot = self.R_robot_cam@tvec + self.t_robot_cam
-                coords = p_robot.flatten()
-                x, y, z = coords[0], coords[1], coords[2]
-                pose = Point()
-                pose.x = float(x)
-                pose.y = float(y)
-                pose.z = float(z)
-                ballposition = BallPosition()
-                ballposition.position = pose
-                ballposition.class_id = int(class_id)
-                txdata.balls.append(ballposition)
-            self.publisher_ball_pos.publish(txdata)
-                
-                
+        for detection in detections:
+            ball = self._ball_from_detection(
+                detection, camera_matrix, dist_coeffs
+            )
+            if ball:
+                msg.balls.append(ball)
+        return msg
+
+    def _ball_from_detection(
+        self,
+        detection: Sequence[float],
+        camera_matrix: np.ndarray,
+        dist_coeffs: np.ndarray,
+    ) -> Optional[BallPosition]:
+        class_id, _score, x1, y1, x2, y2 = detection
+        corners = np.array(
+            [
+                [x1, y1],
+                [x2, y1],
+                [x2, y2],
+                [x1, y2],
+            ],
+            dtype=np.float32,
+        )
+        success, rvec, tvec = cv2.solvePnP(
+            self.obj_points,
+            corners,
+            camera_matrix,
+            dist_coeffs,
+            flags=cv2.SOLVEPNP_IPPE_SQUARE,
+        )
+        if not success:
+            self.get_logger().warning("solvePnP failed for detection, skipping.")
+            return None
+
+        pose = Point(x=float(tvec[0]), y=float(tvec[1]), z=float(tvec[2]))
+        ball_position = BallPosition()
+        ball_position.position = pose
+        ball_position.class_id = int(class_id)
+        return ball_position
 
 
-def main_ball_detect():
+def main_ball_detect() -> None:
     rclpy.init()
     rdk_yolo = Rdk_YOLO()
     try:
