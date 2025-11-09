@@ -17,6 +17,8 @@ find_package(ldlidar_node REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rere_daisha_msgs REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
@@ -98,6 +100,19 @@ ament_target_dependencies(ransac_ball_partly_node
 install(
   TARGETS ransac_ball_partly_node
   DESTINATION lib/${PROJECT_NAME}
+)
+
+# ui ball
+add_executable(ball_converter_listener_node
+  src/ball_converter_ui.cpp
+  include/${PROJECT_NAME}/ball_converter_ui.hpp
+)
+
+ament_target_dependencies(ball_converter_listener_node
+  rclcpp
+  rere_daisha_msgs
+  tf2_ros
+  tf2_geometry_msgs
 )
 
 # add install
