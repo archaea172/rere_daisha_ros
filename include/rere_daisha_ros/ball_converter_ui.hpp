@@ -21,4 +21,6 @@ public:
 
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_{nullptr};
     std::unique_ptr<tf2_ros::Buffer> tf_buffer_;
+    rclcpp::Subscription<rere_daisha_msgs::msg::BallPositionArray>::SharedPtr ball_yolo_subscriber;
+    rclcpp::Publisher<rere_daisha_msgs::msg::BallPositionArray>::SharedPtr ball_yolo_ui_publisher;
 };
