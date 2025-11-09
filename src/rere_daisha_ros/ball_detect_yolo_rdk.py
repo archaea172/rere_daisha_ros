@@ -22,9 +22,9 @@ class Rdk_YOLO(Node):
     CAMERA_TOPIC = "/camera/camera/rgbd"
     OUTPUT_TOPIC = "ball_position_yolo"
     FRAME_ID = "camera_link"
-    BALL_DIAMETER_M = 0.065
+    BALL_DIAMETER_M = 0.075
     MODEL_CLASSES = ["blue_ball", "red_ball", "yellow_ball"]
-    MODEL_THRESHOLD = 0.4
+    MODEL_THRESHOLD = 0.7
     MODEL_IOU = 0.8
     MODEL_BATCH = 16
     MODEL_STRIDES = [8, 16, 32]

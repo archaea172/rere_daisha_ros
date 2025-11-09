@@ -39,7 +39,7 @@ void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::
                 geometry_msgs::msg::Point point_in_target;
                 tf2::doTransform(rxdata->balls[i].position, point_in_target, transform_stamped);
                 txdata.balls[i].position = point_in_target;
-                RCLCPP_INFO(this->get_logger(), "ball:%d (%f, %f, %f)", txdata.balls[i].class_id, txdata.balls[i].position.x, txdata.balls[i].position.y, txdata.balls[i].position.z);
+                // RCLCPP_INFO(this->get_logger(), "ball:%d (%f, %f, %f)", txdata.balls[i].class_id, txdata.balls[i].position.x, txdata.balls[i].position.y, txdata.balls[i].position.z);
             }
         }
         catch(const tf2::TransformException & ex)
