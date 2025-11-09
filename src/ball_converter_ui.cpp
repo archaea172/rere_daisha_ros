@@ -18,6 +18,10 @@ BallConverterListenerNode::BallConverterListenerNode()
 
 void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::BallPositionArray::SharedPtr rxdata)
 {
+    std::string source_frame = rxdata.header.frame_id;
+    std::string target_frame = "base_link"
+
+    geometry_msgs::msg::TransformStamped transform_stamped;
 
 }
 
