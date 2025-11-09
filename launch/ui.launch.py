@@ -14,4 +14,15 @@ def generate_launch_description():
     )
     ld.add_action(tf_camera_lister)
 
+    # ui endpoint
+    
+    endpoint_node = Node(
+        package='ros_tcp_endpoint',
+        executable='default_server_endpoint',
+        name='default_server_endpoint',
+        output='screen',
+        parameters=[{'ROS_IP': '100.96.217.54'}],
+    )
+    ld.add_action(endpoint_node)
+
     return ld
