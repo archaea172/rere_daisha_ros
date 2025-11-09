@@ -6,6 +6,11 @@ BallConverterListenerNode::BallConverterListenerNode()
 
 }
 
+void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::BallPositionArray::SharedPtr rxdata)
+{
+    
+}
+
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
