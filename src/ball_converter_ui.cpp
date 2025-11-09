@@ -27,7 +27,9 @@ void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::
         source_frame,
         tf2::TimePointZero
     );
-    
+
+    rere_daisha_msgs::msg::BallPositionArray txdata = rere_daisha_msgs::msg::BallPositionArray();
+
     try
     {
         for (size_t i = 0; i < rxdata->balls.size(); i++)
@@ -46,7 +48,8 @@ void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
-
+    std::shared_ptr<BallConverterListenerNode> node = std::make_shared<BallConverterListenerNode>();
+    rclcpp::spin(node->get_node_base_interface());
     rclcpp::shutdown();
     return 0;
 }
