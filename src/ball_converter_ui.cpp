@@ -22,6 +22,8 @@ void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::
     std::string target_frame = "base_link";
 
     geometry_msgs::msg::TransformStamped transform_stamped;
+    rere_daisha_msgs::msg::BallPositionArray txdata = *rxdata;
+    
     try
     {
         transform_stamped = tf_buffer_->lookupTransform(
@@ -29,8 +31,6 @@ void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::
             source_frame,
             tf2::TimePointZero
         );
-
-        rere_daisha_msgs::msg::BallPositionArray txdata = *rxdata;
 
         try
         {
