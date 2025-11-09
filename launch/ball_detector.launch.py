@@ -16,9 +16,9 @@ def generate_launch_description():
         executable='ball_detect_yolo.py',
         namespace=name_space
     )
-    # ld.add_action(yolo_rdk_node)
+    ld.add_action(yolo_rdk_node)
 
-    # カメラ用のtf
+    # カメラ用のtf broadcast
     rad = -120
     theta = np.deg2rad(rad)
     tf2_camera_node = Node(
@@ -33,5 +33,13 @@ def generate_launch_description():
             ]
     )
     ld.add_action(tf2_camera_node)
+
+    # converter
+    tf_camera_lister = Node(
+        package='rere_daisha_ros',
+        executable='ball_converter_listener_node',
+        namespace=name_space
+    )
+    ld.add_action(tf_camera_lister)
 
     return ld
