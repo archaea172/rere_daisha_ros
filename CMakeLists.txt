@@ -24,9 +24,9 @@ ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
 install(PROGRAMS scripts/ball_detect_yolo.py DESTINATION lib/${PROJECT_NAME})
 
-install(
-  DIRECTORY include/
-  DESTINATION include
+include_directories(
+  include
+  include/${PROJECT_NAME}
 )
 
 # ransac library
@@ -113,6 +113,11 @@ ament_target_dependencies(ball_converter_listener_node
   rere_daisha_msgs
   tf2_ros
   tf2_geometry_msgs
+)
+
+install(
+  TARGETS ball_converter_listener_node
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 # add install
