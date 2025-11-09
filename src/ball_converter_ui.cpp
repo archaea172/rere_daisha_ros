@@ -28,7 +28,7 @@ void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::
         tf2::TimePointZero
     );
 
-    rere_daisha_msgs::msg::BallPositionArray txdata = rere_daisha_msgs::msg::BallPositionArray();
+    rere_daisha_msgs::msg::BallPositionArray txdata = *rxdata;
 
     try
     {
