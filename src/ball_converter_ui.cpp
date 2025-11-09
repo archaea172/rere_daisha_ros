@@ -12,6 +12,8 @@ BallConverterListenerNode::BallConverterListenerNode()
         std::string("ball_position_yolo_ui"),
         rclcpp::SystemDefaultsQoS()
     );
+    this->tf_buffer_ = std::make_unique<tf2_ros::Buffer>(this->get_clock());
+    this->tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 }
 
 void BallConverterListenerNode::yolo_ball_callback(const rere_daisha_msgs::msg::BallPositionArray::SharedPtr rxdata)
