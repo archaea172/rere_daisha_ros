@@ -43,7 +43,7 @@ Eigen::MatrixXd MPPIControler::sampling_dim2()
     return z_s;
 }
 
-Eigen::MatrixXd MPPIControler::predict(Eigen::MatrixXd iput_matrix)
+Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::MatrixXd iput_matrix)
 {
 
 }
