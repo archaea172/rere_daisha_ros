@@ -1,6 +1,6 @@
 #include "mppi.hpp"
 
-MPPIControler::MPPIControler()
+MPPIControler::MPPIControler(int sample_num, int dim_num)
 {
-    
+
 }
