@@ -3,7 +3,7 @@
 MPPIControler::MPPIControler(int sample_num, int dim_num)
 : sample_num_(sample_num), dim_num_(dim_num),
 gen(1234), uni(0.0, 1.0), clamp_abs(0.5),
-d(0.5), dt(0.1)
+d(0.5), dt(0.1), loop_num_(1000)
 {
     this->mu.resize(2);
     this->sig.resize(2, 2);

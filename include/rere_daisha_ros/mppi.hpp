@@ -17,6 +17,7 @@ class MPPIControler
 
         int sample_num_;
         int dim_num_;
+        int loop_num_;
 
         Eigen::VectorXd mu;
         Eigen::MatrixXd sig;
