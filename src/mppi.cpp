@@ -3,6 +3,8 @@
 MPPIControler::MPPIControler(int sample_num, int dim_num)
 : sample_num_(sample_num), dim_num_(dim_num), gen(1234), uni(0.0, 1.0)
 {
+    this->mu.resize(2);
+    this->sig.resize(2, 2);
     this->mu << 0, 0;
     this->sig << 1, 0,
                  0, 1;
@@ -11,7 +13,7 @@ MPPIControler::MPPIControler(int sample_num, int dim_num)
 Eigen::MatrixXd MPPIControler::sampling_dim2()
 {
     Eigen::MatrixXd y_s(this->dim_num_, this->sample_num_);
-    for (size_t i = 0; i < this->sample_num_; i++)
+    for (int i = 0; i < this->sample_num_; i++)
     {
         double u1 = this->uni(this->gen);
         double u2 = this->uni(this->gen);
