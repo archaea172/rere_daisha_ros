@@ -12,6 +12,11 @@ d(0.5), dt(0.1)
                  0, 1;
 }
 
+Eigen::VectorXd MPPIControler::run()
+{
+
+}
+
 Eigen::MatrixXd MPPIControler::sampling_dim2()
 {
     Eigen::MatrixXd y_s(this->dim_num_, this->sample_num_);
