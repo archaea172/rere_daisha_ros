@@ -120,6 +120,16 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# mppi library
+add_library(mppi_library
+  src/mppi.cpp
+)
+
+target_include_directories(mppi_library PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
+  $<INSTALL_INTERFACE:include>
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks
