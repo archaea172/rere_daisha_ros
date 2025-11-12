@@ -56,7 +56,9 @@ Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::Matrix
         double vx = v_vector[i]*std::cos(state_vector(i, 2));
         double vy = v_vector[i]*std::sin(state_vector(i, 2));
         
-
+        Eigen::RowVectorXd v(3);
+        v << vx, vy, omega_vector(i);
+        state_vector.col(i + 1) = state_vector.col(i) + v * dt;
     }
 
     std::cout << v_vector << std::endl;
