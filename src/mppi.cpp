@@ -45,5 +45,8 @@ Eigen::MatrixXd MPPIControler::sampling_dim2()
 
 Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::MatrixXd iput_matrix)
 {
+    Eigen::RowVectorXd v_vector = iput_matrix.colwise().sum()/2;
+    Eigen::RowVectorXd omega_vector = (iput_matrix.row(0) - iput_matrix.row(1)) / 2;
 
+    
 }
