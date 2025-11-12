@@ -10,6 +10,7 @@ class MPPIControler
         MPPIControler(int sample_num, int dim_num);
     // private:
         Eigen::MatrixXd sampling_dim2();
+        Eigen::MatrixXd predict(Eigen::MatrixXd iput_matrix);
 
         int sample_num_;
         int dim_num_;
