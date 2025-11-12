@@ -145,6 +145,11 @@ target_link_libraries(mppi_pursuit
   mppi_library
 )
 
+install(
+  TARGETS mppi_pursuit
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks
