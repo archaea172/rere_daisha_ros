@@ -48,5 +48,9 @@ Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::Matrix
     Eigen::RowVectorXd v_vector = iput_matrix.colwise().sum()/2;
     Eigen::RowVectorXd omega_vector = (iput_matrix.row(0) - iput_matrix.row(1)) / 2;
 
-    
+    std::cout << v_vector << std::endl;
+    std::cout << omega_vector << std::endl;
+
+    Eigen::MatrixXd state_vector;
+    return state_vector;
 }

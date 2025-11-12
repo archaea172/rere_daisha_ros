@@ -4,6 +4,8 @@
 #include <random>
 #include <cmath>
 
+#include <iostream>
+
 class MPPIControler
 {
     public:
