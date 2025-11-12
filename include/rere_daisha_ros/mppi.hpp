@@ -8,7 +8,7 @@ class MPPIControler
 {
     public:
         MPPIControler(int sample_num, int dim_num);
-    private:
+    // private:
         Eigen::MatrixXd sampling_dim2();
 
         int sample_num_;
