@@ -3,7 +3,7 @@
 MPPIControler::MPPIControler(int sample_num, int dim_num)
 : sample_num_(sample_num), dim_num_(dim_num),
 gen(1234), uni(0.0, 1.0), clamp_abs(0.5),
-d(0.5)
+d(0.5), dt(0.1)
 {
     this->mu.resize(2);
     this->sig.resize(2, 2);
@@ -44,14 +44,23 @@ Eigen::MatrixXd MPPIControler::sampling_dim2()
     return z_s;
 }
 
-Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::MatrixXd iput_matrix)
+Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::MatrixXd input_matrix)
 {
-    Eigen::RowVectorXd v_vector = iput_matrix.colwise().sum()/2;
-    Eigen::RowVectorXd omega_vector = (iput_matrix.row(0) - iput_matrix.row(1)) / (2*d);
+    Eigen::RowVectorXd v_vector = input_matrix.colwise().sum()/2;
+    Eigen::RowVectorXd omega_vector = (input_matrix.row(0) - input_matrix.row(1)) / (2*d);
+    Eigen::MatrixXd state_vector(state_vector.size(), this->sample_num_);
+
+    state_vector.col(0) = state_init;
+    for (size_t i = 0; i < input_matrix.size(); i++)
+    {
+        double vx = v_vector[i]*std::cos(state_vector(i, 2));
+        double vy = v_vector[i]*std::sin(state_vector(i, 2));
+        
+
+    }
 
     std::cout << v_vector << std::endl;
     std::cout << omega_vector << std::endl;
 
-    Eigen::MatrixXd state_vector;
     return state_vector;
 }

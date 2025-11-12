@@ -26,4 +26,5 @@ class MPPIControler
         double clamp_abs;
 
         double d;
+        double dt;
 };
