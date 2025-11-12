@@ -8,5 +8,30 @@ MPPIControler::MPPIControler(int sample_num, int dim_num)
 
 Eigen::MatrixXd MPPIControler::sampling()
 {
+    Eigen::MatrixXd y_s(this->dim_num_, this->sample_num_);
+    for (size_t i = 0; i < this->sample_num_; i++)
+    {
+        double u1 = this->uni(this->gen);
+        double u2 = this->uni(this->gen);
+        if (u1 < 1e-16) u1 = 1e-16;
 
+        double r = std::sqrt(-2.0*std::log(u1));
+        double theta = 2.0*M_PI*u2;
+
+        y_s(0, i) = r * std::cos(theta);
+        y_s(1, i) = r * std::sin(theta);
+    }
+
+    Eigen::LLT<Eigen::MatrixXd> llt(this->sig);
+    if (llt.info() != Eigen::Success) {
+        
+        return ;
+    }
+
+    Eigen::MatrixXd P = llt.matrixL();
+
+    Eigen::MatrixXd z_s = P * y_s;
+    z_s.colwise() += this->mu;
+
+    return z_s;
 }
