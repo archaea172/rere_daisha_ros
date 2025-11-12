@@ -5,3 +5,8 @@ MPPIControler::MPPIControler(int sample_num, int dim_num)
 {
     
 }
+
+Eigen::MatrixXd MPPIControler::sampling()
+{
+
+}
