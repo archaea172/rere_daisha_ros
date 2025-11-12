@@ -135,6 +135,16 @@ target_link_libraries(mppi_library
   Eigen3::Eigen
 )
 
+# mppi pursuit
+
+add_executable(mppi_pursuit
+  src/mppi_pursuit.cpp
+)
+
+target_link_libraries(mppi_pursuit
+  mppi_library
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks
