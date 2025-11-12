@@ -6,7 +6,7 @@ MPPIControler::MPPIControler(int sample_num, int dim_num)
     
 }
 
-Eigen::MatrixXd MPPIControler::sampling()
+Eigen::MatrixXd MPPIControler::sampling_dim2()
 {
     Eigen::MatrixXd y_s(this->dim_num_, this->sample_num_);
     for (size_t i = 0; i < this->sample_num_; i++)
@@ -24,8 +24,8 @@ Eigen::MatrixXd MPPIControler::sampling()
 
     Eigen::LLT<Eigen::MatrixXd> llt(this->sig);
     if (llt.info() != Eigen::Success) {
-        
-        return ;
+        Eigen::MatrixXd null_matrix;
+        return null_matrix;
     }
 
     Eigen::MatrixXd P = llt.matrixL();
