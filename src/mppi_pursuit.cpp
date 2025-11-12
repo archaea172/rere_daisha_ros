@@ -8,5 +8,5 @@ int main(int argc, char *argv[])
     std::cout << matrix << std::endl;
     Eigen::VectorXd init(3);
     init << 0, 0, 0;
-    debug.predict(init, matrix);
+    std::cout << debug.predict(init, matrix) << std::endl;;
 }

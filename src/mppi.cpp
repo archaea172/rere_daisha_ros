@@ -19,7 +19,7 @@ Eigen::MatrixXd MPPIControler::sampling_dim2()
     {
         double u1 = this->uni(this->gen);
         double u2 = this->uni(this->gen);
-        std::max(u1, std::numeric_limits<double>::min());
+        u1 = std::max(u1, std::numeric_limits<double>::min());
 
         double r = std::sqrt(-2.0*std::log(u1));
         double theta = 2.0*M_PI*u2;
@@ -48,15 +48,17 @@ Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::Matrix
 {
     Eigen::RowVectorXd v_vector = input_matrix.colwise().sum()/2;
     Eigen::RowVectorXd omega_vector = (input_matrix.row(0) - input_matrix.row(1)) / (2*d);
-    Eigen::MatrixXd state_vector(state_vector.size(), this->sample_num_);
+    Eigen::MatrixXd state_vector(state_init.size(), this->sample_num_ + 1);
 
     state_vector.col(0) = state_init;
-    for (size_t i = 0; i < input_matrix.size(); i++)
+    for (size_t i = 0; i < input_matrix.cols(); i++)
     {
-        double vx = v_vector[i]*std::cos(state_vector(i, 2));
-        double vy = v_vector[i]*std::sin(state_vector(i, 2));
+        double vx = v_vector[i]*std::cos(state_vector(2, i));
+        double vy = v_vector[i]*std::sin(state_vector(2, i));
+
+        std::cout << vx << "," << vy << std::endl;
         
-        Eigen::RowVectorXd v(3);
+        Eigen::VectorXd v(3);
         v << vx, vy, omega_vector(i);
         state_vector.col(i + 1) = state_vector.col(i) + v * dt;
     }
