@@ -2,7 +2,8 @@
 
 MPPIControler::MPPIControler(int sample_num, int dim_num)
 : sample_num_(sample_num), dim_num_(dim_num),
-gen(1234), uni(0.0, 1.0), clamp_abs(0.5)
+gen(1234), uni(0.0, 1.0), clamp_abs(0.5),
+d(0.5)
 {
     this->mu.resize(2);
     this->sig.resize(2, 2);
@@ -46,7 +47,7 @@ Eigen::MatrixXd MPPIControler::sampling_dim2()
 Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::MatrixXd iput_matrix)
 {
     Eigen::RowVectorXd v_vector = iput_matrix.colwise().sum()/2;
-    Eigen::RowVectorXd omega_vector = (iput_matrix.row(0) - iput_matrix.row(1)) / 2;
+    Eigen::RowVectorXd omega_vector = (iput_matrix.row(0) - iput_matrix.row(1)) / (2*d);
 
     std::cout << v_vector << std::endl;
     std::cout << omega_vector << std::endl;

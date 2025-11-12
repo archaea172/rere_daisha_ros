@@ -24,4 +24,6 @@ class MPPIControler
         std::uniform_real_distribution<double> uni;
 
         double clamp_abs;
+
+        double d;
 };
