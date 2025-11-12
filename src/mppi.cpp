@@ -37,5 +37,7 @@ Eigen::MatrixXd MPPIControler::sampling_dim2()
     Eigen::MatrixXd z_s = P * y_s;
     z_s.colwise() += this->mu;
 
+    z_s = z_s.cwiseMax(-this->clamp_abs).cwiseMin(clamp_abs);
+
     return z_s;
 }
