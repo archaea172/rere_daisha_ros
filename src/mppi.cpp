@@ -1,7 +1,8 @@
 #include "mppi.hpp"
 
 MPPIControler::MPPIControler(int sample_num, int dim_num)
-: sample_num_(sample_num), dim_num_(dim_num), gen(1234), uni(0.0, 1.0)
+: sample_num_(sample_num), dim_num_(dim_num),
+gen(1234), uni(0.0, 1.0), clamp_abs(0.5)
 {
     this->mu.resize(2);
     this->sig.resize(2, 2);

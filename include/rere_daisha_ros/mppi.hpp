@@ -20,5 +20,5 @@ class MPPIControler
         std::mt19937_64 gen;
         std::uniform_real_distribution<double> uni;
 
-        double clamp_abs = 0.5;
+        double clamp_abs;
 };
