@@ -3,7 +3,9 @@
 MPPIControler::MPPIControler(int sample_num, int dim_num)
 : sample_num_(sample_num), dim_num_(dim_num), gen(1234), uni(0.0, 1.0)
 {
-    
+    this->mu << 0, 0;
+    this->sig << 1, 0,
+                 0, 1;
 }
 
 Eigen::MatrixXd MPPIControler::sampling_dim2()
@@ -13,7 +15,7 @@ Eigen::MatrixXd MPPIControler::sampling_dim2()
     {
         double u1 = this->uni(this->gen);
         double u2 = this->uni(this->gen);
-        if (u1 < 1e-16) u1 = 1e-16;
+        std::max(u1, std::numeric_limits<double>::min());
 
         double r = std::sqrt(-2.0*std::log(u1));
         double theta = 2.0*M_PI*u2;
