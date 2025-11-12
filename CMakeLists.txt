@@ -19,6 +19,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(rere_daisha_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
@@ -128,6 +129,10 @@ add_library(mppi_library
 target_include_directories(mppi_library PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
   $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(mppi_library
+  Eigen3::Eigen
 )
 
 # add install
