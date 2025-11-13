@@ -73,3 +73,8 @@ Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::Matrix
 
     return state_vector;
 }
+
+double MPPIControler::evaluation(Eigen::MatrixXd state_array, Eigen::MatrixXd input_state)
+{
+
+}

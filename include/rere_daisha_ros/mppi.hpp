@@ -15,6 +15,8 @@ class MPPIControler
         Eigen::MatrixXd sampling_dim2();
         Eigen::MatrixXd predict(Eigen::VectorXd state_init, Eigen::MatrixXd iput_matrix);
 
+        double evaluation(Eigen::MatrixXd state_array, Eigen::MatrixXd input_state);
+
         int sample_num_;
         int dim_num_;
         int loop_num_;
