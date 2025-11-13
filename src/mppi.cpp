@@ -101,6 +101,6 @@ double MPPIControler::input_smooth(const Eigen::MatrixXd &input_State)
 double MPPIControler::vel_smooth(const Eigen::VectorXd &V)
 {
     Eigen::VectorXd diff = V.tail(V.size() - 1) - V.head(V.size() - 1);
-    double result = diff.sum();
+    double result = diff.array().square().sum();
     return result;
 }
