@@ -90,11 +90,17 @@ double MPPIControler::evaluation(Eigen::MatrixXd state_array, Eigen::MatrixXd in
     return result;
 }
 
-double MPPIControler::input_smooth(Eigen::MatrixXd input_State)
+double MPPIControler::input_smooth(const Eigen::MatrixXd &input_State)
 {
     Eigen::MatrixXd diff = input_State.rightCols(input_State.cols() - 1) - input_State.leftCols(input_State.cols() - 1);
     double result = diff.array().square().sum();
-    std::cout << result << std::endl;
 
+    return result;
+}
+
+double MPPIControler::vel_smooth(const Eigen::VectorXd &V)
+{
+    Eigen::VectorXd diff = V.tail(V.size() - 1) - V.head(V.size() - 1);
+    double result = diff.sum();
     return result;
 }

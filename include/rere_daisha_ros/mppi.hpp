@@ -16,7 +16,8 @@ class MPPIControler
         Eigen::MatrixXd predict(Eigen::VectorXd state_init, Eigen::MatrixXd iput_matrix);
 
         double evaluation(Eigen::MatrixXd state_array, Eigen::MatrixXd input_state);
-        double input_smooth(Eigen::MatrixXd input_State);
+        double input_smooth(const Eigen::MatrixXd &input_State);
+        double vel_smooth(const Eigen::VectorXd &V);
 
         int sample_num_;
         int dim_num_;
