@@ -15,7 +15,7 @@ d(0.5), dt(0.1), loop_num_(1000)
 Eigen::VectorXd MPPIControler::run()
 {
     Eigen::VectorXd evaluation_result(this->loop_num_);
-    Eigen::MatrixXd input_first(3, this->loop_num_);
+    Eigen::MatrixXd input_first(2, this->loop_num_);
 
     for (size_t i = 0; i < this->loop_num_; i++)
     {
@@ -25,6 +25,10 @@ Eigen::VectorXd MPPIControler::run()
         input_first.col(i) = input_sample.col(i);
     }
 
+    Eigen::VectorXd evaluation_result_sum = evaluation_result.rowwise().sum();
+    Eigen::VectorXd input = input_first * evaluation_result_sum;
+
+    return input;
 }
 
 Eigen::MatrixXd MPPIControler::sampling_dim2()
