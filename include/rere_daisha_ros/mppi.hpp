@@ -29,4 +29,6 @@ class MPPIControler
 
         double d;
         double dt;
+
+        Eigen::VectorXd state;
 };
