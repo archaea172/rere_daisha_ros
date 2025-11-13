@@ -11,5 +11,6 @@ int main(int argc, char *argv[])
     auto state = debug.predict(init, matrix);
     std::cout << state << std::endl;;
 
-    auto smooth = debug.input_smooth(matrix);
+    auto smooth = debug.vel_smooth(state.row(0).transpose());
+    std::cout << smooth << std::endl;;
 }
