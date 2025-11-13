@@ -12,7 +12,7 @@ d(0.5), dt(0.1), loop_num_(1000)
                  0, 1;
 }
 
-Eigen::VectorXd MPPIControler::run()
+Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state)
 {
     Eigen::VectorXd evaluation_result(this->loop_num_);
     Eigen::MatrixXd input_first(2, this->loop_num_);
@@ -20,13 +20,13 @@ Eigen::VectorXd MPPIControler::run()
     for (size_t i = 0; i < this->loop_num_; i++)
     {
         Eigen::MatrixXd input_sample = this->sampling_dim2();
-        Eigen::MatrixXd state_sample = this->predict(this->state, input_sample);
+        Eigen::MatrixXd state_sample = this->predict(state, input_sample);
         evaluation_result[i] = evaluation(state_sample, input_sample);
-        input_first.col(i) = input_sample.col(i);
+        input_first.col(i) = input_sample.col(0);
     }
 
-    Eigen::VectorXd evaluation_result_sum = evaluation_result.rowwise().sum();
-    Eigen::VectorXd input = input_first * evaluation_result_sum;
+    double evaluation_result_sum = evaluation_result.sum();
+    Eigen::VectorXd input = input_first * evaluation_result / evaluation_result_sum;
 
     return input;
 }
