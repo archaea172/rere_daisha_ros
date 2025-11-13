@@ -14,6 +14,7 @@ d(0.5), dt(0.1), loop_num_(1000)
 
 Eigen::VectorXd MPPIControler::run()
 {
+    Eigen::VectorXd evaluation_result(this->loop_num_);
 
     for (size_t i = 0; i < this->loop_num_; i++)
     {
