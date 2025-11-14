@@ -26,7 +26,7 @@ Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state, Eigen::VectorXd pos_re
     {
         Eigen::MatrixXd input_sample = this->sampling_dim2();
         Eigen::MatrixXd state_sample = this->predict(state, input_sample);
-        evaluation_result(i) = evaluation(state_sample, input_sample);
+        evaluation_result(i) = evaluation(state_sample, input_sample, pos_ref);
         input_first.col(i) = input_sample.col(0);
     }
 
