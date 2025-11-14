@@ -3,7 +3,7 @@
 MPPIControler::MPPIControler(int sample_num, int dim_num)
 : sample_num_(sample_num), dim_num_(dim_num),
 gen(1234), uni(0.0, 1.0), clamp_abs(0.5),
-d(0.5), loop_num_(1000), dt(0.1)
+d(0.5), loop_num_(1000), dt(0.1), lambda(5)
 {
     this->mu.resize(2);
     this->sig.resize(2, 2);
@@ -18,7 +18,6 @@ d(0.5), loop_num_(1000), dt(0.1)
 
 Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state, Eigen::VectorXd pos_ref)
 {
-    Eigen::VectorXd weight_result(this->loop_num_);
     Eigen::VectorXd evaluation_result(this->loop_num_);
     Eigen::MatrixXd input_first(2, this->loop_num_);
 
@@ -30,6 +29,9 @@ Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state, Eigen::VectorXd pos_re
         input_first.col(i) = input_sample.col(0);
     }
 
+    double rho = evaluation_result.minCoeff();
+    Eigen::VectorXd weight_result(this->loop_num_);
+    weight_result = (Eigen::ArrayXXd(rho - evaluation_result.array()) / lambda).exp().matrix();
     double weight_result_sum = weight_result.sum();
     Eigen::VectorXd input = input_first * weight_result / weight_result_sum;
 

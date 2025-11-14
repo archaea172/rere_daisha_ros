@@ -39,4 +39,5 @@ class MPPIControler
         double omega_ref;
 
         Eigen::VectorXd weight_vector;
+        double lambda;
 };
