@@ -15,7 +15,7 @@ d(0.5), loop_num_(1000), dt(0.1)
     this->omega_ref = this->clamp_abs / this->d;
 }
 
-Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state)
+Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state, Eigen::VectorXd pos_ref)
 {
     Eigen::MatrixXd evaluation_result(this->loop_num_, 2);
     Eigen::MatrixXd input_first(2, this->loop_num_);

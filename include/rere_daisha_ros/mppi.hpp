@@ -10,7 +10,7 @@ class MPPIControler
 {
     public:
         MPPIControler(int sample_num, int dim_num);
-        Eigen::VectorXd run(Eigen::VectorXd state);
+        Eigen::VectorXd run(Eigen::VectorXd state, Eigen::VectorXd pos_ref);
     // private:
         Eigen::MatrixXd sampling_dim2();
         Eigen::MatrixXd predict(Eigen::VectorXd state_init, Eigen::MatrixXd iput_matrix);
