@@ -10,6 +10,9 @@ d(0.5), loop_num_(1000), dt(0.1)
     this->mu << 0, 0;
     this->sig << 1, 0,
                  0, 1;
+
+    this->v_ref = this->clamp_abs;
+    this->omega_ref = this->clamp_abs / this->d;
 }
 
 Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state)
@@ -107,10 +110,12 @@ double MPPIControler::vel_smooth(const Eigen::VectorXd &V)
 
 double MPPIControler::pos_error(const Eigen::MatrixXd &input_State)
 {
-
+    double result;
+    return result;
 }
 
 double MPPIControler::input_error(const Eigen::MatrixXd &input_State)
 {
-
+    double result;
+    return result;
 }

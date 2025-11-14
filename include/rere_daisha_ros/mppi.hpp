@@ -35,4 +35,6 @@ class MPPIControler
 
         double d;
         double dt;
+        double v_ref;
+        double omega_ref;
 };
