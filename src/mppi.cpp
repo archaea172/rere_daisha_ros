@@ -89,7 +89,6 @@ Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::Matrix
 
 double MPPIControler::evaluation(Eigen::MatrixXd state_array, Eigen::MatrixXd input_state)
 {
-
     double result;
     return result;
 }
@@ -119,6 +118,6 @@ double MPPIControler::pos_error(const Eigen::MatrixXd &input_State, const Eigen:
 
 double MPPIControler::input_error(const Eigen::MatrixXd &input_State)
 {
-    double result = (input_State.row(0).array().square() - std::pow(this->v_ref, 2)).sum();
+    double result = (input_State.array().square() - std::pow(this->v_ref, 2)).sum();
     return result;
 }

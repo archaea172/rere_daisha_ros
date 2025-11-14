@@ -37,4 +37,6 @@ class MPPIControler
         double dt;
         double v_ref;
         double omega_ref;
+
+        Eigen::VectorXd weight_vector;
 };
