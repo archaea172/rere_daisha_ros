@@ -116,6 +116,6 @@ double MPPIControler::pos_error(const Eigen::MatrixXd &input_State)
 
 double MPPIControler::input_error(const Eigen::MatrixXd &input_State)
 {
-    double result;
+    double result = (input_State.row(0).array().square() - std::pow(this->v_ref, 2)).sum();
     return result;
 }
