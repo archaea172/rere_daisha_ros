@@ -13,6 +13,7 @@ d(0.5), loop_num_(1000), dt(0.1)
 
     this->v_ref = this->clamp_abs;
     this->omega_ref = this->clamp_abs / this->d;
+    this->weight_vector << 1, 1, 1;
 }
 
 Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state, Eigen::VectorXd pos_ref)
@@ -87,9 +88,11 @@ Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::Matrix
     return state_vector;
 }
 
-double MPPIControler::evaluation(Eigen::MatrixXd state_array, Eigen::MatrixXd input_state)
+double MPPIControler::evaluation(Eigen::MatrixXd state_array, Eigen::MatrixXd input_state, Eigen::VectorXd pos_ref)
 {
-    double result;
+    Eigen::VectorXd evaluation_result;
+    evaluation_result << this->pos_error(state_array, pos_ref), this->input_error(input_state), this->input_smooth(input_state);
+    double result = evaluation_result.dot(this->weight_vector);
     return result;
 }
 
