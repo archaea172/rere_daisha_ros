@@ -18,7 +18,7 @@ class MPPIControler
         Eigen::RowVectorXd evaluation(Eigen::MatrixXd state_array, Eigen::MatrixXd input_state);
         double input_smooth(const Eigen::MatrixXd &input_State);
         double vel_smooth(const Eigen::VectorXd &V);
-        double pos_error(const Eigen::MatrixXd &input_State);
+        double pos_error(const Eigen::MatrixXd &input_State, const Eigen::VectorXd &pos_ref);
         double input_error(const Eigen::MatrixXd &input_State);
 
         int sample_num_;

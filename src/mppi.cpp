@@ -108,9 +108,11 @@ double MPPIControler::vel_smooth(const Eigen::VectorXd &V)
     return result;
 }
 
-double MPPIControler::pos_error(const Eigen::MatrixXd &input_State)
+double MPPIControler::pos_error(const Eigen::MatrixXd &input_State, const Eigen::VectorXd &pos_ref)
 {
-    double result;
+    Eigen::VectorXi rows(2);
+    rows << 0, 1;
+    double result = (input_State(rows, Eigen::all).colwise() - pos_ref).array().square().sum();
     return result;
 }
 
