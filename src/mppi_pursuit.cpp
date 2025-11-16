@@ -1,7 +1,5 @@
 #include "mppi_pursuit.hpp"
 
-#include "mppi.hpp"
-
 MPPIPursuitNode::MPPIPursuitNode()
 : rclcpp_lifecycle::LifecycleNode(std::string("mppi_pursuit_node"))
 {
