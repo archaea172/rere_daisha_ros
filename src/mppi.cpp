@@ -27,6 +27,7 @@ Eigen::VectorXd MPPIControler::run(const Eigen::VectorXd &state, const Eigen::Ve
     Eigen::VectorXd evaluation_result(this->loop_num_);
     Eigen::MatrixXd input_first(2, this->loop_num_);
 
+    #pragma omp parallel for
     for (size_t i = 0; i < (size_t)this->loop_num_; i++)
     {
         Eigen::MatrixXd input_sample = this->sampling_dim2();
