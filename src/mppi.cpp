@@ -35,6 +35,7 @@ Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state, Eigen::VectorXd pos_re
     double weight_result_sum = weight_result.sum();
     Eigen::VectorXd input = input_first * weight_result / weight_result_sum;
 
+    this->mu = input;
     return input;
 }
 
