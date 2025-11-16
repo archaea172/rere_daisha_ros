@@ -3,7 +3,17 @@
 MPPIPursuitNode::MPPIPursuitNode()
 : rclcpp_lifecycle::LifecycleNode(std::string("mppi_pursuit_node"))
 {
-
+    this->mppi_controler = std::make_unique<MPPIControler>(
+        this->sample_num,
+        this->dim_num,
+        this->loop_num,
+        this->dt,
+        this->sig_,
+        this->max_wheel_vel,
+        this->wheel_distance,
+        this->weight_array,
+        this->lambda_
+    );
 }
 
 MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_configure(const rclcpp_lifecycle::State &state)
