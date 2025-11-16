@@ -10,10 +10,10 @@ MPPIControler::MPPIControler(
     double wheel_distance,
     Eigen::VectorXd weight_array,
     double lambda_)
-: sample_num_(sample_num), dim_num_(dim_num), sig(sig),
-gen(1234), uni(0.0, 1.0), clamp_abs(max_wheel_vel),
-d(wheel_distance), loop_num_(loop_num), dt(dt_), lambda(lambda_),
-weight_vector(weight_array)
+: sample_num_(sample_num), dim_num_(dim_num), loop_num_(loop_num),
+sig(sig_), gen(1234), uni(0.0, 1.0), clamp_abs(max_wheel_vel),
+d(wheel_distance), dt(dt_),
+weight_vector(weight_array), lambda(lambda_)
 {
     this->mu.resize(2);
     this->mu << 0, 0;
@@ -130,6 +130,6 @@ double MPPIControler::pos_error(const Eigen::MatrixXd &input_State, const Eigen:
 
 double MPPIControler::input_error(const Eigen::MatrixXd &input_State)
 {
-    double result = (input_State.array().square() - std::pow(this->v_ref, 2)).sum();
+    double result = ((input_State.colwise().sum()/2).array().square() - std::pow(this->v_ref, 2)).sum();
     return result;
 }
