@@ -19,12 +19,12 @@ class MPPIControler
             double wheel_distance,
             Eigen::VectorXd weight_array,
             double lambda_);
-        Eigen::VectorXd run(Eigen::VectorXd state, Eigen::VectorXd pos_ref);
+        Eigen::VectorXd run(const Eigen::VectorXd &state, const Eigen::VectorXd &pos_ref);
     private:
         Eigen::MatrixXd sampling_dim2();
-        Eigen::MatrixXd predict(Eigen::VectorXd state_init, Eigen::MatrixXd iput_matrix);
+        Eigen::MatrixXd predict(const Eigen::VectorXd &state_init, const Eigen::MatrixXd &iput_matrix);
 
-        double evaluation(Eigen::MatrixXd state_array, Eigen::MatrixXd input_state, Eigen::VectorXd pos_ref);
+        double evaluation(const Eigen::MatrixXd &state_array, const Eigen::MatrixXd &input_state, const Eigen::VectorXd &pos_ref);
         double input_smooth(const Eigen::MatrixXd &input_State);
         double vel_smooth(const Eigen::VectorXd &V);
         double pos_error(const Eigen::MatrixXd &input_State, const Eigen::VectorXd &pos_ref);
