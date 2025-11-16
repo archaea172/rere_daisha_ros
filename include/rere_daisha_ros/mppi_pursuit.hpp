@@ -9,7 +9,7 @@
 using std::placeholders::_1;
 using namespace std::chrono_literals;
 
-class MPPIPursuitNode : rclcpp_lifecycle::LifecycleNode
+class MPPIPursuitNode : public rclcpp_lifecycle::LifecycleNode
 {
     public:
         using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
