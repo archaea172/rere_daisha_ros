@@ -48,7 +48,7 @@ Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state, Eigen::VectorXd pos_re
 Eigen::MatrixXd MPPIControler::sampling_dim2()
 {
     Eigen::MatrixXd y_s(this->dim_num_, this->sample_num_);
-    for (int i = 0; i < (size_t)this->sample_num_; i++)
+    for (size_t i = 0; i < (size_t)this->sample_num_; i++)
     {
         double u1 = this->uni(this->gen);
         double u2 = this->uni(this->gen);
@@ -84,7 +84,7 @@ Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::Matrix
     Eigen::MatrixXd state_vector(state_init.size(), this->sample_num_ + 1);
 
     state_vector.col(0) = state_init;
-    for (size_t i = 0; i < input_matrix.cols(); i++)
+    for (size_t i = 0; i < (size_t)input_matrix.cols(); i++)
     {
         double vx = v_vector[i]*std::cos(state_vector(2, i));
         double vy = v_vector[i]*std::sin(state_vector(2, i));
@@ -99,7 +99,7 @@ Eigen::MatrixXd MPPIControler::predict(Eigen::VectorXd state_init, Eigen::Matrix
 
 double MPPIControler::evaluation(Eigen::MatrixXd state_array, Eigen::MatrixXd input_state, Eigen::VectorXd pos_ref)
 {
-    Eigen::VectorXd evaluation_result;
+    Eigen::VectorXd evaluation_result(3);
     evaluation_result << this->pos_error(state_array, pos_ref), this->input_error(input_state), this->input_smooth(input_state);
     double result = evaluation_result.dot(this->weight_vector);
     return result;
