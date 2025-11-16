@@ -20,7 +20,7 @@ class MPPIControler
             Eigen::VectorXd weight_array,
             double lambda_);
         Eigen::VectorXd run(Eigen::VectorXd state, Eigen::VectorXd pos_ref);
-    // private:
+    private:
         Eigen::MatrixXd sampling_dim2();
         Eigen::MatrixXd predict(Eigen::VectorXd state_init, Eigen::MatrixXd iput_matrix);
 
