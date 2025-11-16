@@ -2,6 +2,10 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
+
+#include "geometry_msgs/msg/pose2_d.hpp"
+#include "std_msgs/msg/float64_multi_array.hpp"
+
 #include <Eigen/Dense>
 
 #include "mppi.hpp"

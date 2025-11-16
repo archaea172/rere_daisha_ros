@@ -17,6 +17,7 @@ find_package(ldlidar_node REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rere_daisha_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
@@ -150,6 +151,8 @@ target_link_libraries(mppi_pursuit
 ament_target_dependencies(mppi_pursuit
   rclcpp
   rclcpp_lifecycle
+  geometry_msgs
+  std_msgs
 )
 
 install(
