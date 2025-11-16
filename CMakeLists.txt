@@ -140,10 +140,16 @@ target_link_libraries(mppi_library
 
 add_executable(mppi_pursuit
   src/mppi_pursuit.cpp
+  include/${PROJECT_NAME}/mppi_pursuit.hpp
 )
 
 target_link_libraries(mppi_pursuit
   mppi_library
+)
+
+ament_target_dependencies(ransac_ball_node
+  rclcpp
+  rclcpp_lifecycle
 )
 
 install(
