@@ -36,6 +36,16 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_shutdown(const rclcpp_lifecy
     return CallbackReturn::SUCCESS;
 }
 
+rcl_interfaces::msg::SetParametersResult MPPIPursuitNode::parameters_callback(
+    const std::vector<rclcpp::Parameter> &parameters
+)
+{
+    rcl_interfaces::msg::SetParametersResult result;
+    result.successful = true;
+    result.reason = "success";
+
+    return result;
+}
 
 int main(int argc, char *argv[])
 {
