@@ -8,5 +8,9 @@ using namespace std::chrono_literals;
 
 class MPPIPursuitNode : rclcpp_lifecycle::LifecycleNode
 {
+    public:
+        using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
+        MPPIPursuitNode();
+    private:
 
 };
