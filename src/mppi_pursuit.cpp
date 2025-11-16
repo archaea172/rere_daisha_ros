@@ -3,8 +3,9 @@
 #include "mppi.hpp"
 
 MPPIPursuitNode::MPPIPursuitNode()
+: rclcpp_lifecycle::LifecycleNode(std::string("mppi_pursuit_node"))
 {
-    
+
 }
 
 int main(int argc, char *argv[])

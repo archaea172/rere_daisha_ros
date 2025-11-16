@@ -147,7 +147,7 @@ target_link_libraries(mppi_pursuit
   mppi_library
 )
 
-ament_target_dependencies(ransac_ball_node
+ament_target_dependencies(mppi_pursuit
   rclcpp
   rclcpp_lifecycle
 )
