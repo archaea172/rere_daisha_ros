@@ -32,6 +32,9 @@ class MPPIPursuitNode : public rclcpp_lifecycle::LifecycleNode
         rcl_interfaces::msg::SetParametersResult parameters_callback(
             const std::vector<rclcpp::Parameter> &parameters
         );
+
+        rclcpp::Subscription<geometry_msgs::msg::Pose2D>::SharedPtr pose_subscriber;
+        rclcpp_lifecycle::LifecyclePublisher<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_vel_publisher;
         
         int sample_num;
         int dim_num;
