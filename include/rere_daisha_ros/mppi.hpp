@@ -9,7 +9,16 @@
 class MPPIControler
 {
     public:
-        MPPIControler(int sample_num, int dim_num);
+        MPPIControler(
+            int sample_num,
+            int dim_num,
+            int loop_num,
+            double dt,
+            Eigen::MatrixXd sig_,
+            double max_wheel_vel,
+            double wheel_distance,
+            Eigen::VectorXd weight_array,
+            double lambda_);
         Eigen::VectorXd run(Eigen::VectorXd state, Eigen::VectorXd pos_ref);
     // private:
         Eigen::MatrixXd sampling_dim2();

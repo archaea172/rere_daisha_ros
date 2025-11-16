@@ -1,19 +1,25 @@
 #include "mppi.hpp"
 
-MPPIControler::MPPIControler(int sample_num, int dim_num)
-: sample_num_(sample_num), dim_num_(dim_num),
-gen(1234), uni(0.0, 1.0), clamp_abs(0.5),
-d(0.5), loop_num_(1000), dt(0.1), lambda(5)
+MPPIControler::MPPIControler(
+    int sample_num,
+    int dim_num,
+    int loop_num,
+    double dt_,
+    Eigen::MatrixXd sig_,
+    double max_wheel_vel,
+    double wheel_distance,
+    Eigen::VectorXd weight_array,
+    double lambda_)
+: sample_num_(sample_num), dim_num_(dim_num), sig(sig),
+gen(1234), uni(0.0, 1.0), clamp_abs(max_wheel_vel),
+d(wheel_distance), loop_num_(loop_num), dt(dt_), lambda(lambda_),
+weight_vector(weight_array)
 {
     this->mu.resize(2);
-    this->sig.resize(2, 2);
     this->mu << 0, 0;
-    this->sig << 1, 0,
-                 0, 1;
 
     this->v_ref = this->clamp_abs;
     this->omega_ref = this->clamp_abs / this->d;
-    this->weight_vector << 1, 1, 1;
 }
 
 Eigen::VectorXd MPPIControler::run(Eigen::VectorXd state, Eigen::VectorXd pos_ref)
