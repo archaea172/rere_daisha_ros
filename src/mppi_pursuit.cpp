@@ -14,6 +14,15 @@ MPPIPursuitNode::MPPIPursuitNode()
         this->weight_array,
         this->lambda_
     );
+
+    this->wheel_vel_publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(
+        std::string("wheel_vel"),
+        rclcpp::SystemDefaultsQoS()
+    );
+
+    this->parameter_callback_hanle_ = this->add_on_set_parameters_callback(
+        std::bind(&MPPIPursuitNode::parameters_callback, this, _1)
+    );
 }
 
 MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_configure(const rclcpp_lifecycle::State &state)
