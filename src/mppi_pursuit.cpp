@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     Eigen::VectorXd state(3);
     state << 0, 0, 0;
     Eigen::VectorXd pos_ref(3);
-    pos_ref << 1, 0, 0;
+    pos_ref << 1, 0;
 
     Eigen::VectorXd input = debug.run(state, pos_ref);
     std::cout << input << std::endl;
