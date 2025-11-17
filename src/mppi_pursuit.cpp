@@ -3,6 +3,8 @@
 MPPIPursuitNode::MPPIPursuitNode()
 : rclcpp_lifecycle::LifecycleNode(std::string("mppi_pursuit_node"))
 {
+    this->dim_num = 2;
+
     this->declare_parameter<int>("sample_num", 50);
     this->declare_parameter<int>("loop_num", 500);
     this->declare_parameter<double>("dt", 0.5);
@@ -28,6 +30,7 @@ MPPIPursuitNode::MPPIPursuitNode()
     sig_std[0], sig_std[1],
     sig_std[2], sig_std[3];
     std::vector<double> weight_std = this->get_parameter("weights").as_double_array();
+    this->weight_array = Eigen::Map<const Eigen::VectorXd>(weight_std.data(), weight_std.size());
 
     this->mppi_controler = std::make_unique<MPPIControler>(
         this->sample_num,
