@@ -3,6 +3,18 @@
 MPPIPursuitNode::MPPIPursuitNode()
 : rclcpp_lifecycle::LifecycleNode(std::string("mppi_pursuit_node"))
 {
+    this->declare_parameter<int>("sample_num", 50);
+    this->declare_parameter<int>("loop_num", 500);
+    this->declare_parameter<double>("dt", 0.5);
+    this->declare_parameter<double>("max_wheel_vel", 0.5);
+    this->declare_parameter<double>("wheel_distance", 0.5);
+    this->declare_parameter<double>("lambda", 5);
+
+    std::vector<double> sig_default = {1, 0, 0, 1};
+    this->declare_parameter("sig", sig_default);
+    std::vector<double> weight_default = {1, 1, 1};
+    this->declare_parameter("weights", weight_default);
+
     this->mppi_controler = std::make_unique<MPPIControler>(
         this->sample_num,
         this->dim_num,
