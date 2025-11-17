@@ -39,6 +39,12 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_activate(const rclcpp_lifecy
         rclcpp::SystemDefaultsQoS(),
         std::bind(&MPPIPursuitNode::pose_callback, this, _1)
     );
+
+    this->mppi_timer = this->create_wall_timer(
+        0.1s,
+        std::bind(&MPPIPursuitNode::timer_callback, this, _1)
+    );
+    
     return CallbackReturn::SUCCESS;
 }
 
