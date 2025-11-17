@@ -44,7 +44,7 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_activate(const rclcpp_lifecy
         0.1s,
         std::bind(&MPPIPursuitNode::timer_callback, this, _1)
     );
-    
+
     return CallbackReturn::SUCCESS;
 }
 
@@ -71,6 +71,11 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_shutdown(const rclcpp_lifecy
 void MPPIPursuitNode::pose_callback(const geometry_msgs::msg::Pose2D::SharedPtr rxdata)
 {
 
+}
+
+void MPPIPursuitNode::timer_callback()
+{
+    
 }
 
 rcl_interfaces::msg::SetParametersResult MPPIPursuitNode::parameters_callback(
