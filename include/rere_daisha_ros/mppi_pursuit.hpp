@@ -52,4 +52,7 @@ class MPPIPursuitNode : public rclcpp_lifecycle::LifecycleNode
 
         geometry_msgs::msg::Pose2D pose_;
         geometry_msgs::msg::Pose2D pose_ref_;
+
+        bool pose_flag_{false};
+        bool pose_ref_flag_{false};
 };
