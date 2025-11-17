@@ -56,6 +56,11 @@ MPPIPursuitNode::MPPIPursuitNode()
 
 MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_configure(const rclcpp_lifecycle::State &state)
 {
+    RCLCPP_INFO(
+      get_logger(),
+      "on_configure() called. state: id=%u, label=%s",
+      state.id(),
+      state.label().c_str());
     return CallbackReturn::SUCCESS;
 }
 
@@ -73,6 +78,11 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_activate(const rclcpp_lifecy
         0.1s,
         std::bind(&MPPIPursuitNode::timer_callback, this)
     );
+    RCLCPP_INFO(
+      get_logger(),
+      "on_activate() called. state: id=%u, label=%s",
+      state.id(),
+      state.label().c_str());
 
     return CallbackReturn::SUCCESS;
 }
@@ -82,6 +92,11 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_deactivate(const rclcpp_life
     this->wheel_vel_publisher->on_deactivate();
     this->pose_subscriber.reset();
     this->mppi_timer.reset();
+    RCLCPP_INFO(
+      get_logger(),
+      "on_deactivate() called. state: id=%u, label=%s",
+      state.id(),
+      state.label().c_str());
     return CallbackReturn::SUCCESS;
 }
 
@@ -89,11 +104,21 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_cleanup(const rclcpp_lifecyc
 {
     this->pose_subscriber.reset();
     this->mppi_timer.reset();
+    RCLCPP_INFO(
+      get_logger(),
+      "on_cleanup() called. state: id=%u, label=%s",
+      state.id(),
+      state.label().c_str());
     return CallbackReturn::SUCCESS;
 }
 
 MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_error(const rclcpp_lifecycle::State &state)
 {
+    RCLCPP_INFO(
+      get_logger(),
+      "on_error() called. state: id=%u, label=%s",
+      state.id(),
+      state.label().c_str());
     return CallbackReturn::SUCCESS;
 }
 
@@ -102,6 +127,11 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_shutdown(const rclcpp_lifecy
     this->wheel_vel_publisher.reset();
     this->pose_subscriber.reset();
     this->mppi_timer.reset();
+    RCLCPP_INFO(
+      get_logger(),
+      "on_shutdown() called. state: id=%u, label=%s",
+      state.id(),
+      state.label().c_str());
     return CallbackReturn::SUCCESS;
 }
 
