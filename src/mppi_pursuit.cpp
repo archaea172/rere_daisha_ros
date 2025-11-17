@@ -15,6 +15,13 @@ MPPIPursuitNode::MPPIPursuitNode()
     std::vector<double> weight_default = {1, 1, 1};
     this->declare_parameter("weights", weight_default);
 
+    this->sample_num = this->get_parameter("sample_num").as_int();
+    this->loop_num = this->get_parameter("loop_num").as_int();
+    this->dt = this->get_parameter("dt").as_double();
+    this->max_wheel_vel = this->get_parameter("max_wheel_vel").as_double();
+    this->wheel_distance = this->get_parameter("wheel_distance").as_double();
+    this->lambda_ = this->get_parameter("lambda").as_double();
+
     this->mppi_controler = std::make_unique<MPPIControler>(
         this->sample_num,
         this->dim_num,
