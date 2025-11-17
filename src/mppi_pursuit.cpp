@@ -87,6 +87,8 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_deactivate(const rclcpp_life
 
 MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_cleanup(const rclcpp_lifecycle::State &state)
 {
+    this->pose_subscriber.reset();
+    this->mppi_timer.reset();
     return CallbackReturn::SUCCESS;
 }
 
@@ -97,6 +99,9 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_error(const rclcpp_lifecycle
 
 MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_shutdown(const rclcpp_lifecycle::State &state)
 {
+    this->wheel_vel_publisher.reset();
+    this->pose_subscriber.reset();
+    this->mppi_timer.reset();
     return CallbackReturn::SUCCESS;
 }
 
