@@ -22,6 +22,7 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(backward_ros REQUIRED)
+find_package(OpenMP)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
@@ -135,6 +136,7 @@ target_include_directories(mppi_library PUBLIC
 
 target_link_libraries(mppi_library
   Eigen3::Eigen
+  OpenMP::OpenMP_CXX
 )
 
 # mppi pursuit
