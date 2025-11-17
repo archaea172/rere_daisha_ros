@@ -123,7 +123,12 @@ void MPPIPursuitNode::timer_callback()
     pose_eigen << pose_.x, pose_.y, pose_.theta;
     Eigen::VectorXd pose_ref_eigen(2);
     pose_ref_eigen << pose_ref_.x, pose_ref_.y;
-    this->mppi_controler->run(pose_eigen, pose_ref_eigen);
+    Eigen::VectorXd input = this->mppi_controler->run(pose_eigen, pose_ref_eigen);
+    std::vector<double> input_vector = {input(0), input(1)};
+
+    std_msgs::msg::Float64MultiArray txdata;
+    txdata.data = input_vector;
+    if (wheel_vel_publisher->is_activated()) wheel_vel_publisher->publish(txdata);
 }
 
 rcl_interfaces::msg::SetParametersResult MPPIPursuitNode::parameters_callback(
