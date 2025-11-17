@@ -32,6 +32,13 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_configure(const rclcpp_lifec
 
 MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_activate(const rclcpp_lifecycle::State &state)
 {
+    this->wheel_vel_publisher->on_activate();
+
+    this->pose_subscriber = this->create_subscription<geometry_msgs::msg::Pose2D>(
+        std::string("robot_pos"),
+        rclcpp::SystemDefaultsQoS(),
+        std::bind(&MPPIPursuitNode::pose_callback, this, _1)
+    );
     return CallbackReturn::SUCCESS;
 }
 
@@ -53,6 +60,11 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_error(const rclcpp_lifecycle
 MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_shutdown(const rclcpp_lifecycle::State &state)
 {
     return CallbackReturn::SUCCESS;
+}
+
+void MPPIPursuitNode::pose_callback(const geometry_msgs::msg::Pose2D::SharedPtr rxdata)
+{
+
 }
 
 rcl_interfaces::msg::SetParametersResult MPPIPursuitNode::parameters_callback(

@@ -33,6 +33,8 @@ class MPPIPursuitNode : public rclcpp_lifecycle::LifecycleNode
             const std::vector<rclcpp::Parameter> &parameters
         );
 
+        void pose_callback(const geometry_msgs::msg::Pose2D::SharedPtr rxdata);
+
         rclcpp::Subscription<geometry_msgs::msg::Pose2D>::SharedPtr pose_subscriber;
         rclcpp_lifecycle::LifecyclePublisher<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_vel_publisher;
         rclcpp::TimerBase::SharedPtr mppi_timer;
