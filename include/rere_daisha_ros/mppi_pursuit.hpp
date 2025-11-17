@@ -49,4 +49,6 @@ class MPPIPursuitNode : public rclcpp_lifecycle::LifecycleNode
         double wheel_distance;
         Eigen::VectorXd weight_array;
         double lambda_;
+
+        geometry_msgs::msg::Pose2D pose_;
 };

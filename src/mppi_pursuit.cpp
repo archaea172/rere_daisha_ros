@@ -107,7 +107,7 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_shutdown(const rclcpp_lifecy
 
 void MPPIPursuitNode::pose_callback(const geometry_msgs::msg::Pose2D::SharedPtr rxdata)
 {
-
+    this->pose_ = *rxdata;
 }
 
 void MPPIPursuitNode::timer_callback()
