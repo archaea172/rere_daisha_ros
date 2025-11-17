@@ -22,6 +22,13 @@ MPPIPursuitNode::MPPIPursuitNode()
     this->wheel_distance = this->get_parameter("wheel_distance").as_double();
     this->lambda_ = this->get_parameter("lambda").as_double();
 
+    std::vector<double> sig_std = this->get_parameter("sig").as_double_array();
+    this->sig_.resize(2, 2);
+    this->sig_ << 
+    sig_std[0], sig_std[1],
+    sig_std[2], sig_std[3];
+    std::vector<double> weight_std = this->get_parameter("weights").as_double_array();
+
     this->mppi_controler = std::make_unique<MPPIControler>(
         this->sample_num,
         this->dim_num,
