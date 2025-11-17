@@ -79,6 +79,9 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_activate(const rclcpp_lifecy
 
 MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_deactivate(const rclcpp_lifecycle::State &state)
 {
+    this->wheel_vel_publisher->on_deactivate();
+    this->pose_subscriber.reset();
+    this->mppi_timer.reset();
     return CallbackReturn::SUCCESS;
 }
 
