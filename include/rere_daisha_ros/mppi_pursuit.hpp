@@ -51,4 +51,5 @@ class MPPIPursuitNode : public rclcpp_lifecycle::LifecycleNode
         double lambda_;
 
         geometry_msgs::msg::Pose2D pose_;
+        geometry_msgs::msg::Pose2D pose_ref_;
 };

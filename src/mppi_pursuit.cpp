@@ -112,7 +112,11 @@ void MPPIPursuitNode::pose_callback(const geometry_msgs::msg::Pose2D::SharedPtr 
 
 void MPPIPursuitNode::timer_callback()
 {
-    
+    Eigen::VectorXd pose_eigen(3);
+    pose_eigen << pose_.x, pose_.y, pose_.theta;
+    Eigen::VectorXd pose_ref_eigen(2);
+    pose_ref_eigen << pose_ref_.x, pose_ref_.y;
+    this->mppi_controler->run(pose_eigen, pose_ref_eigen);
 }
 
 rcl_interfaces::msg::SetParametersResult MPPIPursuitNode::parameters_callback(
