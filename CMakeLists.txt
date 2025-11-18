@@ -17,8 +17,12 @@ find_package(ldlidar_node REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rere_daisha_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(Eigen3 3.3 REQUIRED NO_MODULE)
+find_package(backward_ros REQUIRED)
+find_package(OpenMP)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
@@ -117,6 +121,44 @@ ament_target_dependencies(ball_converter_listener_node
 
 install(
   TARGETS ball_converter_listener_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+# mppi library
+add_library(mppi_library
+  src/mppi.cpp
+)
+
+target_include_directories(mppi_library PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
+  $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(mppi_library
+  Eigen3::Eigen
+  OpenMP::OpenMP_CXX
+)
+
+# mppi pursuit
+
+add_executable(mppi_pursuit
+  src/mppi_pursuit.cpp
+  include/${PROJECT_NAME}/mppi_pursuit.hpp
+)
+
+target_link_libraries(mppi_pursuit
+  mppi_library
+)
+
+ament_target_dependencies(mppi_pursuit
+  rclcpp
+  rclcpp_lifecycle
+  geometry_msgs
+  std_msgs
+)
+
+install(
+  TARGETS mppi_pursuit
   DESTINATION lib/${PROJECT_NAME}
 )
 
