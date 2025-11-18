@@ -74,6 +74,12 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_activate(const rclcpp_lifecy
         std::bind(&MPPIPursuitNode::pose_callback, this, _1)
     );
 
+    this->pose_ref_subscriber = this->create_subscription<geometry_msgs::msg::Pose2D>(
+        std::string("pose_ref"),
+        rclcpp::SystemDefaultsQoS(),
+        std::bind(&MPPIPursuitNode::pose_ref_callback, this, _1)
+    );
+
     this->mppi_timer = this->create_wall_timer(
         0.1s,
         std::bind(&MPPIPursuitNode::timer_callback, this)
@@ -139,6 +145,12 @@ void MPPIPursuitNode::pose_callback(const geometry_msgs::msg::Pose2D::SharedPtr 
 {
     this->pose_ = *rxdata;
     this->pose_flag_ = true;
+}
+
+void MPPIPursuitNode::pose_ref_callback(const geometry_msgs::msg::Pose2D::SharedPtr rxdata)
+{
+    this->pose_ref_ = *rxdata;
+    this->pose_ref_flag_ = true;
 }
 
 void MPPIPursuitNode::timer_callback()
