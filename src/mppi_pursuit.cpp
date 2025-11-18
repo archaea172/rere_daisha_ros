@@ -97,6 +97,7 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_deactivate(const rclcpp_life
 {
     this->wheel_vel_publisher->on_deactivate();
     this->pose_subscriber.reset();
+    this->pose_ref_subscriber.reset();
     this->mppi_timer.reset();
     RCLCPP_INFO(
       get_logger(),
@@ -109,6 +110,7 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_deactivate(const rclcpp_life
 MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_cleanup(const rclcpp_lifecycle::State &state)
 {
     this->pose_subscriber.reset();
+    this->pose_ref_subscriber.reset();
     this->mppi_timer.reset();
     RCLCPP_INFO(
       get_logger(),
@@ -132,6 +134,7 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_shutdown(const rclcpp_lifecy
 {
     this->wheel_vel_publisher.reset();
     this->pose_subscriber.reset();
+    this->pose_ref_subscriber.reset();
     this->mppi_timer.reset();
     RCLCPP_INFO(
       get_logger(),
