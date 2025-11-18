@@ -134,3 +134,36 @@ double MPPIControler::input_error(const Eigen::MatrixXd &input_State)
     double result = ((input_State.colwise().sum()/2).array().square() - std::pow(this->v_ref, 2)).sum();
     return result;
 }
+
+void MPPIControler::set_sample_num(int new_sample_num)
+{
+    this->sample_num_ = new_sample_num;
+}
+void MPPIControler::set_loop_num(int new_loop_num)
+{
+    this->loop_num_ = new_loop_num;
+}
+void MPPIControler::set_dt(double new_dt)
+{
+    this->dt = new_dt;
+}
+void MPPIControler::set_sig(Eigen::MatrixXd new_sig)
+{
+    this->sig = new_sig;
+}
+void MPPIControler::set_max_wheel_vel(double new_max_wheel_vel)
+{
+    this->clamp_abs = new_max_wheel_vel;
+}
+void MPPIControler::set_wheel_distance(double new_wheel_distance)
+{
+    this->d = new_wheel_distance;
+}
+void MPPIControler::set_weights(Eigen::VectorXd new_weights)
+{
+    this->weight_vector = new_weights;
+}
+void MPPIControler::set_lambda(double new_lambda)
+{
+    this->lambda = new_lambda;
+}
