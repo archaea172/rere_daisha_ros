@@ -184,6 +184,63 @@ rcl_interfaces::msg::SetParametersResult MPPIPursuitNode::parameters_callback(
     result.successful = true;
     result.reason = "success";
 
+    for (const auto &param : parameters)
+    {
+        if (param.get_name() == "sample_num" && param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
+        {
+            this->mppi_controler->set_sample_num(param.as_int());
+            RCLCPP_INFO(this->get_logger(), "Parameter changed");
+        }
+        else if (param.get_name() == "loop_num" && param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
+        {
+            this->mppi_controler->set_loop_num(param.as_int());
+            RCLCPP_INFO(this->get_logger(), "Parameter changed");
+        }
+        else if (param.get_name() == "dt" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+        {
+            this->mppi_controler->set_dt(param.as_double());
+            RCLCPP_INFO(this->get_logger(), "Parameter changed");
+        }
+        else if (param.get_name() == "max_wheel_vel" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+        {
+            this->mppi_controler->set_max_wheel_vel(param.as_double());
+            RCLCPP_INFO(this->get_logger(), "Parameter changed");
+        }
+        else if (param.get_name() == "wheel_distance" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+        {
+            this->mppi_controler->set_wheel_distance(param.as_double());
+            RCLCPP_INFO(this->get_logger(), "Parameter changed");
+        }
+        else if (param.get_name() == "lambda" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+        {
+            this->mppi_controler->set_lambda(param.as_double());
+            RCLCPP_INFO(this->get_logger(), "Parameter changed");
+        }
+        else if (param.get_name() == "sig" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY)
+        {
+            std::vector<double> sig_std = this->get_parameter("sig").as_double_array();
+            Eigen::MatrixXd sig_eigen(2, 2);
+            sig_eigen << 
+            sig_std[0], sig_std[1],
+            sig_std[2], sig_std[3];
+            this->mppi_controler->set_sig(sig_eigen);
+            RCLCPP_INFO(this->get_logger(), "Parameter changed");
+        }
+        else if (param.get_name() == "weights" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY)
+        {
+            std::vector<double> weight_std = param.as_double_array();
+            Eigen::VectorXd weight_eigen = Eigen::Map<const Eigen::VectorXd>(weight_std.data(), weight_std.size());
+            this->mppi_controler->set_weights(weight_eigen);
+            RCLCPP_INFO(this->get_logger(), "Parameter changed");
+        }
+        else
+        {
+            result.successful = false;
+            result.reason = "fail!";
+            RCLCPP_INFO(this->get_logger(), "Parameter change fail!!");
+        }
+    }
+
     return result;
 }
 
