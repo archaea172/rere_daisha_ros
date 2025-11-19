@@ -8,6 +8,14 @@ CanBridge::CanBridge()
         throw std::runtime_error("failed to open socket");
     }
 
+    int enable_canfd = 1;
+    if (setsockopt(this->sock, SOL_CAN_RAW, CAN_RAW_FD_FRAMES,
+    &enable_canfd, sizeof(enable_canfd)) < 0)
+    {
+        close(this->sock);
+        throw std::runtime_error("failed to socketopt canfd");
+    }
+
     ifreq ifr{};
     std::strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
     if (ioctl(this->sock, SIOCGIFINDEX, &ifr) < 0)
