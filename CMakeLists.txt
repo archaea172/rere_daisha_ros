@@ -162,6 +162,16 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# can library
+add_library(can_library
+  src/ros2can_bridge.cpp
+)
+
+target_include_directories(can_library PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
+  $<INSTALL_INTERFACE:include>
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks
