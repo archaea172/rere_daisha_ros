@@ -5,6 +5,9 @@
 
 #include "std_msgs/msg/float64_multi_array.hpp"
 
+using std::placeholders::_1;
+using namespace std::chrono_literals;
+
 class Ros2CanBridge
 : public rclcpp_lifecycle::LifecycleNode
 {
