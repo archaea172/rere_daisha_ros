@@ -172,6 +172,27 @@ target_include_directories(can_library PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
+# bridge
+add_executable(ros2_can_bridge
+  src/ros2can_bridge.cpp
+  include/${PROJECT_NAME}/ros2can_bridge.hpp
+)
+
+target_link_libraries(ros2_can_bridge
+  can_library
+)
+
+ament_target_dependencies(ros2_can_bridge
+  rclcpp
+  rclcpp_lifecycle
+  std_msgs
+)
+
+install(
+  TARGETS ros2_can_bridge
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks
