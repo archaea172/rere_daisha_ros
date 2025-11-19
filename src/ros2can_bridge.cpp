@@ -51,5 +51,22 @@ int CanBridge::send_float(int canid, std::vector<float> txdata_f)
     frame.can_id = canid;
     frame.len = byte_length;
     frame.flags = 1;
-    
+    for (int i = 0; i < (int)txdata_f.size(); i++)
+    {
+        union Data data;
+        data.data_f32 = txdata_f[i];
+        frame.data[i*4    ] = (uint8_t)((data.data_ui32 >> 24) & 0xff);
+        frame.data[i*4 + 1] = (uint8_t)((data.data_ui32 >> 16) & 0xff);
+        frame.data[i*4 + 2] = (uint8_t)((data.data_ui32 >>  8) & 0xff);
+        frame.data[i*4 + 3] = (uint8_t)((data.data_ui32      ) & 0xff);
+    }
+    int nbytes = write(this->sock, &frame, sizeof(frame));
+    if (nbytes < 0)
+    {
+        throw std::runtime_error("failed to write");
+    }
+    else
+    {
+        return 0;
+    }
 }
