@@ -85,6 +85,15 @@ Ros2CanBridge::CallbackReturn Ros2CanBridge::on_shutdown(const rclcpp_lifecycle:
 void Ros2CanBridge::vel_callback(const std_msgs::msg::Float64MultiArray::SharedPtr rxdata)
 {
     int size = rxdata->data.size();
+    if (size != 2)
+    {
+        RCLCPP_INFO(this->get_logger(), "size is not right");
+        return;
+    }
+    std::vector<float> txdata(2);
+    txdata[0] = rxdata->data[0];
+    txdata[1] = rxdata->data[1];
+    this->bridge->send_float(0x200, txdata);
 }
 
 int main(int argc, char *argv[])
