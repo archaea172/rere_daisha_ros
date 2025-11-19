@@ -3,6 +3,10 @@
 #include <net/if.h>
 #include <linux/can.h>
 #include <linux/can/raw.h>
+#include <vector>
+#include <stdexcept>
+#include <cstring>
+#include <unistd.h>
 
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
