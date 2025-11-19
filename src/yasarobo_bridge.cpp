@@ -91,8 +91,8 @@ void Ros2CanBridge::vel_callback(const std_msgs::msg::Float64MultiArray::SharedP
         return;
     }
     std::vector<float> txdata(2);
-    txdata[0] = rxdata->data[0];
-    txdata[1] = rxdata->data[1];
+    txdata[0] = (float)rxdata->data[0];
+    txdata[1] = (float)rxdata->data[1];
     this->bridge->send_float(0x200, txdata);
 }
 
