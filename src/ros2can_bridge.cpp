@@ -33,7 +33,13 @@ CanBridge::CanBridge()
         throw std::runtime_error("failed to bind");
     }
 }
+
 CanBridge::~CanBridge()
 {
     close(this->sock);
+}
+
+int CanBridge::send_float(int canid, std::vector<float> txdata_f)
+{
+
 }
