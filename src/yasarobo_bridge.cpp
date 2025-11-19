@@ -94,6 +94,7 @@ void Ros2CanBridge::vel_callback(const std_msgs::msg::Float64MultiArray::SharedP
     txdata[0] = (float)rxdata->data[0];
     txdata[1] = (float)rxdata->data[1];
     this->bridge->send_float(0x200, txdata);
+    RCLCPP_INFO(this->get_logger(), "send!");
 }
 
 int main(int argc, char *argv[])
