@@ -81,3 +81,17 @@ Ros2CanBridge::CallbackReturn Ros2CanBridge::on_shutdown(const rclcpp_lifecycle:
       state.label().c_str());
     return CallbackReturn::SUCCESS;
 }
+
+void Ros2CanBridge::vel_callback(const std_msgs::msg::Float64MultiArray::SharedPtr rxdata)
+{
+    int size = rxdata->data.size();
+}
+
+int main(int argc, char *argv[])
+{
+    rclcpp::init(argc, argv);
+    std::shared_ptr<Ros2CanBridge> node = std::make_shared<Ros2CanBridge>();
+    rclcpp::spin(node->get_node_base_interface());
+    rclcpp::shutdown();
+    return 0;
+}
