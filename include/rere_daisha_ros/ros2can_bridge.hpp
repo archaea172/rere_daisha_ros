@@ -10,6 +10,7 @@ class CanBridge
 {
 public:
     CanBridge();
+    ~CanBridge();
 private:
     const char* ifname;
 };
