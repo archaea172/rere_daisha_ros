@@ -51,7 +51,7 @@ int CanBridge::send_float(int canid, std::vector<float> txdata_f)
     canfd_frame frame{};
     frame.can_id = canid;
     frame.len = byte_length;
-    frame.flags = 1;
+    frame.flags |= CANFD_BRS;
     for (int i = 0; i < (int)txdata_f.size(); i++)
     {
         union Data data;
