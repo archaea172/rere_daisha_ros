@@ -15,7 +15,7 @@ Ros2CanBridge::CallbackReturn Ros2CanBridge::on_configure(const rclcpp_lifecycle
       state.id(),
       state.label().c_str());
 
-    this->bridge = std::make_unique<Ros2CanBridge>(this->Ifname);
+    this->bridge = std::make_unique<CanBridge>(this->Ifname);
 
     return CallbackReturn::SUCCESS;
 }
