@@ -15,8 +15,6 @@ Ros2CanBridge::CallbackReturn Ros2CanBridge::on_configure(const rclcpp_lifecycle
       state.id(),
       state.label().c_str());
 
-    this->bridge = std::make_unique<CanBridge>(this->Ifname);
-
     return CallbackReturn::SUCCESS;
 }
 
@@ -27,11 +25,59 @@ Ros2CanBridge::CallbackReturn Ros2CanBridge::on_activate(const rclcpp_lifecycle:
         rclcpp::SystemDefaultsQoS(),
         std::bind(&Ros2CanBridge::vel_callback, this, _1)
     );
+
+    this->bridge = std::make_unique<CanBridge>(this->Ifname);
     RCLCPP_INFO(
       get_logger(),
       "on_activate() called. state: id=%u, label=%s",
       state.id(),
       state.label().c_str());
 
+    return CallbackReturn::SUCCESS;
+}
+
+Ros2CanBridge::CallbackReturn Ros2CanBridge::on_deactivate(const rclcpp_lifecycle::State &state)
+{
+    this->input_subscriber.reset();
+    this->bridge.reset();
+    RCLCPP_INFO(
+      get_logger(),
+      "on_deactivate() called. state: id=%u, label=%s",
+      state.id(),
+      state.label().c_str());
+    return CallbackReturn::SUCCESS;
+}
+
+Ros2CanBridge::CallbackReturn Ros2CanBridge::on_cleanup(const rclcpp_lifecycle::State &state)
+{
+    this->input_subscriber.reset();
+    this->bridge.reset();
+    RCLCPP_INFO(
+      get_logger(),
+      "on_cleanup() called. state: id=%u, label=%s",
+      state.id(),
+      state.label().c_str());
+    return CallbackReturn::SUCCESS;
+}
+
+Ros2CanBridge::CallbackReturn Ros2CanBridge::on_error(const rclcpp_lifecycle::State &state)
+{
+    RCLCPP_INFO(
+      get_logger(),
+      "on_error() called. state: id=%u, label=%s",
+      state.id(),
+      state.label().c_str());
+    return CallbackReturn::SUCCESS;
+}
+
+Ros2CanBridge::CallbackReturn Ros2CanBridge::on_shutdown(const rclcpp_lifecycle::State &state)
+{
+    this->input_subscriber.reset();
+    this->bridge.reset();
+    RCLCPP_INFO(
+      get_logger(),
+      "on_shutdown() called. state: id=%u, label=%s",
+      state.id(),
+      state.label().c_str());
     return CallbackReturn::SUCCESS;
 }
