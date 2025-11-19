@@ -13,6 +13,7 @@ public:
     ~CanBridge();
 private:
     const char* ifname;
+    int sock;
 };
 
 class ros2can_bridge_node
