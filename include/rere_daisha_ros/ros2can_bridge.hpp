@@ -8,9 +8,6 @@
 #include <cstring>
 #include <unistd.h>
 
-#include "rclcpp/rclcpp.hpp"
-#include "rclcpp_lifecycle/lifecycle_node.hpp"
-
 class CanBridge
 {
 public:
@@ -25,13 +22,4 @@ private:
     uint32_t data_ui32;
     float data_f32;
     };
-};
-
-class ros2can_bridge_node
-: public rclcpp_lifecycle::LifecycleNode
-{
-public:
-    ros2can_bridge_node();
-private:
-    const char* ifname;
 };
