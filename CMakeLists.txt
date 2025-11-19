@@ -174,8 +174,8 @@ target_include_directories(can_library PUBLIC
 
 # bridge
 add_executable(ros2_can_bridge
-  src/ros2can_bridge.cpp
-  include/${PROJECT_NAME}/ros2can_bridge.hpp
+  src/yasarobo_bridge.cpp
+  include/${PROJECT_NAME}/yasarobo_bridge.hpp
 )
 
 target_link_libraries(ros2_can_bridge
