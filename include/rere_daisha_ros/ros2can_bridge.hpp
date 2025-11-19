@@ -24,7 +24,7 @@ private:
 };
 
 class ros2can_bridge_node
-: rclcpp_lifecycle::LifecycleNode
+: public rclcpp_lifecycle::LifecycleNode
 {
 public:
     ros2can_bridge_node();
