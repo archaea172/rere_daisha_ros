@@ -41,5 +41,15 @@ CanBridge::~CanBridge()
 
 int CanBridge::send_float(int canid, std::vector<float> txdata_f)
 {
+    int byte_length = (int)txdata_f.size() * 4;
+    if (byte_length > 64)
+    {
+        return -1;
+    }
 
+    canfd_frame frame{};
+    frame.can_id = canid;
+    frame.len = byte_length;
+    frame.flags = 1;
+    
 }
