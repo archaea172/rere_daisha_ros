@@ -5,11 +5,12 @@
 #include <linux/can/raw.h>
 
 #include "rclcpp/rclcpp.hpp"
+#include "rclcpp_lifecycle/lifecycle_node.hpp"
 
 class CanBridge
 {
 public:
-    CanBridge();
+    CanBridge(const char* Ifname);
     ~CanBridge();
     int send_float(int canid, std::vector<float> txdata_f);
 private:
@@ -23,7 +24,7 @@ private:
 };
 
 class ros2can_bridge_node
-: rclcpp::Node
+: rclcpp_lifecycle::LifecycleNode
 {
 public:
     ros2can_bridge_node();

@@ -1,6 +1,7 @@
 #include "ros2can_bridge.hpp"
 
-CanBridge::CanBridge()
+CanBridge::CanBridge(const char* Ifname)
+: ifname(Ifname)
 {
     this->sock = socket(PF_CAN, SOCK_RAW, CAN_RAW);
     if (this->sock < 0)
