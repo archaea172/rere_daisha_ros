@@ -15,6 +15,11 @@ public:
 private:
     const char* ifname;
     int sock;
+    union Data
+    {
+    uint32_t data_ui32;
+    float data_f32;
+    };
 };
 
 class ros2can_bridge_node
