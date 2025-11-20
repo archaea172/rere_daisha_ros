@@ -24,5 +24,5 @@ private:
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_vel_subscriber;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_publisher;
 
-    double d;
+    double wheel_distance;
 };
