@@ -26,7 +26,16 @@ Ros2CanBridge::CallbackReturn Ros2CanBridge::on_activate(const rclcpp_lifecycle:
         std::bind(&Ros2CanBridge::vel_callback, this, _1)
     );
 
-    this->bridge = std::make_unique<CanBridge>(this->Ifname);
+	try
+	{
+		this->bridge = std::make_unique<CanBridge>(this->Ifname);
+	}
+	catch(const std::exception& e)
+	{
+		RCLCPP_INFO(this->get_logger(), "please check can0");
+		return CallbackReturn::FAILURE;
+	}
+	
     RCLCPP_INFO(
       get_logger(),
       "on_activate() called. state: id=%u, label=%s",
@@ -94,7 +103,14 @@ void Ros2CanBridge::vel_callback(const std_msgs::msg::Float64MultiArray::SharedP
     txdata[0] = (float)rxdata->data[0];
     txdata[1] = (float)rxdata->data[1];
     this->bridge->send_float(0x200, txdata);
-    RCLCPP_INFO(this->get_logger(), "send!");
+	try
+	{
+		RCLCPP_INFO(this->get_logger(), "send!");
+	}
+	catch(const std::exception& e)
+	{
+		RCLCPP_INFO(this->get_logger(), "fail to write");
+	}
 }
 
 int main(int argc, char *argv[])
