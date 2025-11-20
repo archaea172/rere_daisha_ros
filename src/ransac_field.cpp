@@ -6,7 +6,12 @@ RansacField::RansacField()
 
 }
 
-void RansacField::run(Eigen::MatrixXd scan_points)
+void RansacField::run(const Eigen::MatrixXd &scan_points)
 {
-
+    const Eigen::Index row_num = scan_points.cols();
+    std::vector<Eigen::Index> indices(row_num);
+    for (Eigen::Index i = 0; i < row_num; i++)
+    {
+        indices[i] = i;
+    }
 }
