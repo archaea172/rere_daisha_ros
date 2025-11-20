@@ -11,7 +11,7 @@ void RansacField::run()
 
 }
 
-std::vector<int> RansacBall::sampring(uint max_val, uint num)
+std::vector<int> RansacField::sampring(uint max_val, uint num)
 {
     if (num > max_val) {
         return {};
