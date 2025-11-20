@@ -16,6 +16,10 @@ ConvertDiffCmdVel::ConvertDiffCmdVel()
         rclcpp::SystemDefaultsQoS(),
         std::bind(&ConvertDiffCmdVel::wheel_vel_callback, this, _1)
     );
+    
+    this->parameter_callback_hanle_ = this->add_on_set_parameters_callback(
+        std::bind(&ConvertDiffCmdVel::parameters_callback, this, _1)
+    );
 }
 
 void ConvertDiffCmdVel::wheel_vel_callback(const std_msgs::msg::Float64MultiArray::SharedPtr rxdata)
@@ -30,6 +34,19 @@ void ConvertDiffCmdVel::wheel_vel_callback(const std_msgs::msg::Float64MultiArra
     txdata.angular.set__z(omega);
 
     this->cmd_vel_publisher->publish(txdata);
+}
+
+rcl_interfaces::msg::SetParametersResult ConvertDiffCmdVel::parameters_callback(
+    const std::vector<rclcpp::Parameter> &parameters
+)
+{
+    rcl_interfaces::msg::SetParametersResult result;
+    result.successful = true;
+    result.reason = "success";
+    for (const auto &param : parameters)
+    {
+
+    }
 }
 
 int main(int argc, char *argv[])
