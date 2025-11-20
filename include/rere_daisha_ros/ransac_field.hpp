@@ -10,5 +10,6 @@ public:
 private:
     std::vector<int> sampring(uint max_val, uint num);
 
-    Eigen::Vector3d pose;
+    Eigen::Vector3d pose_;
+    Eigen::Vector3d pose_init_;
 };
