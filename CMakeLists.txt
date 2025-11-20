@@ -162,6 +162,37 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# can library
+add_library(can_library
+  src/ros2can_bridge.cpp
+)
+
+target_include_directories(can_library PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
+  $<INSTALL_INTERFACE:include>
+)
+
+# bridge
+add_executable(ros2_can_bridge
+  src/yasarobo_bridge.cpp
+  include/${PROJECT_NAME}/yasarobo_bridge.hpp
+)
+
+target_link_libraries(ros2_can_bridge
+  can_library
+)
+
+ament_target_dependencies(ros2_can_bridge
+  rclcpp
+  rclcpp_lifecycle
+  std_msgs
+)
+
+install(
+  TARGETS ros2_can_bridge
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks
