@@ -45,8 +45,19 @@ rcl_interfaces::msg::SetParametersResult ConvertDiffCmdVel::parameters_callback(
     result.reason = "success";
     for (const auto &param : parameters)
     {
-
+        if (param.get_name() == "wheel_vel" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+        {
+            this->wheel_distance = param.as_double();
+            RCLCPP_INFO(this->get_logger(), "Parameter changed");
+        }
+        else
+        {
+            result.successful = false;
+            result.reason = "fail!";
+            RCLCPP_INFO(this->get_logger(), "Parameter change fail!!");
+        }
     }
+    return result;
 }
 
 int main(int argc, char *argv[])
