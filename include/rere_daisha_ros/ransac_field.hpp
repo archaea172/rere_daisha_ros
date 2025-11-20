@@ -7,7 +7,7 @@ class RansacField
 {
 public:
     RansacField();
-    void run();
+    void run(Eigen::MatrixXd scan_points);
 private:
     
 

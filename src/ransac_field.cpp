@@ -6,7 +6,7 @@ RansacField::RansacField()
 
 }
 
-void RansacField::run()
+void RansacField::run(Eigen::MatrixXd scan_points)
 {
 
 }
