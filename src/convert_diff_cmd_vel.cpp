@@ -10,7 +10,7 @@ ConvertDiffCmdVel::ConvertDiffCmdVel()
         std::string("cmd_vel_feedback"),
         rclcpp::SystemDefaultsQoS()
     );
-    
+
     this->wheel_vel_subscriber = this->create_subscription<std_msgs::msg::Float64MultiArray>(
         std::string("wheel_vel"),
         rclcpp::SystemDefaultsQoS(),
@@ -23,7 +23,13 @@ void ConvertDiffCmdVel::wheel_vel_callback(const std_msgs::msg::Float64MultiArra
     double vr = rxdata->data[0];
     double vl = rxdata->data[1];
     double v = (vr + vl) / 2;
-    double w = (vr + vl) / 2;
+    double omega = (vr - vl) / (2 * this->wheel_distance);
+
+    geometry_msgs::msg::Twist txdata;
+    txdata.linear.set__x(v);
+    txdata.angular.set__z(omega);
+
+    this->cmd_vel_publisher->publish(txdata);
 }
 
 int main(int argc, char *argv[])
