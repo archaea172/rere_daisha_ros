@@ -14,6 +14,14 @@ ConvertDiffCmdVel::ConvertDiffCmdVel()
     );
 }
 
+void ConvertDiffCmdVel::wheel_vel_callback(const std_msgs::msg::Float64MultiArray::SharedPtr rxdata)
+{
+    double vr = rxdata->data[0];
+    double vl = rxdata->data[1];
+    double v = (vr + vl) / 2;
+    double w = (vr + vl) / 2;
+}
+
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
