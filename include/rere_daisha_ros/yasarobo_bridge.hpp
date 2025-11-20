@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ros2can_bridge.hpp"
 
 #include "rclcpp/rclcpp.hpp"
