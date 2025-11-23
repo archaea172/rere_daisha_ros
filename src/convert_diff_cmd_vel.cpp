@@ -29,8 +29,13 @@ ConvertDiffCmdVel::ConvertDiffCmdVel()
 
 void ConvertDiffCmdVel::wheel_vel_callback(const std_msgs::msg::Float64MultiArray::SharedPtr rxdata)
 {
-    double vr = rxdata->data[0];
-    double vl = rxdata->data[1];
+
+}
+
+void ConvertDiffCmdVel::timer_callback()
+{
+    double vr = vel_.data[0];
+    double vl = vel_.data[1];
     double v = (vr + vl) / 2;
     double omega = (vr - vl) / (2 * this->wheel_distance);
 
@@ -39,11 +44,6 @@ void ConvertDiffCmdVel::wheel_vel_callback(const std_msgs::msg::Float64MultiArra
     txdata.angular.set__z(omega);
 
     this->cmd_vel_publisher->publish(txdata);
-}
-
-void ConvertDiffCmdVel::timer_callback()
-{
-    
 }
 
 rcl_interfaces::msg::SetParametersResult ConvertDiffCmdVel::parameters_callback(
