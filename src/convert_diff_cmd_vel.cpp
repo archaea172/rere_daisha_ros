@@ -29,19 +29,31 @@ ConvertDiffCmdVel::ConvertDiffCmdVel()
 
 void ConvertDiffCmdVel::wheel_vel_callback(const std_msgs::msg::Float64MultiArray::SharedPtr rxdata)
 {
-
+    this->vel_ = *rxdata;
 }
 
 void ConvertDiffCmdVel::timer_callback()
 {
-    double vr = vel_.data[0];
-    double vl = vel_.data[1];
-    double v = (vr + vl) / 2;
-    double omega = (vr - vl) / (2 * this->wheel_distance);
-
     geometry_msgs::msg::Twist txdata;
-    txdata.linear.set__x(v);
-    txdata.angular.set__z(omega);
+
+    if (this->vel_.data.size() == 0)
+    {
+
+    }
+    else if ()
+    {
+        
+    }
+    else
+    {
+        double vr = vel_.data[0];
+        double vl = vel_.data[1];
+        double v = (vr + vl) / 2;
+        double omega = (vr - vl) / (2 * this->wheel_distance);
+
+        txdata.linear.set__x(v);
+        txdata.angular.set__z(omega);
+    }
 
     this->cmd_vel_publisher->publish(txdata);
 }
