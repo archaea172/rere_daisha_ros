@@ -27,4 +27,6 @@ private:
     rclcpp::TimerBase::SharedPtr pub_timer;
 
     double wheel_distance;
+
+    std_msgs::msg::Float64MultiArray vel_;
 };
