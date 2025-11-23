@@ -30,6 +30,7 @@ ConvertDiffCmdVel::ConvertDiffCmdVel()
 void ConvertDiffCmdVel::wheel_vel_callback(const std_msgs::msg::Float64MultiArray::SharedPtr rxdata)
 {
     this->vel_ = *rxdata;
+    this->last_msg_time_ = this->now();
 }
 
 void ConvertDiffCmdVel::timer_callback()
@@ -38,11 +39,16 @@ void ConvertDiffCmdVel::timer_callback()
 
     if (this->vel_.data.size() == 0)
     {
-
+        txdata.linear.set__y(0);
+        txdata.angular.set__z(0);
+        this->cmd_vel_publisher->publish(txdata);
+        return;
     }
-    else if ()
+    auto now = this->now();
+    const bool stale = (now - last_msg_time_) > rclcpp::Duration::from_seconds(0.5);
+    if (stale)
     {
-        
+
     }
     else
     {

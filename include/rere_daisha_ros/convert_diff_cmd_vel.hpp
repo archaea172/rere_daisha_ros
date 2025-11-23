@@ -29,4 +29,5 @@ private:
     double wheel_distance;
 
     std_msgs::msg::Float64MultiArray vel_;
+    rclcpp::Time last_msg_time_;
 };
