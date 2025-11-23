@@ -48,7 +48,8 @@ void ConvertDiffCmdVel::timer_callback()
     const bool stale = (now - last_msg_time_) > rclcpp::Duration::from_seconds(0.5);
     if (stale)
     {
-
+        txdata.linear.set__y(0);
+        txdata.angular.set__z(0);
     }
     else
     {
