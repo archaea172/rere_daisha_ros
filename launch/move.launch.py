@@ -1,6 +1,10 @@
 from launch import LaunchDescription
 from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
 
 import math
 
@@ -41,5 +45,14 @@ def generate_launch_description():
         }]
     )
     ld.add_action(convert_node)
+
+    ldlidar_node = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution(
+                [FindPackageShare("ldlidar_node"), "launch", "ldlidar_with_mgr.launch.py"]
+            )
+        ),
+    )
+    ld.add_action(ldlidar_node)
 
     return ld
