@@ -40,7 +40,7 @@ def generate_launch_description():
         package='rere_daisha_ros',
         executable='convert_diff_cmd_vel',
         parameters=[{
-            "wheel_distance": 0.5
+            "wheel_distance": 0.190
         }]
     )
     ld.add_action(convert_node)
