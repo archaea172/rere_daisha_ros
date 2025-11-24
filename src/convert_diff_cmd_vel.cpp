@@ -2,9 +2,9 @@
 
 ConvertDiffCmdVel::ConvertDiffCmdVel()
 : rclcpp::Node(std::string("convert_diff_cmd_vel")),
+last_msg_time_(this->now()),
 msg_flag_(false),
-watch_dog_time_(rclcpp::Duration::from_seconds(0.5)),
-last_msg_time_(this->now())
+watch_dog_time_(rclcpp::Duration::from_seconds(0.5))
 {
     this->declare_parameter<double>("wheel_distance", 0.5);
     this->wheel_distance = this->get_parameter("wheel_distance").as_double();
