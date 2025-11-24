@@ -11,7 +11,7 @@ import math
 def generate_launch_description():
     x = 0.5
     y = 0.5
-    theta = 0
+    theta = 0.0
 
     name_space = 'rere_daisha'
     ld = LaunchDescription()
@@ -19,7 +19,6 @@ def generate_launch_description():
     mcl_node = Node(
         package="yasarobo2025_26",
         executable="mcl_node",
-        namespace=name_space,
         parameters=[{
             "particleNum": 50,
             "initial_x": x,
@@ -40,7 +39,6 @@ def generate_launch_description():
     convert_node = Node(
         package='rere_daisha_ros',
         executable='convert_diff_cmd_vel',
-        namespace=name_space,
         parameters=[{
             "wheel_distance": 0.5
         }]
