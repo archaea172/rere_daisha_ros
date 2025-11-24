@@ -45,6 +45,7 @@ void ConvertDiffCmdVel::timer_callback()
     const bool stale = !this->msg_flag_ || ((now - last_msg_time_) > this->watch_dog_time_);
     if (stale)
     {
+        txdata.linear.set__x(0);
         txdata.linear.set__y(0);
         txdata.angular.set__z(0);
     }
@@ -55,6 +56,7 @@ void ConvertDiffCmdVel::timer_callback()
         double v = (vr + vl) / 2;
         double omega = (vr - vl) / (2 * this->wheel_distance);
 
+        txdata.linear.set__x(0);
         txdata.linear.set__y(v);
         txdata.angular.set__z(omega);
     }
