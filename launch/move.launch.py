@@ -32,6 +32,7 @@ def generate_launch_description():
             "resampleThreshold": 0.9,
             "scanStep": 5,
             "lidar_threshold": 3.0/40.0*math.pi,
+            "mapDir": "/home/sunrise/rere_daisha_ws/src/yasarobo2025_26/map/"
         }],
     )
     ld.add_action(mcl_node)
