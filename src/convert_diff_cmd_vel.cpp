@@ -1,7 +1,10 @@
 #include "convert_diff_cmd_vel.hpp"
 
 ConvertDiffCmdVel::ConvertDiffCmdVel()
-: rclcpp::Node(std::string("convert_diff_cmd_vel"))
+: rclcpp::Node(std::string("convert_diff_cmd_vel")),
+msg_flag_(false),
+watch_dog_time_(rclcpp::Duration::from_seconds(0.5)),
+last_msg_time_(this->now())
 {
     this->declare_parameter<double>("wheel_distance", 0.5);
     this->wheel_distance = this->get_parameter("wheel_distance").as_double();
@@ -31,21 +34,15 @@ void ConvertDiffCmdVel::wheel_vel_callback(const std_msgs::msg::Float64MultiArra
 {
     this->vel_ = *rxdata;
     this->last_msg_time_ = this->now();
+    this->msg_flag_ = true;
 }
 
 void ConvertDiffCmdVel::timer_callback()
 {
     geometry_msgs::msg::Twist txdata;
 
-    if (this->vel_.data.size() == 0)
-    {
-        txdata.linear.set__y(0);
-        txdata.angular.set__z(0);
-        this->cmd_vel_publisher->publish(txdata);
-        return;
-    }
     auto now = this->now();
-    const bool stale = (now - last_msg_time_) > rclcpp::Duration::from_seconds(0.5);
+    const bool stale = !this->msg_flag_ || ((now - last_msg_time_) > this->watch_dog_time_);
     if (stale)
     {
         txdata.linear.set__y(0);

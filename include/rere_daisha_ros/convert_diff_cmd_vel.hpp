@@ -30,4 +30,6 @@ private:
 
     std_msgs::msg::Float64MultiArray vel_;
     rclcpp::Time last_msg_time_;
+    bool msg_flag_;
+    rclcpp::Duration watch_dog_time_;
 };
