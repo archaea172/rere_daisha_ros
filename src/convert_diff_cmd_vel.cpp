@@ -55,7 +55,7 @@ void ConvertDiffCmdVel::timer_callback()
         double v = (vr + vl) / 2;
         double omega = (vr - vl) / (2 * this->wheel_distance);
 
-        txdata.linear.set__x(v);
+        txdata.linear.set__y(v);
         txdata.angular.set__z(omega);
     }
 
@@ -71,7 +71,7 @@ rcl_interfaces::msg::SetParametersResult ConvertDiffCmdVel::parameters_callback(
     result.reason = "success";
     for (const auto &param : parameters)
     {
-        if (param.get_name() == "wheel_vel" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
+        if (param.get_name() == "wheel_distance" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE)
         {
             this->wheel_distance = param.as_double();
             RCLCPP_INFO(this->get_logger(), "Parameter changed");
