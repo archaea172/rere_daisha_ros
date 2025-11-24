@@ -32,4 +32,14 @@ def generate_launch_description():
     )
     ld.add_action(mcl_node)
 
-    
+    convert_node = Node(
+        package='rere_daisha_ros',
+        executable='convert_diff_cmd_vel',
+        namespace=name_space,
+        parameters=[{
+            "wheel_distance": 0.5
+        }]
+    )
+    ld.add_action(convert_node)
+
+    return ld
