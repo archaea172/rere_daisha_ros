@@ -53,5 +53,17 @@ def generate_launch_description():
         ),
     )
     ld.add_action(ldlidar_node)
+    
+    gen_path = Node(
+        package="yasarobo2025_26",
+        executable="gen_path",
+        output="screen",
+        parameters=[{
+            "initial_x": x,
+            "initial_y": y,
+            "initial_theta": 0.0,
+        }],
+    )
+    ld.add_action(gen_path)
 
     return ld
