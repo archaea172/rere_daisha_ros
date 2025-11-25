@@ -32,6 +32,9 @@ Eigen::VectorXd MPPIControler::run(const Eigen::VectorXd &state, const nav_msgs:
     Eigen::MatrixXd input_first(2, this->loop_num_);
 
     Eigen::MatrixXd path_ref = this->pathToEigenMatrix(path, state(0), state(1));
+    const auto& goal_pos = path.poses.back().pose.position;
+    Eigen::MatrixXd goal_pos_eigen(2);
+    goal_pos_eigen << goal_pos.x, goal_pos.y;
 
     #pragma omp parallel for
     for (size_t i = 0; i < (size_t)this->loop_num_; i++)
