@@ -134,7 +134,7 @@ double MPPIControler::input_error(const Eigen::MatrixXd &input_State)
 double MPPIControler::path_error(const Eigen::MatrixXd &input_State, const Eigen::MatrixXd &path_ref)
 {
     Eigen::MatrixXd diff = path_ref - input_State;
-    double result = diff.array().sqrt().sum();
+    double result = diff.array().square().sum();
     return result;
 }
 
