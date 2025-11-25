@@ -31,7 +31,7 @@ Eigen::VectorXd MPPIControler::run(const Eigen::VectorXd &state, const nav_msgs:
     Eigen::VectorXd evaluation_result(this->loop_num_);
     Eigen::MatrixXd input_first(2, this->loop_num_);
 
-    Eigen::MatrixXd path_ref = this->pathToEigenMatrix(path);
+    Eigen::MatrixXd path_ref = this->pathToEigenMatrix(path, state(0), state(1));
 
     #pragma omp parallel for
     for (size_t i = 0; i < (size_t)this->loop_num_; i++)
@@ -177,6 +177,9 @@ void MPPIControler::set_lambda(double new_lambda)
 
 Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path, double robot_x, double robot_y)
 {
+    int closest_idx = 0;
+    double min_dist_sq = std::numeric_limits<double>::max();
+
     double step_dist = this->v_ref * this->dt;
     std::vector<double> cum_dist;
     cum_dist.push_back(0.0);
