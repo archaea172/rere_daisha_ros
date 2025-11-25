@@ -184,4 +184,11 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
         cum_dist.push_back(cum_dist.back() + dist);
     }
     double total_dist = cum_dist.back();
+
+    int num_steps = static_cast<int>(total_dist / step_dist);
+    if (num_steps == 0) num_steps = 1;
+    size_t matrix_size;
+    if (num_steps > this->horizon_step_) matrix_size = this->horizon_step_;
+    else matrix_size = num_steps;
+
 }
