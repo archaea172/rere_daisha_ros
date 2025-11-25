@@ -171,3 +171,8 @@ void MPPIControler::set_lambda(double new_lambda)
 {
     this->lambda = new_lambda;
 }
+
+Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path)
+{
+
+}
