@@ -7,4 +7,4 @@
     wheel_distance: 0.190
     lambda: 0.8
     sig: [0.5, 0.0, 0.0, 1.5]
-    weights: [10, 0.01, 0.1]
+    weights: [10.0, 0.01, 0.1]
