@@ -14,7 +14,7 @@ MPPIPursuitNode::MPPIPursuitNode()
 
     std::vector<double> sig_default = {1, 0, 0, 1};
     this->declare_parameter("sig", sig_default);
-    std::vector<double> weight_default = {1, 1, 1};
+    std::vector<double> weight_default = {1, 1, 1, 1};
     this->declare_parameter("weights", weight_default);
 
     this->sample_num = this->get_parameter("sample_num").as_int();
