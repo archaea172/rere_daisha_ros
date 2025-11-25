@@ -56,8 +56,8 @@ void ConvertDiffCmdVel::timer_callback()
         double v = (vr + vl) / 2;
         double omega = (vr - vl) / (2 * this->wheel_distance);
 
-        txdata.linear.set__x(0);
-        txdata.linear.set__y(v);
+        txdata.linear.set__x(v);
+        txdata.linear.set__y(0);
         txdata.angular.set__z(omega);
     }
 
