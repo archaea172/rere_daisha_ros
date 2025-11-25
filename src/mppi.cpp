@@ -191,4 +191,37 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
     if (num_steps > this->horizon_step_) matrix_size = this->horizon_step_;
     else matrix_size = num_steps;
 
+    Eigen::MatrixXd traj(matrix_size, 2);
+    int current_idx = 0;
+    for (size_t i = 0; i < matrix_size; i++)
+    {
+        double target_d = i * step_dist;
+        while (current_idx < (int)cum_dist.size() - 2 && cum_dist[current_idx + 1] < target_d)
+        {
+            current_idx++;
+        }
+        
+        double d0 = cum_dist[current_idx];
+        double d1 = cum_dist[current_idx + 1];
+        double segment_len = d1 - d0;
+        
+        double x_out, y_out;
+
+        if (segment_len < 1e-6) {
+            x_out = path.poses[current_idx].pose.position.x;
+            y_out = path.poses[current_idx].pose.position.y;
+        } else {
+            double alpha = (target_d - d0) / segment_len;
+            double x0 = path.poses[current_idx].pose.position.x;
+            double y0 = path.poses[current_idx].pose.position.y;
+            double x1 = path.poses[current_idx + 1].pose.position.x;
+            double y1 = path.poses[current_idx + 1].pose.position.y;
+
+            x_out = (1.0 - alpha) * x0 + alpha * x1;
+            y_out = (1.0 - alpha) * y0 + alpha * y1;
+        }
+        traj(i, 0) = x_out;
+        traj(i, 1) = y_out;
+    }
+    return traj;
 }
