@@ -53,20 +53,15 @@ Eigen::VectorXd MPPIControler::run(const Eigen::VectorXd &state, const Eigen::Ve
 Eigen::MatrixXd MPPIControler::sampling_dim2()
 {
     thread_local std::mt19937_64 local_gen{1234u + static_cast<unsigned>(omp_get_thread_num())};
-    thread_local std::uniform_real_distribution<double> local_uni(0.0, 1.0);
-
+    std::normal_distribution<double> dist(0.0, 1.0);
+    
     Eigen::MatrixXd y_s(this->dim_num_, this->sample_num_);
     for (size_t i = 0; i < (size_t)this->sample_num_; i++)
     {
-        double u1 = local_uni(local_gen);
-        double u2 = local_uni(local_gen);
-        u1 = std::max(u1, std::numeric_limits<double>::min());
-
-        double r = std::sqrt(-2.0*std::log(u1));
-        double theta = 2.0*M_PI*u2;
-
-        y_s(0, i) = r * std::cos(theta);
-        y_s(1, i) = r * std::sin(theta);
+        for (int j = 0; j < 2; j++)
+        {
+            y_s(j, i) = dist(local_gen);
+        }
     }
 
     Eigen::MatrixXd z_s = this->error_L_matrix * y_s;

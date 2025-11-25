@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+#include <omp.h>
+
 class MPPIControler
 {
     public:
