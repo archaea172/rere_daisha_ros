@@ -175,7 +175,7 @@ void MPPIControler::set_lambda(double new_lambda)
     this->lambda = new_lambda;
 }
 
-Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path)
+Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path, double robot_x, double robot_y)
 {
     double step_dist = this->v_ref * this->dt;
     std::vector<double> cum_dist;

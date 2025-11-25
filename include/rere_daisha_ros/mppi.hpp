@@ -43,7 +43,7 @@ class MPPIControler
         double input_error(const Eigen::MatrixXd &input_State);
         double path_error(const Eigen::MatrixXd &input_State, const Eigen::MatrixXd &path_ref);
 
-        Eigen::MatrixXd pathToEigenMatrix(const nav_msgs::msg::Path& path);
+        Eigen::MatrixXd pathToEigenMatrix(const nav_msgs::msg::Path& path, double robot_x, double robot_y);
 
         int horizon_step_;
         int dim_num_;
