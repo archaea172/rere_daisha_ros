@@ -36,7 +36,7 @@ class MPPIControler
         Eigen::MatrixXd sampling_dim2();
         Eigen::MatrixXd predict(const Eigen::VectorXd &state_init, const Eigen::MatrixXd &iput_matrix);
 
-        double evaluation(const Eigen::MatrixXd &state_array, const Eigen::MatrixXd &input_state, const Eigen::MatrixXd &path_ref);
+        double evaluation(const Eigen::MatrixXd &state_array, const Eigen::MatrixXd &input_state, const Eigen::MatrixXd &path_ref, const Eigen::VectorXd &goal_pose);
         double input_smooth(const Eigen::MatrixXd &input_State);
         double vel_smooth(const Eigen::VectorXd &V);
         double pos_error(const Eigen::MatrixXd &input_State, const Eigen::VectorXd &pos_ref);

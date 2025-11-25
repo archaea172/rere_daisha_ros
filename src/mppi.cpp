@@ -41,7 +41,7 @@ Eigen::VectorXd MPPIControler::run(const Eigen::VectorXd &state, const nav_msgs:
     {
         Eigen::MatrixXd input_sample = this->sampling_dim2();
         Eigen::MatrixXd state_sample = this->predict(state, input_sample);
-        evaluation_result(i) = evaluation(state_sample, input_sample, path_ref);
+        evaluation_result(i) = evaluation(state_sample, input_sample, path_ref, goal_pos_eigen);
         input_first.col(i) = input_sample.col(0);
     }
 
@@ -97,10 +97,10 @@ Eigen::MatrixXd MPPIControler::predict(const Eigen::VectorXd &state_init, const 
     return state_vector;
 }
 
-double MPPIControler::evaluation(const Eigen::MatrixXd &state_array, const Eigen::MatrixXd &input_state, const Eigen::MatrixXd &path_ref)
+double MPPIControler::evaluation(const Eigen::MatrixXd &state_array, const Eigen::MatrixXd &input_state, const Eigen::MatrixXd &path_ref, const Eigen::VectorXd &goal_pose)
 {
-    Eigen::VectorXd evaluation_result(3);
-    evaluation_result << this->path_error(state_array, path_ref), this->input_error(input_state), this->input_smooth(input_state);
+    Eigen::VectorXd evaluation_result(4);
+    evaluation_result << this->path_error(state_array, path_ref), this->input_error(input_state), this->input_smooth(input_state), this->pos_error(state_array, goal_pose);
     double result = evaluation_result.dot(this->weight_vector);
     return result;
 }
