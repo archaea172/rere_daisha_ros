@@ -23,7 +23,7 @@ class MPPIControler
             double wheel_distance,
             Eigen::VectorXd weight_array,
             double lambda_);
-        Eigen::VectorXd run(const Eigen::VectorXd &state, const Eigen::VectorXd &pos_ref);
+        Eigen::VectorXd run(const Eigen::VectorXd &state, const nav_msgs::msg::Path& path);
         void set_horizon_step(int horizon_step);
         void set_loop_num(int new_loop_num);
         void set_dt(double new_dt);

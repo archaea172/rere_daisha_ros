@@ -26,17 +26,19 @@ weight_vector(weight_array), lambda(lambda_)
     else this->error_L_matrix = Eigen::MatrixXd::Identity(2, 2);
 }
 
-Eigen::VectorXd MPPIControler::run(const Eigen::VectorXd &state, const Eigen::VectorXd &pos_ref)
+Eigen::VectorXd MPPIControler::run(const Eigen::VectorXd &state, const nav_msgs::msg::Path& path)
 {
     Eigen::VectorXd evaluation_result(this->loop_num_);
     Eigen::MatrixXd input_first(2, this->loop_num_);
+
+    Eigen::MatrixXd path_ref;
 
     #pragma omp parallel for
     for (size_t i = 0; i < (size_t)this->loop_num_; i++)
     {
         Eigen::MatrixXd input_sample = this->sampling_dim2();
         Eigen::MatrixXd state_sample = this->predict(state, input_sample);
-        evaluation_result(i) = evaluation(state_sample, input_sample, pos_ref);
+        evaluation_result(i) = evaluation(state_sample, input_sample, path_ref);
         input_first.col(i) = input_sample.col(0);
     }
 
