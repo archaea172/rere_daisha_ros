@@ -75,7 +75,7 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_activate(const rclcpp_lifecy
     );
 
     this->pose_ref_subscriber = this->create_subscription<nav_msgs::msg::Path>(
-        std::string("pose_ref"),
+        std::string("route"),
         rclcpp::SystemDefaultsQoS(),
         std::bind(&MPPIPursuitNode::path_ref_callback, this, _1)
     );
