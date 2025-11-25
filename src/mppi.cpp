@@ -20,6 +20,10 @@ weight_vector(weight_array), lambda(lambda_)
 
     this->v_ref = this->clamp_abs;
     this->omega_ref = this->clamp_abs / this->d;
+
+    Eigen::LLT<Eigen::MatrixXd> llt(this->sig);
+    if (llt.info() == Eigen::Success) this->error_L_matrix = llt.matrixL();
+    else this->error_L_matrix = Eigen::MatrixXd::Identity(2, 2);
 }
 
 Eigen::VectorXd MPPIControler::run(const Eigen::VectorXd &state, const Eigen::VectorXd &pos_ref)
@@ -62,15 +66,7 @@ Eigen::MatrixXd MPPIControler::sampling_dim2()
         y_s(1, i) = r * std::sin(theta);
     }
 
-    Eigen::LLT<Eigen::MatrixXd> llt(this->sig);
-    if (llt.info() != Eigen::Success) {
-        Eigen::MatrixXd null_matrix;
-        return null_matrix;
-    }
-
-    Eigen::MatrixXd P = llt.matrixL();
-
-    Eigen::MatrixXd z_s = P * y_s;
+    Eigen::MatrixXd z_s = this->error_L_matrix * y_s;
     z_s.colwise() += this->mu;
 
     z_s = z_s.cwiseMax(-this->clamp_abs).cwiseMin(clamp_abs);
@@ -150,6 +146,9 @@ void MPPIControler::set_dt(double new_dt)
 void MPPIControler::set_sig(Eigen::MatrixXd new_sig)
 {
     this->sig = new_sig;
+    Eigen::LLT<Eigen::MatrixXd> llt(this->sig);
+    if (llt.info() == Eigen::Success) this->error_L_matrix = llt.matrixL();
+    else this->error_L_matrix = Eigen::MatrixXd::Identity(2, 2);
 }
 void MPPIControler::set_max_wheel_vel(double new_max_wheel_vel)
 {

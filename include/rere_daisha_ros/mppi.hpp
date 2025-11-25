@@ -57,4 +57,5 @@ class MPPIControler
 
         Eigen::VectorXd weight_vector;
         double lambda;
+        Eigen::MatrixXd error_L_matrix;
 };
