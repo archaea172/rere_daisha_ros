@@ -47,21 +47,6 @@ include_directories(
   ${OpenCV_INCLUDE_DIRS}
 )
 
-# debug node
-add_executable(debug_node
-  src/debug.cpp
-)
-
-install(
-  TARGETS debug_node
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-target_link_libraries(debug_node
-  ransac_ball
-  ${OpenCV_LIBRARIES}
-)
-
 # ransac ball node
 add_executable(ransac_ball_node
   src/ransac_ball_node.cpp
@@ -208,6 +193,20 @@ ament_target_dependencies(convert_diff_cmd_vel
 install(
   TARGETS convert_diff_cmd_vel
   DESTINATION lib/${PROJECT_NAME}
+)
+
+# debug node
+add_executable(debug_node
+  src/debug.cpp
+)
+
+install(
+  TARGETS debug_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+target_link_libraries(debug_node
+  mppi_library
 )
 
 # add install
