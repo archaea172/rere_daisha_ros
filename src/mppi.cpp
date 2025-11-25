@@ -174,5 +174,14 @@ void MPPIControler::set_lambda(double new_lambda)
 
 Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path)
 {
-
+    double step_dist = this->v_ref * this->dt;
+    std::vector<double> cum_dist;
+    cum_dist.push_back(0.0);
+    for (size_t i = 0; i < path.poses.size() - 1; ++i) {
+        double dx = path.poses[i+1].pose.position.x - path.poses[i].pose.position.x;
+        double dy = path.poses[i+1].pose.position.y - path.poses[i].pose.position.y;
+        double dist = std::sqrt(dx * dx + dy * dy);
+        cum_dist.push_back(cum_dist.back() + dist);
+    }
+    double total_dist = cum_dist.back();
 }
