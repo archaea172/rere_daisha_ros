@@ -12,11 +12,11 @@ int main()
 {
     
     Eigen::MatrixXd sig(2, 2);
-    sig << 1, 0,
-    0, 1;
-    Eigen::VectorXd weight_vector(3);
-    weight_vector << 1, 1, 1;
-    auto debug = MPPIControler(1000, 2, 50, 0.5, sig, 0.5, 0.19, weight_vector, 5);
+    sig << 0.5, 0,
+    0, 1.5;
+    Eigen::VectorXd weight_vector(3);//pos, input, smooth
+    weight_vector << 10, 0.01, 0.1;
+    auto debug = MPPIControler(50, 2, 800, 0.03, sig, 0.5, 0.19, weight_vector, 0.8);
     Eigen::VectorXd state(3);
     state << 0, 0, 0;
     Eigen::VectorXd pos_ref(2);
