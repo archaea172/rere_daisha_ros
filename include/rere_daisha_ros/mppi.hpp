@@ -12,7 +12,7 @@ class MPPIControler
 {
     public:
         MPPIControler(
-            int sample_num,
+            int horizon_step,
             int dim_num,
             int loop_num,
             double dt,
@@ -22,7 +22,7 @@ class MPPIControler
             Eigen::VectorXd weight_array,
             double lambda_);
         Eigen::VectorXd run(const Eigen::VectorXd &state, const Eigen::VectorXd &pos_ref);
-        void set_sample_num(int new_sample_num);
+        void set_horizon_step(int horizon_step);
         void set_loop_num(int new_loop_num);
         void set_dt(double new_dt);
         void set_sig(Eigen::MatrixXd new_sig);
@@ -40,7 +40,7 @@ class MPPIControler
         double pos_error(const Eigen::MatrixXd &input_State, const Eigen::VectorXd &pos_ref);
         double input_error(const Eigen::MatrixXd &input_State);
 
-        int sample_num_;
+        int horizon_step_;
         int dim_num_;
         int loop_num_;
 

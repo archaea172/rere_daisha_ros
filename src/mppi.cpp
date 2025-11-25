@@ -1,7 +1,7 @@
 #include "mppi.hpp"
 
 MPPIControler::MPPIControler(
-    int sample_num,
+    int horizon_step,
     int dim_num,
     int loop_num,
     double dt_,
@@ -10,7 +10,7 @@ MPPIControler::MPPIControler(
     double wheel_distance,
     Eigen::VectorXd weight_array,
     double lambda_)
-: sample_num_(sample_num), dim_num_(dim_num), loop_num_(loop_num),
+: horizon_step_(horizon_step), dim_num_(dim_num), loop_num_(loop_num),
 sig(sig_), gen(1234), uni(0.0, 1.0), clamp_abs(max_wheel_vel),
 d(wheel_distance), dt(dt_),
 weight_vector(weight_array), lambda(lambda_)
@@ -55,8 +55,8 @@ Eigen::MatrixXd MPPIControler::sampling_dim2()
     thread_local std::mt19937_64 local_gen{1234u + static_cast<unsigned>(omp_get_thread_num())};
     std::normal_distribution<double> dist(0.0, 1.0);
     
-    Eigen::MatrixXd y_s(this->dim_num_, this->sample_num_);
-    for (size_t i = 0; i < (size_t)this->sample_num_; i++)
+    Eigen::MatrixXd y_s(this->dim_num_, this->horizon_step_);
+    for (size_t i = 0; i < (size_t)this->horizon_step_; i++)
     {
         for (int j = 0; j < 2; j++)
         {
@@ -76,7 +76,7 @@ Eigen::MatrixXd MPPIControler::predict(const Eigen::VectorXd &state_init, const 
 {
     Eigen::RowVectorXd v_vector = input_matrix.colwise().sum()/2;
     Eigen::RowVectorXd omega_vector = (input_matrix.row(0) - input_matrix.row(1)) / (2*d);
-    Eigen::MatrixXd state_vector(state_init.size(), this->sample_num_ + 1);
+    Eigen::MatrixXd state_vector(state_init.size(), this->horizon_step_ + 1);
 
     state_vector.col(0) = state_init;
     for (size_t i = 0; i < (size_t)input_matrix.cols(); i++)
@@ -129,9 +129,9 @@ double MPPIControler::input_error(const Eigen::MatrixXd &input_State)
     return result;
 }
 
-void MPPIControler::set_sample_num(int new_sample_num)
+void MPPIControler::set_horizon_step(int new_horizon_step)
 {
-    this->sample_num_ = new_sample_num;
+    this->horizon_step_ = new_horizon_step;
 }
 void MPPIControler::set_loop_num(int new_loop_num)
 {
