@@ -179,11 +179,19 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
 {
     int closest_idx = 0;
     double min_dist_sq = std::numeric_limits<double>::max();
-
+    for (size_t i = 0; i < path.poses.size(); ++i) {
+        double dx = path.poses[i].pose.position.x - robot_x;
+        double dy = path.poses[i].pose.position.y - robot_y;
+        double dist_sq = dx*dx + dy*dy;
+        if (dist_sq < min_dist_sq) {
+            min_dist_sq = dist_sq;
+            closest_idx = i;
+        }
+    }
     double step_dist = this->v_ref * this->dt;
     std::vector<double> cum_dist;
     cum_dist.push_back(0.0);
-    for (size_t i = 0; i < path.poses.size() - 1; ++i) {
+    for (size_t i = closest_idx; i < path.poses.size() - 1; ++i) {
         double dx = path.poses[i+1].pose.position.x - path.poses[i].pose.position.x;
         double dy = path.poses[i+1].pose.position.y - path.poses[i].pose.position.y;
         double dist = std::sqrt(dx * dx + dy * dy);
@@ -226,19 +234,21 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
         double d1 = cum_dist[current_idx + 1];
         double segment_len = d1 - d0;
         
+        int p_idx = closest_idx + current_idx;
+
         double x_out, y_out;
 
         if (segment_len < 1e-6) {
-            x_out = path.poses[current_idx].pose.position.x;
-            y_out = path.poses[current_idx].pose.position.y;
+            x_out = path.poses[p_idx].pose.position.x;
+            y_out = path.poses[p_idx].pose.position.y;
         } else {
             double alpha = (target_d - d0) / segment_len;
             if (alpha < 0.0) alpha = 0.0;
             if (alpha > 1.0) alpha = 1.0;
-            double x0 = path.poses[current_idx].pose.position.x;
-            double y0 = path.poses[current_idx].pose.position.y;
-            double x1 = path.poses[current_idx + 1].pose.position.x;
-            double y1 = path.poses[current_idx + 1].pose.position.y;
+            double x0 = path.poses[p_idx].pose.position.x;
+            double y0 = path.poses[p_idx].pose.position.y;
+            double x1 = path.poses[p_idx + 1].pose.position.x;
+            double y1 = path.poses[p_idx + 1].pose.position.y;
 
             x_out = (1.0 - alpha) * x0 + alpha * x1;
             y_out = (1.0 - alpha) * y0 + alpha * y1;
