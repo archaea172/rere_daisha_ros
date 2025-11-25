@@ -92,10 +92,10 @@ Eigen::MatrixXd MPPIControler::predict(const Eigen::VectorXd &state_init, const 
     return state_vector;
 }
 
-double MPPIControler::evaluation(const Eigen::MatrixXd &state_array, const Eigen::MatrixXd &input_state, const Eigen::VectorXd &pos_ref)
+double MPPIControler::evaluation(const Eigen::MatrixXd &state_array, const Eigen::MatrixXd &input_state, const Eigen::MatrixXd &path_ref)
 {
     Eigen::VectorXd evaluation_result(3);
-    evaluation_result << this->pos_error(state_array, pos_ref), this->input_error(input_state), this->input_smooth(input_state);
+    evaluation_result << this->path_error(input_state, path_ref), this->input_error(input_state), this->input_smooth(input_state);
     double result = evaluation_result.dot(this->weight_vector);
     return result;
 }
@@ -129,7 +129,7 @@ double MPPIControler::input_error(const Eigen::MatrixXd &input_State)
     return result;
 }
 
-double MPPIControler::path_error(const Eigen::MatrixXd &input_State, const Eigen::VectorXd &path_ref)
+double MPPIControler::path_error(const Eigen::MatrixXd &input_State, const Eigen::MatrixXd &path_ref)
 {
 
 }
