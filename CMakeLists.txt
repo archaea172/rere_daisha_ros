@@ -193,6 +193,23 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# convert mcl
+add_executable(convert_diff_cmd_vel
+  src/convert_diff_cmd_vel.cpp
+  include/${PROJECT_NAME}/convert_diff_cmd_vel.hpp
+)
+
+ament_target_dependencies(convert_diff_cmd_vel
+  rclcpp
+  std_msgs
+  geometry_msgs
+)
+
+install(
+  TARGETS convert_diff_cmd_vel
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks

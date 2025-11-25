@@ -218,7 +218,7 @@ rcl_interfaces::msg::SetParametersResult MPPIPursuitNode::parameters_callback(
         }
         else if (param.get_name() == "sig" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY)
         {
-            std::vector<double> sig_std = this->get_parameter("sig").as_double_array();
+            std::vector<double> sig_std = param.as_double_array();
             Eigen::MatrixXd sig_eigen(2, 2);
             sig_eigen << 
             sig_std[0], sig_std[1],
