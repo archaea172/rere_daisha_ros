@@ -8,6 +8,8 @@
 
 #include <omp.h>
 
+#include "nav_msgs/msg/path.hpp"
+
 class MPPIControler
 {
     public:
