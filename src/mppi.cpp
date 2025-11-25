@@ -193,7 +193,7 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
     
     int effective_steps = std::min(num_steps, this->horizon_step_);
 
-    Eigen::MatrixXd traj(2, this->horizon_step_);
+    Eigen::MatrixXd traj(this->horizon_step_, 2);
 
     const auto& goal_pos = path.poses.back().pose.position;
     const double goal_x = goal_pos.x;
