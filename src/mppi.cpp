@@ -129,6 +129,11 @@ double MPPIControler::input_error(const Eigen::MatrixXd &input_State)
     return result;
 }
 
+double MPPIControler::path_error(const Eigen::MatrixXd &input_State, const Eigen::VectorXd &path_ref)
+{
+
+}
+
 void MPPIControler::set_horizon_step(int new_horizon_step)
 {
     this->horizon_step_ = new_horizon_step;

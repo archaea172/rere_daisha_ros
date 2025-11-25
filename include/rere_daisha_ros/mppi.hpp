@@ -39,6 +39,7 @@ class MPPIControler
         double vel_smooth(const Eigen::VectorXd &V);
         double pos_error(const Eigen::MatrixXd &input_State, const Eigen::VectorXd &pos_ref);
         double input_error(const Eigen::MatrixXd &input_State);
+        double path_error(const Eigen::MatrixXd &input_State, const Eigen::VectorXd &path_ref);
 
         int horizon_step_;
         int dim_num_;
