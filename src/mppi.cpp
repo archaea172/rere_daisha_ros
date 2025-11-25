@@ -97,7 +97,7 @@ Eigen::MatrixXd MPPIControler::predict(const Eigen::VectorXd &state_init, const 
 double MPPIControler::evaluation(const Eigen::MatrixXd &state_array, const Eigen::MatrixXd &input_state, const Eigen::MatrixXd &path_ref)
 {
     Eigen::VectorXd evaluation_result(3);
-    evaluation_result << this->path_error(input_state, path_ref), this->input_error(input_state), this->input_smooth(input_state);
+    evaluation_result << this->path_error(state_array, path_ref), this->input_error(input_state), this->input_smooth(input_state);
     double result = evaluation_result.dot(this->weight_vector);
     return result;
 }
@@ -133,7 +133,8 @@ double MPPIControler::input_error(const Eigen::MatrixXd &input_State)
 
 double MPPIControler::path_error(const Eigen::MatrixXd &input_State, const Eigen::MatrixXd &path_ref)
 {
-    Eigen::MatrixXd diff = path_ref - input_State;
+    Eigen::MatrixXd predicted_xy = input_State.block(0, 1, 2, this->horizon_step_);
+    Eigen::MatrixXd diff = path_ref - predicted_xy;
     double result = diff.array().square().sum();
     return result;
 }
@@ -192,7 +193,7 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
     
     int effective_steps = std::min(num_steps, this->horizon_step_);
 
-    Eigen::MatrixXd traj(this->horizon_step_, 2);
+    Eigen::MatrixXd traj(2, this->horizon_step_);
 
     const auto& goal_pos = path.poses.back().pose.position;
     const double goal_x = goal_pos.x;
@@ -239,8 +240,8 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
             x_out = (1.0 - alpha) * x0 + alpha * x1;
             y_out = (1.0 - alpha) * y0 + alpha * y1;
         }
-        traj(i, 0) = x_out;
-        traj(i, 1) = y_out;
+        traj(0, i) = x_out;
+        traj(1, i) = y_out;
     }
     return traj;
 }
