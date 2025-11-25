@@ -31,7 +31,7 @@ Eigen::VectorXd MPPIControler::run(const Eigen::VectorXd &state, const nav_msgs:
     Eigen::VectorXd evaluation_result(this->loop_num_);
     Eigen::MatrixXd input_first(2, this->loop_num_);
 
-    Eigen::MatrixXd path_ref;
+    Eigen::MatrixXd path_ref = this->pathToEigenMatrix(path);
 
     #pragma omp parallel for
     for (size_t i = 0; i < (size_t)this->loop_num_; i++)
@@ -187,15 +187,30 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
 
     int num_steps = static_cast<int>(total_dist / step_dist);
     if (num_steps == 0) num_steps = 1;
-    size_t matrix_size;
-    if (num_steps > this->horizon_step_) matrix_size = this->horizon_step_;
-    else matrix_size = num_steps;
+    
+    int effective_steps = std::min(num_steps, this->horizon_step_);
 
-    Eigen::MatrixXd traj(matrix_size, 2);
+    Eigen::MatrixXd traj(this->horizon_step_, 2);
+
+    const auto& goal_pos = path.poses.back().pose.position;
+    const double goal_x = goal_pos.x;
+    const double goal_y = goal_pos.y;
+
     int current_idx = 0;
-    for (size_t i = 0; i < matrix_size; i++)
+    for (size_t i = 0; i < this->horizon_step_; i++)
     {
+        if (i >= effective_steps) {
+            traj(i, 0) = goal_x;
+            traj(i, 1) = goal_y;
+            continue;
+        }
+
         double target_d = i * step_dist;
+
+        if (target_d > total_dist) {
+            target_d = total_dist;
+        }
+
         while (current_idx < (int)cum_dist.size() - 2 && cum_dist[current_idx + 1] < target_d)
         {
             current_idx++;
@@ -212,6 +227,8 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
             y_out = path.poses[current_idx].pose.position.y;
         } else {
             double alpha = (target_d - d0) / segment_len;
+            if (alpha < 0.0) alpha = 0.0;
+            if (alpha > 1.0) alpha = 1.0;
             double x0 = path.poses[current_idx].pose.position.x;
             double y0 = path.poses[current_idx].pose.position.y;
             double x1 = path.poses[current_idx + 1].pose.position.x;
