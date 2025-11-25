@@ -188,7 +188,7 @@ rcl_interfaces::msg::SetParametersResult MPPIPursuitNode::parameters_callback(
     {
         if (param.get_name() == "sample_num" && param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
         {
-            this->mppi_controler->set_sample_num(param.as_int());
+            this->mppi_controler->set_horizon_step(param.as_int());
             RCLCPP_INFO(this->get_logger(), "Parameter changed");
         }
         else if (param.get_name() == "loop_num" && param.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
