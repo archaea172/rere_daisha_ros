@@ -145,6 +145,7 @@ ament_target_dependencies(mppi_pursuit
   rclcpp_lifecycle
   geometry_msgs
   std_msgs
+  nav_msgs
 )
 
 install(

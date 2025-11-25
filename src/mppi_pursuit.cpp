@@ -74,10 +74,10 @@ MPPIPursuitNode::CallbackReturn MPPIPursuitNode::on_activate(const rclcpp_lifecy
         std::bind(&MPPIPursuitNode::pose_callback, this, _1)
     );
 
-    this->pose_ref_subscriber = this->create_subscription<geometry_msgs::msg::Pose2D>(
+    this->pose_ref_subscriber = this->create_subscription<nav_msgs::msg::Path>(
         std::string("pose_ref"),
         rclcpp::SystemDefaultsQoS(),
-        std::bind(&MPPIPursuitNode::pose_ref_callback, this, _1)
+        std::bind(&MPPIPursuitNode::path_ref_callback, this, _1)
     );
 
     this->mppi_timer = this->create_wall_timer(
@@ -150,25 +150,23 @@ void MPPIPursuitNode::pose_callback(const geometry_msgs::msg::Pose2D::SharedPtr 
     this->pose_flag_ = true;
 }
 
-void MPPIPursuitNode::pose_ref_callback(const geometry_msgs::msg::Pose2D::SharedPtr rxdata)
+void MPPIPursuitNode::path_ref_callback(const nav_msgs::msg::Path::SharedPtr rxdata)
 {
-    this->pose_ref_ = *rxdata;
-    this->pose_ref_flag_ = true;
+    this->path_ref_ = *rxdata;
+    this->path_ref_flag_ = true;
 }
 
 void MPPIPursuitNode::timer_callback()
 {
     if (!this->pose_flag_) return;
-    if (!this->pose_ref_flag_)
+    if (!this->path_ref_flag_)
     {
-        RCLCPP_INFO(this->get_logger(), "pose_ref is not set");
+        RCLCPP_INFO(this->get_logger(), "path_ref is not set");
         return;
     }
     Eigen::VectorXd pose_eigen(3);
     pose_eigen << pose_.x, pose_.y, pose_.theta;
-    Eigen::VectorXd pose_ref_eigen(2);
-    pose_ref_eigen << pose_ref_.x, pose_ref_.y;
-    Eigen::VectorXd input = this->mppi_controler->run(pose_eigen, pose_ref_eigen);
+    Eigen::VectorXd input = this->mppi_controler->run(pose_eigen, path_ref_);
     std::vector<double> input_vector = {input(0), input(1)};
 
     std_msgs::msg::Float64MultiArray txdata;
