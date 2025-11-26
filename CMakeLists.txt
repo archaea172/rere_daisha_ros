@@ -222,14 +222,14 @@ add_executable(convert_joy_wheel_vel
   include/${PROJECT_NAME}/joy_wheel_vel_converter.hpp
 )
 
-ament_target_dependencies(convert_diff_cmd_vel
+ament_target_dependencies(convert_joy_wheel_vel
   rclcpp
   std_msgs
-  geometry_msgs
+  sensor_msgs
 )
 
 install(
-  TARGETS convert_diff_cmd_vel
+  TARGETS convert_joy_wheel_vel
   DESTINATION lib/${PROJECT_NAME}
 )
 
