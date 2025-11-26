@@ -19,4 +19,8 @@ private:
 
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_vel_publisher_;
     rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_subscriber_;
+
+    double max_vel = 0.5;
+    double max_omega = 0.5;
+    double wheel_distance = 0.19;
 };
