@@ -1,5 +1,4 @@
 from launch import LaunchDescription
-from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -7,9 +6,9 @@ from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 from launch.actions import IncludeLaunchDescription, GroupAction, EmitEvent, RegisterEventHandler
 from launch.event_handlers import OnProcessStart
-from launch_ros.actions import LifecycleNode
 from launch_ros.event_handlers import OnStateTransition
 from launch_ros.events.lifecycle import ChangeState
+from launch_ros.actions import LifecycleNode
 import lifecycle_msgs.msg
 import launch
 
@@ -73,14 +72,16 @@ def generate_launch_description():
     )
     ld.add_action(gen_path)
 
-    bridge_can = Node(
+    bridge_can = LifecycleNode(
         package='rere_daisha_ros',
         executable='ros2_can_bridge',
+        name='ros2_can_bridge',
+        namespace='', 
     )
     ld.add_action(bridge_can)
 
     
-    bridge_event_handler = RegisterEventHandler(
+    bridge_configure_event_handler = RegisterEventHandler(
         OnProcessStart(
             target_action=bridge_can,
             on_start=[
@@ -94,7 +95,7 @@ def generate_launch_description():
         )
     )
 
-    bridge_event_handler = RegisterEventHandler(
+    bridge_activate_event_handler = RegisterEventHandler(
         OnStateTransition(
             target_lifecycle_node=bridge_can,
             start_state='configuring',
@@ -109,5 +110,8 @@ def generate_launch_description():
             ]
         )
     )
+
+    ld.add_action(bridge_configure_event_handler)
+    ld.add_action(bridge_activate_event_handler)
 
     return ld
