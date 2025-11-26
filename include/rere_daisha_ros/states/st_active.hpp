@@ -18,12 +18,12 @@ struct StActive : smacc2::SmaccState<StActive, SmRereDaisha> {
   // --- 遷移マップ ---
   typedef mpl::list<
     // タイマーイベントで StIdle (アイドル) に戻る
-    Transition<EvTimer<ClRosTimer, OrTimer>, StIdle>
+    Transition<EvTopicMessage<ClKeyboard, OrKeyboard>, StIdle>
   > reactions;
 
   // --- onEntry ---
   void onEntry() {
-    RCLCPP_INFO(getLogger(), "ENTERING ACTIVE STATE");
+    RCLCPP_INFO(getLogger(), "ACTIVE! Press any key to stop.");
   }
 
   // --- onExit ---

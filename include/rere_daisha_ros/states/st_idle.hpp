@@ -16,12 +16,12 @@ struct StIdle : smacc2::SmaccState<StIdle, sm_rere_daisha::SmRereDaisha> {
   // --- 遷移マップ (Transition Map) ---
   typedef mpl::list<
     // EvTimerイベントが発生したら、StActiveへ遷移(Transition)する
-    Transition<EvTimer<cl_ros_timer::ClRosTimer, sm_rere_daisha::orthogonals::OrTimer>, StActive> 
+    Transition<EvTopicMessage<ClKeyboard, OrKeyboard>, StActive>
   > reactions;
 
   // --- 状態に入った時の処理 ---
   void onEntry() {
-    RCLCPP_INFO(getLogger(), "ENTERING IDLE STATE");
+    RCLCPP_INFO(getLogger(), "waiting for keyboard input...");
   }
 
   // --- 状態から出る時の処理 ---
