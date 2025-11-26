@@ -24,6 +24,7 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(backward_ros REQUIRED)
 find_package(OpenMP)
 find_package(nav_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
@@ -213,6 +214,23 @@ install(
 
 target_link_libraries(debug_node
   mppi_library
+)
+
+#joy wheel vel converter
+add_executable(convert_joy_wheel_vel
+  src/joy_wheel_vel_converter.cpp
+  include/${PROJECT_NAME}/joy_wheel_vel_converter.hpp
+)
+
+ament_target_dependencies(convert_joy_wheel_vel
+  rclcpp
+  std_msgs
+  sensor_msgs
+)
+
+install(
+  TARGETS convert_joy_wheel_vel
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 # add install
