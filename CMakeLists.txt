@@ -233,6 +233,21 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
+#arm control
+add_executable(arm_controller
+  src/arm_control.cpp
+  include/${PROJECT_NAME}/arm_control.hpp
+)
+
+ament_target_dependencies(arm_controller
+  rclcpp
+)
+
+install(
+  TARGETS arm_controller
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks
