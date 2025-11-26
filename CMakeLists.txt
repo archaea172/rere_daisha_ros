@@ -241,6 +241,7 @@ add_executable(arm_controller
 
 ament_target_dependencies(arm_controller
   rclcpp
+  geometry_msgs
 )
 
 install(
