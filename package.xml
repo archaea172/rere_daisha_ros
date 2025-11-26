@@ -13,7 +13,9 @@
   <test_depend>ament_lint_common</test_depend>
 
   <exec_depend>ros_tcp_endpoint</exec_depend>
-  <depend>backward_ros</depend>
+  <depend>backward_ros</depend><depend>rclcpp</depend>
+  <depend>smacc2</depend>
+  <depend>smacc2_client_library</depend>
 
   <export>
     <build_type>ament_cmake</build_type>
