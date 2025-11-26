@@ -5,6 +5,13 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
+from launch.actions import IncludeLaunchDescription, GroupAction, EmitEvent, RegisterEventHandler
+from launch.event_handlers import OnProcessStart
+from launch_ros.actions import LifecycleNode
+from launch_ros.event_handlers import OnStateTransition
+from launch_ros.events.lifecycle import ChangeState
+import lifecycle_msgs.msg
+import launch
 
 import math
 
@@ -65,5 +72,42 @@ def generate_launch_description():
         }],
     )
     ld.add_action(gen_path)
+
+    bridge_can = Node(
+        package='rere_daisha_ros',
+        executable='ros2_can_bridge',
+    )
+    ld.add_action(bridge_can)
+
+    
+    bridge_event_handler = RegisterEventHandler(
+        OnProcessStart(
+            target_action=bridge_can,
+            on_start=[
+                EmitEvent(
+                    event=ChangeState(
+                        lifecycle_node_matcher=launch.events.matches_action(bridge_can),
+                        transition_id=lifecycle_msgs.msg.Transition.TRANSITION_CONFIGURE,
+                    )
+                )
+            ]
+        )
+    )
+
+    bridge_event_handler = RegisterEventHandler(
+        OnStateTransition(
+            target_lifecycle_node=bridge_can,
+            start_state='configuring',
+            goal_state='inactive',
+            entities=[
+                EmitEvent(
+                    event=ChangeState(
+                        lifecycle_node_matcher=launch.events.matches_action(bridge_can),
+                        transition_id=lifecycle_msgs.msg.Transition.TRANSITION_ACTIVATE,
+                    )
+                )
+            ]
+        )
+    )
 
     return ld
