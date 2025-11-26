@@ -23,6 +23,7 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(backward_ros REQUIRED)
 find_package(OpenMP)
+find_package(nav_msgs REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
@@ -45,21 +46,6 @@ target_include_directories(ransac_ball PUBLIC
 
 include_directories(
   ${OpenCV_INCLUDE_DIRS}
-)
-
-# debug node
-add_executable(debug_node
-  src/debug.cpp
-)
-
-install(
-  TARGETS debug_node
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-target_link_libraries(debug_node
-  ransac_ball
-  ${OpenCV_LIBRARIES}
 )
 
 # ransac ball node
@@ -139,6 +125,10 @@ target_link_libraries(mppi_library
   OpenMP::OpenMP_CXX
 )
 
+ament_target_dependencies(mppi_library
+  nav_msgs
+)
+
 # mppi pursuit
 
 add_executable(mppi_pursuit
@@ -155,6 +145,7 @@ ament_target_dependencies(mppi_pursuit
   rclcpp_lifecycle
   geometry_msgs
   std_msgs
+  nav_msgs
 )
 
 install(
@@ -208,6 +199,20 @@ ament_target_dependencies(convert_diff_cmd_vel
 install(
   TARGETS convert_diff_cmd_vel
   DESTINATION lib/${PROJECT_NAME}
+)
+
+# debug node
+add_executable(debug_node
+  src/debug.cpp
+)
+
+install(
+  TARGETS debug_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+target_link_libraries(debug_node
+  mppi_library
 )
 
 # add install

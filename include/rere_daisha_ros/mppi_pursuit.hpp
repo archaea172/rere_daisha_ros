@@ -5,6 +5,7 @@
 
 #include "geometry_msgs/msg/pose2_d.hpp"
 #include "std_msgs/msg/float64_multi_array.hpp"
+#include "nav_msgs/msg/path.hpp"
 
 #include <Eigen/Dense>
 
@@ -34,11 +35,11 @@ class MPPIPursuitNode : public rclcpp_lifecycle::LifecycleNode
         );
 
         void pose_callback(const geometry_msgs::msg::Pose2D::SharedPtr rxdata);
-        void pose_ref_callback(const geometry_msgs::msg::Pose2D::SharedPtr rxdata);
+        void path_ref_callback(const nav_msgs::msg::Path::SharedPtr rxdata);
         void timer_callback();
 
         rclcpp::Subscription<geometry_msgs::msg::Pose2D>::SharedPtr pose_subscriber;
-        rclcpp::Subscription<geometry_msgs::msg::Pose2D>::SharedPtr pose_ref_subscriber;
+        rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr pose_ref_subscriber;
         rclcpp_lifecycle::LifecyclePublisher<std_msgs::msg::Float64MultiArray>::SharedPtr wheel_vel_publisher;
         rclcpp::TimerBase::SharedPtr mppi_timer;
         
@@ -53,8 +54,8 @@ class MPPIPursuitNode : public rclcpp_lifecycle::LifecycleNode
         double lambda_;
 
         geometry_msgs::msg::Pose2D pose_;
-        geometry_msgs::msg::Pose2D pose_ref_;
+        nav_msgs::msg::Path path_ref_;
 
         bool pose_flag_{false};
-        bool pose_ref_flag_{false};
+        bool path_ref_flag_{false};
 };
