@@ -24,6 +24,8 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(backward_ros REQUIRED)
 find_package(OpenMP)
 find_package(nav_msgs REQUIRED)
+find_package(smacc2 REQUIRED)
+find_package(smacc2_client_library REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
