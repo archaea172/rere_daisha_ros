@@ -166,7 +166,11 @@ void MPPIPursuitNode::timer_callback()
     }
     Eigen::VectorXd pose_eigen(3);
     pose_eigen << pose_.x, pose_.y, pose_.theta;
+    auto t0 = std::chrono::steady_clock::now();
     Eigen::VectorXd input = this->mppi_controler->run(pose_eigen, path_ref_);
+    auto t1 = std::chrono::steady_clock::now();
+    auto dt_ms = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+    RCLCPP_INFO(get_logger(), "MPPI run took %ld [ms]", dt_ms);
     std::vector<double> input_vector = {input(0), input(1)};
 
     std_msgs::msg::Float64MultiArray txdata;
