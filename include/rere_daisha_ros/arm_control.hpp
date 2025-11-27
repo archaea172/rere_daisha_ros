@@ -2,7 +2,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 
-#include "geometry_msgs/msg/point_stamped.hpp"
+#include "rere_daisha_msgs/srv/arm_pos.hpp"
 
 class ArmControl
 : public rclcpp::Node
