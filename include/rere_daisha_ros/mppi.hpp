@@ -49,11 +49,8 @@ class MPPIControler
         int dim_num_;
         int loop_num_;
 
-        Eigen::VectorXd mu;
-        Eigen::MatrixXd sig;
-
-        std::mt19937_64 gen;
-        std::uniform_real_distribution<double> uni;
+        Eigen::Vector2d mu;
+        Eigen::Matrix2d sig;
 
         double clamp_abs;
 
@@ -62,7 +59,7 @@ class MPPIControler
         double v_ref;
         double omega_ref;
 
-        Eigen::VectorXd weight_vector;
+        Eigen::Vector4d weight_vector;
         double lambda;
-        Eigen::MatrixXd error_L_matrix;
+        Eigen::Matrix2d error_L_matrix;
 };

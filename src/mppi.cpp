@@ -11,7 +11,7 @@ MPPIControler::MPPIControler(
     Eigen::VectorXd weight_array,
     double lambda_)
 : horizon_step_(horizon_step), dim_num_(dim_num), loop_num_(loop_num),
-sig(sig_), gen(1234), uni(0.0, 1.0), clamp_abs(max_wheel_vel),
+sig(sig_), clamp_abs(max_wheel_vel),
 d(wheel_distance), dt(dt_),
 weight_vector(weight_array), lambda(lambda_)
 {
@@ -37,7 +37,7 @@ Eigen::VectorXd MPPIControler::run(const Eigen::VectorXd &state, const nav_msgs:
     goal_pos_eigen << goal_pos.x, goal_pos.y;
 
     #pragma omp parallel for
-    for (size_t i = 0; i < (size_t)this->loop_num_; i++)
+    for (size_t i = 0; i < static_cast<size_t>(this->loop_num_); i++)
     {
         Eigen::MatrixXd input_sample = this->sampling_dim2();
         Eigen::MatrixXd state_sample = this->predict(state, input_sample);
@@ -61,7 +61,7 @@ Eigen::MatrixXd MPPIControler::sampling_dim2()
     std::normal_distribution<double> dist(0.0, 1.0);
     
     Eigen::MatrixXd y_s(this->dim_num_, this->horizon_step_);
-    for (size_t i = 0; i < (size_t)this->horizon_step_; i++)
+    for (size_t i = 0; i < static_cast<size_t>(this->horizon_step_); i++)
     {
         for (int j = 0; j < 2; j++)
         {
@@ -84,7 +84,7 @@ Eigen::MatrixXd MPPIControler::predict(const Eigen::VectorXd &state_init, const 
     Eigen::MatrixXd state_vector(state_init.size(), this->horizon_step_ + 1);
 
     state_vector.col(0) = state_init;
-    for (size_t i = 0; i < (size_t)input_matrix.cols(); i++)
+    for (size_t i = 0; i < static_cast<size_t>(input_matrix.cols()); i++)
     {
         double vx = v_vector[i]*std::cos(state_vector(2, i));
         double vy = v_vector[i]*std::sin(state_vector(2, i));
@@ -215,9 +215,9 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
     const double goal_y = goal_pos.y;
 
     int current_idx = 0;
-    for (size_t i = 0; i < this->horizon_step_; i++)
+    for (size_t i = 0; i < static_cast<size_t>(this->horizon_step_); i++)
     {
-        if (i >= effective_steps) {
+        if (i >= static_cast<size_t>(effective_steps)) {
             traj(0, i) = goal_x;
             traj(1, i) = goal_y;
             continue;
@@ -229,7 +229,7 @@ Eigen::MatrixXd MPPIControler::pathToEigenMatrix(const nav_msgs::msg::Path& path
             target_d = total_dist;
         }
 
-        while (current_idx < (int)cum_dist.size() - 2 && cum_dist[current_idx + 1] < target_d)
+        while (current_idx < static_cast<int>(cum_dist.size() - 2) && cum_dist[current_idx + 1] < target_d)
         {
             current_idx++;
         }
