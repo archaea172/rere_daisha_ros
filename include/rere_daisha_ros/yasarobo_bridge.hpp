@@ -4,6 +4,7 @@
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
 
 #include "std_msgs/msg/float64_multi_array.hpp"
+#include "std_msgs/msg/float64.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -25,7 +26,9 @@ private:
     std::unique_ptr<CanBridge> bridge;
 
     void vel_callback(const std_msgs::msg::Float64MultiArray::SharedPtr rxdata);
+    void angle_callback(const std_msgs::msg::Float64::SharedPtr rxdata);
 
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr input_subscriber;
+    rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr angle_subscriber;
     const char* Ifname;
 };
