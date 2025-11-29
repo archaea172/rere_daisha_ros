@@ -47,10 +47,10 @@ class MPPIPursuitNode : public rclcpp_lifecycle::LifecycleNode
         int dim_num;
         int loop_num;
         double dt;
-        Eigen::MatrixXd sig_;
+        Eigen::Matrix2d sig_;
         double max_wheel_vel;
         double wheel_distance;
-        Eigen::VectorXd weight_array;
+        Eigen::Vector4d weight_array;
         double lambda_;
 
         geometry_msgs::msg::Pose2D pose_;

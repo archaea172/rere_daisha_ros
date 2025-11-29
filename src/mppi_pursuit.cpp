@@ -166,7 +166,11 @@ void MPPIPursuitNode::timer_callback()
     }
     Eigen::VectorXd pose_eigen(3);
     pose_eigen << pose_.x, pose_.y, pose_.theta;
+    auto t0 = std::chrono::steady_clock::now();
     Eigen::VectorXd input = this->mppi_controler->run(pose_eigen, path_ref_);
+    auto t1 = std::chrono::steady_clock::now();
+    auto dt_ms = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+    RCLCPP_INFO(get_logger(), "MPPI run took %ld [ms]", dt_ms);
     std::vector<double> input_vector = {input(0), input(1)};
 
     std_msgs::msg::Float64MultiArray txdata;
@@ -217,7 +221,7 @@ rcl_interfaces::msg::SetParametersResult MPPIPursuitNode::parameters_callback(
         else if (param.get_name() == "sig" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY)
         {
             std::vector<double> sig_std = param.as_double_array();
-            Eigen::MatrixXd sig_eigen(2, 2);
+            Eigen::Matrix2d sig_eigen(2, 2);
             sig_eigen << 
             sig_std[0], sig_std[1],
             sig_std[2], sig_std[3];
@@ -227,7 +231,7 @@ rcl_interfaces::msg::SetParametersResult MPPIPursuitNode::parameters_callback(
         else if (param.get_name() == "weights" && param.get_type() == rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY)
         {
             std::vector<double> weight_std = param.as_double_array();
-            Eigen::VectorXd weight_eigen = Eigen::Map<const Eigen::VectorXd>(weight_std.data(), weight_std.size());
+            Eigen::Vector4d weight_eigen = Eigen::Map<const Eigen::VectorXd>(weight_std.data(), weight_std.size());
             this->mppi_controler->set_weights(weight_eigen);
             RCLCPP_INFO(this->get_logger(), "Parameter changed");
         }

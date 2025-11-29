@@ -15,8 +15,8 @@ import launch
 import math
 
 def generate_launch_description():
-    x = 0.5
-    y = 0.5
+    x = 0.25
+    y = 0.25
     theta = 0.0
 
     name_space = 'rere_daisha'
@@ -58,7 +58,7 @@ def generate_launch_description():
             )
         ),
     )
-    ld.add_action(ldlidar_node)
+    # ld.add_action(ldlidar_node)
     
     gen_path = Node(
         package="yasarobo2025_26",
@@ -78,7 +78,7 @@ def generate_launch_description():
         name='ros2_can_bridge',
         namespace='', 
     )
-    ld.add_action(bridge_can)
+    # ld.add_action(bridge_can)
 
     
     bridge_configure_event_handler = RegisterEventHandler(
