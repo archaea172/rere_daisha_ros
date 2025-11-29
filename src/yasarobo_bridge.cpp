@@ -113,6 +113,21 @@ void Ros2CanBridge::vel_callback(const std_msgs::msg::Float64MultiArray::SharedP
 	}
 }
 
+void Ros2CanBridge::angle_callback(const std_msgs::msg::Float64::SharedPtr rxdata)
+{
+  std::vector<float> txdata;
+  txdata.push_back(static_cast<float>(rxdata->data));
+  try
+  {
+    this->bridge->send_float(0x201, txdata);
+    RCLCPP_INFO(this->get_logger(), "send!");
+  }
+	catch(const std::exception& e)
+	{
+		RCLCPP_INFO(this->get_logger(), "fail to write");
+	}
+}
+
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
