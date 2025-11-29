@@ -26,6 +26,12 @@ Ros2CanBridge::CallbackReturn Ros2CanBridge::on_activate(const rclcpp_lifecycle:
         std::bind(&Ros2CanBridge::vel_callback, this, _1)
     );
 
+	this->angle_subscriber = this->create_subscription<std_msgs::msg::Float64>(
+		std::string("base_angle"),
+		rclcpp::SystemDefaultsQoS(),
+		std::bind(&Ros2CanBridge::angle_callback, this, _1)
+	);
+
 	try
 	{
 		this->bridge = std::make_unique<CanBridge>(this->Ifname);
@@ -48,6 +54,7 @@ Ros2CanBridge::CallbackReturn Ros2CanBridge::on_activate(const rclcpp_lifecycle:
 Ros2CanBridge::CallbackReturn Ros2CanBridge::on_deactivate(const rclcpp_lifecycle::State &state)
 {
     this->input_subscriber.reset();
+	this->angle_subscriber.reset();
     this->bridge.reset();
     RCLCPP_INFO(
       get_logger(),
@@ -60,6 +67,7 @@ Ros2CanBridge::CallbackReturn Ros2CanBridge::on_deactivate(const rclcpp_lifecycl
 Ros2CanBridge::CallbackReturn Ros2CanBridge::on_cleanup(const rclcpp_lifecycle::State &state)
 {
     this->input_subscriber.reset();
+	this->angle_subscriber.reset();
     this->bridge.reset();
     RCLCPP_INFO(
       get_logger(),
@@ -82,6 +90,7 @@ Ros2CanBridge::CallbackReturn Ros2CanBridge::on_error(const rclcpp_lifecycle::St
 Ros2CanBridge::CallbackReturn Ros2CanBridge::on_shutdown(const rclcpp_lifecycle::State &state)
 {
     this->input_subscriber.reset();
+	this->angle_subscriber.reset();
     this->bridge.reset();
     RCLCPP_INFO(
       get_logger(),
@@ -115,13 +124,13 @@ void Ros2CanBridge::vel_callback(const std_msgs::msg::Float64MultiArray::SharedP
 
 void Ros2CanBridge::angle_callback(const std_msgs::msg::Float64::SharedPtr rxdata)
 {
-  std::vector<float> txdata;
-  txdata.push_back(static_cast<float>(rxdata->data));
-  try
-  {
-    this->bridge->send_float(0x201, txdata);
-    RCLCPP_INFO(this->get_logger(), "send!");
-  }
+	std::vector<float> txdata;
+	txdata.push_back(static_cast<float>(rxdata->data));
+	try
+	{
+		this->bridge->send_float(0x201, txdata);
+		RCLCPP_INFO(this->get_logger(), "send!");
+	}
 	catch(const std::exception& e)
 	{
 		RCLCPP_INFO(this->get_logger(), "fail to write");
