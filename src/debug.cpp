@@ -3,32 +3,34 @@
 #include <random>
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/float64.hpp"
+#include "std_msgs/msg/float64_multi_array.hpp"
 
 #include <chrono>
 
 #include "mppi.hpp"
 
-int main()
+int main(int argc, char *argv[])
 {
     
-    // Eigen::MatrixXd sig(2, 2);
-    // sig << 0.5, 0,
-    // 0, 1.5;
-    // Eigen::VectorXd weight_vector(3);//pos, input, smooth
-    // weight_vector << 10, 0.01, 0.1;
-    // auto debug = MPPIControler(50, 2, 800, 0.03, sig, 0.5, 0.19, weight_vector, 0.8);
-    // Eigen::VectorXd state(3);
-    // state << 0, 0, 0;
-    // Eigen::VectorXd pos_ref(2);
-    // pos_ref << 1, 0;
+    rclcpp::init(argc, argv);
+    auto node = rclcpp::Node(std::string("honban"));
+    auto pub_wheel_ = node.create_publisher<std_msgs::msg::Float64MultiArray>(
+        std::string("wheel_vel"),
+        rclcpp::SystemDefaultsQoS()
+    );
+    auto pub_arm_ = node.create_publisher<std_msgs::msg::Float64>(
+        std::string("base_angle"),
+        rclcpp::SystemDefaultsQoS()
+    );
 
-    // auto start = std::chrono::high_resolution_clock::now();
-    // auto input = debug.run(state, pos_ref);
-    // auto end = std::chrono::high_resolution_clock::now();
+    while (true)
+    {
+        /* code */
+    }
+    
 
-    // std::cout << input << std::endl;
-    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    // std::cout << duration.count() << std::endl;
 
     return 0;
 }

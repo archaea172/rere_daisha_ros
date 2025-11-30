@@ -40,7 +40,7 @@ def generate_launch_description():
             "mapDir": "/home/sunrise/rere_daisha_ws/src/yasarobo2025_26/map/"
         }],
     )
-    ld.add_action(mcl_node)
+    # ld.add_action(mcl_node)
 
     convert_node = Node(
         package='rere_daisha_ros',
@@ -49,7 +49,7 @@ def generate_launch_description():
             "wheel_distance": 0.190
         }]
     )
-    ld.add_action(convert_node)
+    # ld.add_action(convert_node)
 
     ldlidar_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -70,7 +70,7 @@ def generate_launch_description():
             "initial_theta": 0.0,
         }],
     )
-    ld.add_action(gen_path)
+    # ld.add_action(gen_path)
 
     bridge_can = LifecycleNode(
         package='rere_daisha_ros',

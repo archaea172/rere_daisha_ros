@@ -216,6 +216,12 @@ target_link_libraries(debug_node
   mppi_library
 )
 
+ament_target_dependencies(convert_diff_cmd_vel
+  rclcpp
+  std_msgs
+  geometry_msgs
+)
+
 #joy wheel vel converter
 add_executable(convert_joy_wheel_vel
   src/joy_wheel_vel_converter.cpp
