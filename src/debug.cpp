@@ -72,6 +72,15 @@ int main(int argc, char *argv[])
         pub_arm_->publish(txdata_angle);
     }
 
+    sleep(1);
+
+    for (size_t i = 0; i < 10; i++)
+    {
+        wheel_vel = {0.2, 0.2};
+        txdata.data = wheel_vel;
+        pub_wheel_->publish(txdata);
+    }
+
     rclcpp::shutdown();
 
     return 0;
