@@ -90,6 +90,29 @@ int main(int argc, char *argv[])
         pub_wheel_->publish(txdata);
     }
 
+    while (true)
+    {
+
+        for (size_t i = 0; i < 10; i++)
+        {
+            angle = 0.2;
+            txdata_angle.data = angle;
+            pub_arm_->publish(txdata_angle);
+        }
+
+        sleep(2);
+
+        for (size_t i = 0; i < 10; i++)
+        {
+            angle = -0.2;
+            txdata_angle.data = angle;
+            pub_arm_->publish(txdata_angle);
+        }
+
+        sleep(2);
+    }
+    
+
     rclcpp::shutdown();
 
     return 0;
