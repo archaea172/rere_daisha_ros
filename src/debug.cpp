@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 
     for (size_t i = 0; i < 10; i++)
     {
-        wheel_vel = {0.1, -0.1};
+        wheel_vel = {0.3, -0.3};
         txdata.data = wheel_vel;
         pub_wheel_->publish(txdata);
     }
