@@ -44,6 +44,8 @@ int main(int argc, char *argv[])
         pub_wheel_->publish(txdata);
     }
 
+    sleep(2);
+
     for (size_t i = 0; i < 10; i++)
     {
         angle = 0.5;
