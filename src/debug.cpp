@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         txdata.data = wheel_vel;
         pub_wheel_->publish(txdata);
     }
-    sleep(1);
+    usleep(1500000);
 
     for (size_t i = 0; i < 10; i++)
     {
