@@ -24,13 +24,23 @@ int main(int argc, char *argv[])
         std::string("base_angle"),
         rclcpp::SystemDefaultsQoS()
     );
-
-    while (true)
-    {
-        /* code */
-    }
     
+    std::vector<double> wheel_vel = {0.2, 0.2};
+    std_msgs::msg::Float64MultiArray txdata;
 
+    for (size_t i = 0; i < 10; i++)
+    {
+        txdata.data = wheel_vel;
+        pub_wheel_->publish(txdata);
+    }
+    sleep(2);
+
+    for (size_t i = 0; i < 10; i++)
+    {
+        wheel_vel = {0, 0};
+        txdata.data = wheel_vel;
+        pub_wheel_->publish(txdata);
+    }
 
     return 0;
 }
