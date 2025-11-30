@@ -83,13 +83,6 @@ int main(int argc, char *argv[])
 
     sleep(2);
 
-    for (size_t i = 0; i < 10; i++)
-    {
-        wheel_vel = {0.1, -0.1};
-        txdata.data = wheel_vel;
-        pub_wheel_->publish(txdata);
-    }
-
     for (size_t i = 0; i < 3; i++)
     {
 
