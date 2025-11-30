@@ -216,7 +216,7 @@ target_link_libraries(debug_node
   mppi_library
 )
 
-ament_target_dependencies(convert_diff_cmd_vel
+ament_target_dependencies(debug_node
   rclcpp
   std_msgs
   geometry_msgs
