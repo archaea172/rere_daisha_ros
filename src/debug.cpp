@@ -42,5 +42,7 @@ int main(int argc, char *argv[])
         pub_wheel_->publish(txdata);
     }
 
+    rclcpp::shutdown();
+
     return 0;
 }
