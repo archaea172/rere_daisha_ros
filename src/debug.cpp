@@ -27,19 +27,38 @@ int main(int argc, char *argv[])
     
     std::vector<double> wheel_vel = {0.2, 0.2};
     std_msgs::msg::Float64MultiArray txdata;
+    double angle = 0.05;
+    std_msgs::msg::Float64 txdata_angle;
 
     for (size_t i = 0; i < 10; i++)
     {
         txdata.data = wheel_vel;
         pub_wheel_->publish(txdata);
     }
-    sleep(2);
+    sleep(1);
 
     for (size_t i = 0; i < 10; i++)
     {
         wheel_vel = {0, 0};
         txdata.data = wheel_vel;
         pub_wheel_->publish(txdata);
+    }
+
+    for (size_t i = 0; i < 10; i++)
+    {
+        angle = 0.05;
+        txdata_angle.data = angle;
+        pub_arm_->publish(txdata_angle);
+    }
+
+    sleep(5);
+        
+
+    for (size_t i = 0; i < 10; i++)
+    {
+        angle = 0;
+        txdata_angle.data = angle;
+        pub_arm_->publish(txdata_angle);
     }
 
     rclcpp::shutdown();
