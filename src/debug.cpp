@@ -32,6 +32,15 @@ int main(int argc, char *argv[])
 
     for (size_t i = 0; i < 10; i++)
     {
+        angle = -0.5;
+        txdata_angle.data = angle;
+        pub_arm_->publish(txdata_angle);
+    }
+
+    sleep(1);
+
+    for (size_t i = 0; i < 10; i++)
+    {
         txdata.data = wheel_vel;
         pub_wheel_->publish(txdata);
     }
@@ -42,15 +51,6 @@ int main(int argc, char *argv[])
         wheel_vel = {0, 0};
         txdata.data = wheel_vel;
         pub_wheel_->publish(txdata);
-    }
-
-    sleep(2);
-
-    for (size_t i = 0; i < 10; i++)
-    {
-        angle = -0.5;
-        txdata_angle.data = angle;
-        pub_arm_->publish(txdata_angle);
     }
 
     sleep(2);
