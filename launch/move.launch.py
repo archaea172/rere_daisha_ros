@@ -78,7 +78,7 @@ def generate_launch_description():
         name='ros2_can_bridge',
         namespace='', 
     )
-    # ld.add_action(bridge_can)
+    ld.add_action(bridge_can)
 
     
     bridge_configure_event_handler = RegisterEventHandler(
