@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
         pub_wheel_->publish(txdata);
     }
 
-    sleep(1);
+    sleep(2);
 
     for (size_t i = 0; i < 10; i++)
     {
