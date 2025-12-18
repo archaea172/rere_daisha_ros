@@ -21,14 +21,14 @@
   <visual>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://rere_daisha_ros/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/base_link.stl" scale="1 1 1"/>
     </geometry>
     <material name="_"/>
   </visual>
   <collision>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://rere_daisha_ros/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/base_link.stl" scale="1 1 1"/>
     </geometry>
   </collision>
 </link>
