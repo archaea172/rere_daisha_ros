@@ -1,0 +1,207 @@
+<?xml version="1.0" ?>
+<robot name="swerve" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find rere_daisha_ros)/urdf/materials.xacro" />
+<xacro:include filename="$(find rere_daisha_ros)/urdf/swerve.trans" />
+
+<link name="base_root"/>
+
+<joint name="base_root_to_base_link" type="fixed">
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+  <parent link="base_root"/>
+  <child link="base_link"/>
+</joint>
+
+<link name="base_link">
+  <inertial>
+    <origin xyz="-5.775445040807947e-17 -0.021342710039809813 0.022104717930795586" rpy="0 0 0"/>
+    <mass value="6.8029685745384665"/>
+    <inertia ixx="0.146579" iyy="0.111575" izz="0.252635" ixy="0.0" iyz="0.002211" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="_"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="swerve_stare_v3_1">
+  <inertial>
+    <origin xyz="3.1384561616221163e-10 -4.2749999948354933e-07 -0.009999999999999998" rpy="0 0 0"/>
+    <mass value="1.1224158255328005"/>
+    <inertia ixx="0.003565" iyy="0.002812" izz="0.006308" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.27 -0.155885 -0.015" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_stare_v3_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="_"/>
+  </visual>
+  <collision>
+    <origin xyz="0.27 -0.155885 -0.015" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_stare_v3_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="swerve_stare_v3_2">
+  <inertial>
+    <origin xyz="-3.1384533860645547e-10 -4.274999999831497e-07 -0.009999999999999998" rpy="0 0 0"/>
+    <mass value="1.1224158255328005"/>
+    <inertia ixx="0.003565" iyy="0.002812" izz="0.006308" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.27 -0.155885 -0.015" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_stare_v3_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="_"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.27 -0.155885 -0.015" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_stare_v3_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="swerve_stare_v3_3">
+  <inertial>
+    <origin xyz="5.657014262884172e-17 -1.4500000067307894e-07 -0.009999999999999998" rpy="0 0 0"/>
+    <mass value="1.1224158255328005"/>
+    <inertia ixx="0.003565" iyy="0.002812" izz="0.006308" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 0.311769 -0.015" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_stare_v3_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="_"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 0.311769 -0.015" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_stare_v3_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="swerve_wheel_v4_1">
+  <inertial>
+    <origin xyz="3.1382119125566987e-10 -4.2749999945579376e-07 0.0" rpy="0 0 0"/>
+    <mass value="2.540388021857102"/>
+    <inertia ixx="0.003882" iyy="0.005689" izz="0.003882" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.27 -0.155885 -0.005" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_wheel_v4_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="_"/>
+  </visual>
+  <collision>
+    <origin xyz="0.27 -0.155885 -0.005" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_wheel_v4_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="swerve_wheel_v4_2">
+  <inertial>
+    <origin xyz="-3.138697635129972e-10 -4.274999999553941e-07 0.0" rpy="0 0 0"/>
+    <mass value="2.540388021857102"/>
+    <inertia ixx="0.003882" iyy="0.005689" izz="0.003882" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.27 -0.155885 -0.005" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_wheel_v4_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="_"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.27 -0.155885 -0.005" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_wheel_v4_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="swerve_wheel_v4_3">
+  <inertial>
+    <origin xyz="-2.4384888103561928e-14 -1.4500000067307894e-07 0.0" rpy="0 0 0"/>
+    <mass value="2.540388021857102"/>
+    <inertia ixx="0.003882" iyy="0.005689" izz="0.003882" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 0.311769 -0.005" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_wheel_v4_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="_"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 0.311769 -0.005" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://rere_daisha_ros/meshes/swerve_wheel_v4_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="swerve2" type="revolute">
+  <origin xyz="-0.27 0.155885 0.015" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="swerve_stare_v3_1"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+  <limit upper="3.141593" lower="-3.141593" effort="100" velocity="100"/>
+</joint>
+
+<joint name="swerve1" type="revolute">
+  <origin xyz="0.27 0.155885 0.015" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="swerve_stare_v3_2"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+  <limit upper="3.141593" lower="-3.141593" effort="100" velocity="100"/>
+</joint>
+
+<joint name="swerve3" type="revolute">
+  <origin xyz="0.0 -0.311769 0.015" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="swerve_stare_v3_3"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+  <limit upper="3.141593" lower="-3.141593" effort="100" velocity="100"/>
+</joint>
+
+<joint name="wheel2" type="continuous">
+  <origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
+  <parent link="swerve_stare_v3_1"/>
+  <child link="swerve_wheel_v4_1"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+<joint name="wheel1" type="continuous">
+  <origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
+  <parent link="swerve_stare_v3_2"/>
+  <child link="swerve_wheel_v4_2"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+<joint name="wheel3" type="continuous">
+  <origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
+  <parent link="swerve_stare_v3_3"/>
+  <child link="swerve_wheel_v4_3"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+</robot>
