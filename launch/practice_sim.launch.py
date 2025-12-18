@@ -15,7 +15,7 @@ import random
 def generate_launch_description():
     x = 2.0
     y = 2.0
-    z = 10.0
+    z = 0.1
     theta = 0
 
     package_dir = get_package_share_directory("rere_daisha_ros")
@@ -43,6 +43,13 @@ def generate_launch_description():
         parameters=[params]
     )
 
+    node_robot_joint_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        output='screen',
+    )
+
     gz_spawn_entity = Node(
         package='ros_gz_sim',
         executable='create',
@@ -56,10 +63,23 @@ def generate_launch_description():
                    '-Y', str(theta)
                 ],
     )
+    # Bridge
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '/ldlidar_node/scan@sensor_msgs/msg/LaserScan@ignition.msgs.LaserScan',
+            '/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
+            '/tf_static@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
+            '/world/yasarobo/clock@rosgraph_msgs/msg/Clock@gz.msgs.Clock'],
+        output='screen'
+    )
 
     ld = LaunchDescription()
     ld.add_action(sim_node)
     ld.add_action(node_robot_state_publisher)
+    ld.add_action(node_robot_joint_publisher)
     ld.add_action(gz_spawn_entity)
+    ld.add_action(bridge)
 
     return ld
