@@ -13,6 +13,12 @@ import math
 import random
 
 def generate_launch_description():
+    x = 0.25
+    y = 0.25
+    z = 0.30
+    theta = math.pi/2
+
+    package_dir = get_package_share_directory("rere_daisha_ros")
     use_sim_time = LaunchConfiguration('use_sim_time', default=True)
 
     world = os.path.join(
