@@ -13,10 +13,10 @@ import math
 import random
 
 def generate_launch_description():
-    x = 0.25
-    y = 0.25
-    z = 0.30
-    theta = math.pi/2
+    x = 2.0
+    y = 2.0
+    z = 10.0
+    theta = 0
 
     package_dir = get_package_share_directory("rere_daisha_ros")
     use_sim_time = LaunchConfiguration('use_sim_time', default=True)
@@ -28,10 +28,38 @@ def generate_launch_description():
     sim_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('ros_gz_sim'), 'launch'), '/gz_sim.launch.py']),
-        launch_arguments=[('gz_args', [f' -r {world}'])]
+        launch_arguments=[('gz_args', [f'-r {world}'])]
+    )
+
+    xacro_file = os.path.join(package_dir, "urdf", "swerve.xacro")
+    doc = xacro.process_file(xacro_file, mappings={'use_sim' : 'true'})
+    robot_desc = doc.toprettyxml(indent='  ')
+    params = {'robot_description': robot_desc}
+
+    node_robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        output='screen',
+        parameters=[params]
+    )
+
+    gz_spawn_entity = Node(
+        package='ros_gz_sim',
+        executable='create',
+        output='screen',
+        arguments=['-string', robot_desc,
+                   '-name', 'robot',
+                   '-allow_renaming', 'false',
+                   '-x', str(x),
+                   '-y', str(y),
+                   '-z', str(z),
+                   '-Y', str(theta)
+                ],
     )
 
     ld = LaunchDescription()
     ld.add_action(sim_node)
+    ld.add_action(node_robot_state_publisher)
+    ld.add_action(gz_spawn_entity)
 
     return ld
