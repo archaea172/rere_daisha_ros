@@ -232,7 +232,7 @@
 </joint>
 
 
-<gazebo reference="base_link">
+<gazebo reference="mid-360-asm_v3_1">
   <sensor type="gpu_lidar" name="lidar_sensor">
     <ignition_frame_id>base_link</ignition_frame_id>
     <topic>/lidar</topic>
