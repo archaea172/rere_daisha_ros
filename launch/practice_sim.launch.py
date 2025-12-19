@@ -68,10 +68,11 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            '/ldlidar_node/scan@sensor_msgs/msg/LaserScan@ignition.msgs.LaserScan',
+            '/lidar/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked',
             '/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
             '/tf_static@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
-            '/world/yasarobo/clock@rosgraph_msgs/msg/Clock@gz.msgs.Clock'],
+            '/world/yasarobo/clock@rosgraph_msgs/msg/Clock@gz.msgs.Clock',
+            '/pos_1@std_msgs/msg/Float64@gz.msgs.Double'],
         output='screen'
     )
 
