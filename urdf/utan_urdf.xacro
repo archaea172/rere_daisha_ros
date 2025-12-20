@@ -3,6 +3,16 @@
 
 <xacro:include filename="$(find utan_urdf_description)/urdf/materials.xacro" />
 <xacro:include filename="$(find utan_urdf_description)/urdf/utan_urdf.trans" />
+
+
+<link name="base_root"/>
+
+<joint name="base_root_to_base_link" type="fixed">
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+  <parent link="base_root"/>
+  <child link="base_link"/>
+</joint>
+
 <link name="base_link">
   <inertial>
     <origin xyz="0.09520162806918002 0.0005187471017515448 0.01932446245336333" rpy="0 0 0"/>
