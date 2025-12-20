@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <robot name="utan_urdf" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:include filename="$(find utan_urdf_description)/urdf/materials.xacro" />
-<xacro:include filename="$(find utan_urdf_description)/urdf/utan_urdf.trans" />
+<xacro:include filename="$(find rere_daisha_ros)/urdf/materials.xacro" />
+<xacro:include filename="$(find rere_daisha_ros)/urdf/utan_urdf.trans" />
 
 
 <link name="base_root"/>
@@ -22,14 +22,14 @@
   <visual>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/base_link_utan.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/base_link_utan.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="opaque160160160"/>
   </visual>
   <collision>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/base_link_utan.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/base_link_utan.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -43,14 +43,14 @@
   <visual>
     <origin xyz="-0.11 -0.0 -0.08" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/turn_table_v2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/turn_table_v2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="opaque160160160"/>
   </visual>
   <collision>
     <origin xyz="-0.11 -0.0 -0.08" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/turn_table_v2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/turn_table_v2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -64,14 +64,14 @@
   <visual>
     <origin xyz="-0.19163 -0.0 -0.0855" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="abs"/>
   </visual>
   <collision>
     <origin xyz="-0.19163 -0.0 -0.0855" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -85,14 +85,14 @@
   <visual>
     <origin xyz="-0.0675 0.12025 -0.012" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/wheel_v1_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/wheel_v1_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="opaque252525"/>
   </visual>
   <collision>
     <origin xyz="-0.0675 0.12025 -0.012" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/wheel_v1_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/wheel_v1_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -106,14 +106,14 @@
   <visual>
     <origin xyz="-0.0675 -0.12025 -0.012" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/wheel_v1_2.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/wheel_v1_2.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="opaque252525"/>
   </visual>
   <collision>
     <origin xyz="-0.0675 -0.12025 -0.012" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/wheel_v1_2.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/wheel_v1_2.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -127,14 +127,14 @@
   <visual>
     <origin xyz="-0.279945 0.0 -0.019" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/ldlidar_v1_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/ldlidar_v1_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="_"/>
   </visual>
   <collision>
     <origin xyz="-0.279945 0.0 -0.019" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/ldlidar_v1_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/ldlidar_v1_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -148,14 +148,14 @@
   <visual>
     <origin xyz="-0.27463 -0.0175 -0.11" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/vertical_arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/vertical_arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="_"/>
   </visual>
   <collision>
     <origin xyz="-0.27463 -0.0175 -0.11" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/vertical_arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/vertical_arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -169,14 +169,14 @@
   <visual>
     <origin xyz="-0.35963 0.0075 -0.2" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/arm_edge_v2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/arm_edge_v2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="opaque160160160"/>
   </visual>
   <collision>
     <origin xyz="-0.35963 0.0075 -0.2" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/arm_edge_v2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/arm_edge_v2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -190,14 +190,14 @@
   <visual>
     <origin xyz="-0.23463 -0.0275 -0.41" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/utan_figure_v2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/utan_figure_v2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="abs"/>
   </visual>
   <collision>
     <origin xyz="-0.23463 -0.0275 -0.41" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://utan_urdf_description/meshes/utan_figure_v2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://rere_daisha_ros/meshes/utan_figure_v2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -241,7 +241,7 @@
   <parent link="arm_frame_v2_1"/>
   <child link="vertical_arm_frame_v2_1"/>
   <axis xyz="0.0 -0.0 1.0"/>
-  <limit upper="0.0" lower="0.17" effort="100" velocity="100"/>
+  <limit upper="0.17" lower="0.0" effort="100" velocity="100"/>
 </joint>
 
 <joint name="arm_horizontal" type="prismatic">
@@ -249,7 +249,7 @@
   <parent link="vertical_arm_frame_v2_1"/>
   <child link="arm_edge_v2_1"/>
   <axis xyz="1.0 0.0 -0.0"/>
-  <limit upper="0.0" lower="0.085" effort="100" velocity="100"/>
+  <limit upper="0.085" lower="0.0" effort="100" velocity="100"/>
 </joint>
 
 <joint name="utan" type="fixed">
