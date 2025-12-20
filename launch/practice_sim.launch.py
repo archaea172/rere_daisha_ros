@@ -72,7 +72,9 @@ def generate_launch_description():
             '/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
             '/tf_static@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
             '/world/yasarobo/clock@rosgraph_msgs/msg/Clock@gz.msgs.Clock',
-            '/pos_1@std_msgs/msg/Float64@gz.msgs.Double'],
+            '/pos_1@std_msgs/msg/Float64@gz.msgs.Double',
+            '/pos_2@std_msgs/msg/Float64@gz.msgs.Double',
+            '/pos_3@std_msgs/msg/Float64@gz.msgs.Double'],
         output='screen'
     )
 
