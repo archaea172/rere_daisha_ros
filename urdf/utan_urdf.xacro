@@ -1,0 +1,251 @@
+<?xml version="1.0" ?>
+<robot name="utan_urdf" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find utan_urdf_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find utan_urdf_description)/urdf/utan_urdf.trans" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="0.09520162806918002 0.0005187471017515448 0.01932446245336333" rpy="0 0 0"/>
+    <mass value="3.65763738670461"/>
+    <inertia ixx="0.033307" iyy="0.019117" izz="0.046561" ixy="0.00029" iyz="6e-06" ixz="0.000904"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/base_link_utan.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="opaque160160160"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/base_link_utan.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="turn_table_v2_1">
+  <inertial>
+    <origin xyz="0.09802654893156955 0.00016193590845080152 -0.006281031795882117" rpy="0 0 0"/>
+    <mass value="0.23068331433441983"/>
+    <inertia ixx="0.000458" iyy="0.000536" izz="0.000862" ixy="-1e-06" iyz="1e-06" ixz="4.8e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.11 -0.0 -0.08" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/turn_table_v2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="opaque160160160"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.11 -0.0 -0.08" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/turn_table_v2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="arm_frame_v2_1">
+  <inertial>
+    <origin xyz="0.02744889021645841 0.0012818596317239104 0.15687901625587758" rpy="0 0 0"/>
+    <mass value="0.2699419306159649"/>
+    <inertia ixx="0.003631" iyy="0.004135" izz="0.000986" ixy="-1.3e-05" iyz="-4e-06" ixz="-0.000386"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.19163 -0.0 -0.0855" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="abs"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.19163 -0.0 -0.0855" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheel_v1_1">
+  <inertial>
+    <origin xyz="3.191891195797325e-16 0.017700000000000354 3.4867941867133823e-16" rpy="0 0 0"/>
+    <mass value="0.28418559373662294"/>
+    <inertia ixx="0.000148" iyy="0.000235" izz="0.000148" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0675 0.12025 -0.012" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/wheel_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="opaque252525"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0675 0.12025 -0.012" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/wheel_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheel_v1_2">
+  <inertial>
+    <origin xyz="6.938893903907228e-17 -0.017700000000000132 1.5317608292875207e-15" rpy="0 0 0"/>
+    <mass value="0.28418559373662294"/>
+    <inertia ixx="0.000148" iyy="0.000235" izz="0.000148" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0675 -0.12025 -0.012" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/wheel_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="opaque252525"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0675 -0.12025 -0.012" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/wheel_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="ldlidar_v1_1">
+  <inertial>
+    <origin xyz="0.023362666392759468 -7.575696337304393e-05 -0.011901663161928948" rpy="0 0 0"/>
+    <mass value="0.1108077083765899"/>
+    <inertia ixx="3e-05" iyy="2.9e-05" izz="3.4e-05" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.279945 0.0 -0.019" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/ldlidar_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="_"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.279945 0.0 -0.019" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/ldlidar_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="vertical_arm_frame_v2_1">
+  <inertial>
+    <origin xyz="-0.005753565521876891 -0.009271128275171311 0.051223551297241085" rpy="0 0 0"/>
+    <mass value="0.5746828614494589"/>
+    <inertia ixx="0.00066" iyy="0.001395" izz="0.001573" ixy="0.000288" iyz="-3.1e-05" ixz="0.000122"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.27463 -0.0175 -0.11" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/vertical_arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="_"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.27463 -0.0175 -0.11" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/vertical_arm_frame_v2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="arm_edge_v2_1">
+  <inertial>
+    <origin xyz="-0.06652395631690738 0.009860556578744007 -0.07655211829948619" rpy="0 0 0"/>
+    <mass value="0.12264148012210885"/>
+    <inertia ixx="0.000396" iyy="0.002509" izz="0.002131" ixy="2e-06" iyz="-1e-06" ixz="0.000624"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.35963 0.0075 -0.2" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/arm_edge_v2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="opaque160160160"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.35963 0.0075 -0.2" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/arm_edge_v2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="utan_figure_v2_1">
+  <inertial>
+    <origin xyz="0.03326863178942485 -0.02596137626057443 0.0974308443997331" rpy="0 0 0"/>
+    <mass value="0.3245235558924718"/>
+    <inertia ixx="0.002786" iyy="0.002186" izz="0.002584" ixy="2.1e-05" iyz="1.1e-05" ixz="-0.000278"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.23463 -0.0275 -0.41" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/utan_figure_v2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="abs"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.23463 -0.0275 -0.41" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://utan_urdf_description/meshes/utan_figure_v2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="rigit1" type="fixed">
+  <origin xyz="0.11 0.0 0.08" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="turn_table_v2_1"/>
+</joint>
+
+<joint name="arm_yaw" type="revolute">
+  <origin xyz="0.08163 0.0 0.0055" rpy="0 0 0"/>
+  <parent link="turn_table_v2_1"/>
+  <child link="arm_frame_v2_1"/>
+  <axis xyz="-0.0 0.0 1.0"/>
+  <limit upper="0.872665" lower="-0.872665" effort="100" velocity="100"/>
+</joint>
+
+<joint name="wheel_right" type="continuous">
+  <origin xyz="0.0675 -0.12025 0.012" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheel_v1_1"/>
+  <axis xyz="0.0 1.0 -0.0"/>
+</joint>
+
+<joint name="wheel_left" type="continuous">
+  <origin xyz="0.0675 0.12025 0.012" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheel_v1_2"/>
+  <axis xyz="0.0 -1.0 0.0"/>
+</joint>
+
+<joint name="lidar_joint" type="fixed">
+  <origin xyz="0.279945 0.0 0.019" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="ldlidar_v1_1"/>
+</joint>
+
+<joint name="arm_vertical" type="prismatic">
+  <origin xyz="0.083 0.0175 0.0245" rpy="0 0 0"/>
+  <parent link="arm_frame_v2_1"/>
+  <child link="vertical_arm_frame_v2_1"/>
+  <axis xyz="0.0 -0.0 1.0"/>
+  <limit upper="0.0" lower="0.17" effort="100" velocity="100"/>
+</joint>
+
+<joint name="arm_horizontal" type="prismatic">
+  <origin xyz="0.085 -0.025 0.09" rpy="0 0 0"/>
+  <parent link="vertical_arm_frame_v2_1"/>
+  <child link="arm_edge_v2_1"/>
+  <axis xyz="1.0 0.0 -0.0"/>
+  <limit upper="0.0" lower="0.085" effort="100" velocity="100"/>
+</joint>
+
+<joint name="utan" type="fixed">
+  <origin xyz="0.043 0.0275 0.3245" rpy="0 0 0"/>
+  <parent link="arm_frame_v2_1"/>
+  <child link="utan_figure_v2_1"/>
+</joint>
+
+</robot>
