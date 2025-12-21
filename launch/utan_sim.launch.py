@@ -15,7 +15,7 @@ import random
 def generate_launch_description():
     x = 2.0
     y = 2.0
-    z = 0.1
+    z = 1.0
     theta = 0
 
     package_dir = get_package_share_directory("rere_daisha_ros")
