@@ -16,7 +16,7 @@ def generate_launch_description():
     x = 2.0
     y = 2.0
     z = 1.0
-    theta = 0
+    theta = math.pi
 
     package_dir = get_package_share_directory("rere_daisha_ros")
     use_sim_time = LaunchConfiguration('use_sim_time', default=True)
@@ -68,13 +68,10 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            '/lidar/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked',
+            '/ldlidar_node/scan@sensor_msgs/msg/LaserScan@ignition.msgs.LaserScan',
             '/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
-            '/tf_static@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
             '/world/yasarobo/clock@rosgraph_msgs/msg/Clock@gz.msgs.Clock',
-            '/pos_1@std_msgs/msg/Float64@gz.msgs.Double',
-            '/pos_2@std_msgs/msg/Float64@gz.msgs.Double',
-            '/pos_3@std_msgs/msg/Float64@gz.msgs.Double'],
+        ],
         output='screen'
     )
 
@@ -83,6 +80,6 @@ def generate_launch_description():
     ld.add_action(node_robot_state_publisher)
     ld.add_action(node_robot_joint_publisher)
     ld.add_action(gz_spawn_entity)
-    # ld.add_action(bridge)
+    ld.add_action(bridge)
 
     return ld
