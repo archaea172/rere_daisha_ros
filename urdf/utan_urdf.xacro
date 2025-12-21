@@ -227,7 +227,7 @@
   <origin xyz="0.0675 0.12025 0.012" rpy="0 0 0"/>
   <parent link="base_link"/>
   <child link="wheel_v1_2"/>
-  <axis xyz="0.0 -1.0 0.0"/>
+  <axis xyz="0.0 1.0 0.0"/>
 </joint>
 
 <joint name="lidar_joint" type="fixed">
@@ -293,26 +293,19 @@
 
 <!-- wheel -->
 <gazebo>
-<plugin filename="gz-sim-joint-controller-system"
-        name="gz::sim::systems::JointController">
-  <joint_name>wheel_right</joint_name>
-  <topic>/wheel_right</topic>
-  <initial_velocity>0</initial_velocity>
-  <!-- <use_force_commands>true</use_force_commands> -->
-  <p_gain>1</p_gain>
-  <i_gain>0.1</i_gain>
-  <d_gain>0.01</d_gain>
-</plugin>
-<plugin filename="gz-sim-joint-controller-system"
-        name="gz::sim::systems::JointController">
-  <joint_name>wheel_left</joint_name>
-  <topic>/wheel_left</topic>
-  <initial_velocity>0</initial_velocity>
-  <!-- <use_force_commands>true</use_force_commands> -->
-  <p_gain>1</p_gain>
-  <i_gain>0.1</i_gain>
-  <d_gain>0.01</d_gain>
-</plugin>
+  <plugin filename="gz-sim-diff-drive-system"
+          name="gz::sim::systems::DiffDrive">
+
+    <left_joint>wheel_left</left_joint>
+    <right_joint>wheel_right</right_joint>
+
+    <wheel_separation>0.2405</wheel_separation>
+    <wheel_radius>0.0321</wheel_radius>
+
+    <topic>cmd_vel</topic>
+
+    <odom_publish_frequency>50</odom_publish_frequency>
+  </plugin>
 </gazebo>
 
 <!-- arm -->
@@ -335,6 +328,10 @@
 <gazebo reference="wheel_v1_2">
   <mu1>1.0</mu1>
   <mu2>1.0</mu2>
+</gazebo>
+<gazebo reference="base_link">
+  <mu1>0</mu1>
+  <mu2>0</mu2>
 </gazebo>
 
 </robot>
