@@ -326,6 +326,14 @@
   <i_gain>0.1</i_gain>
   <d_gain>0.01</d_gain>
 </plugin>
+<plugin filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+  <joint_name>arm_horizontal</joint_name>
+  <topic>/arm_horizontal</topic>
+  <p_gain>20</p_gain>
+  <i_gain>0.1</i_gain>
+  <d_gain>0.01</d_gain>
+</plugin>
 </gazebo>
 
 <!-- friction -->
