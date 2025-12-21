@@ -314,7 +314,15 @@
         name="gz::sim::systems::JointPositionController">
   <joint_name>arm_yaw</joint_name>
   <topic>/arm_yaw</topic>
-  <p_gain>1</p_gain>
+  <p_gain>20</p_gain>
+  <i_gain>0.1</i_gain>
+  <d_gain>0.01</d_gain>
+</plugin>
+<plugin filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+  <joint_name>arm_vertical</joint_name>
+  <topic>/arm_vertical</topic>
+  <p_gain>20</p_gain>
   <i_gain>0.1</i_gain>
   <d_gain>0.01</d_gain>
 </plugin>
