@@ -313,4 +313,26 @@
 </plugin>
 </gazebo>
 
+<!-- arm -->
+<gazebo>
+<plugin filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+  <joint_name>arm_yaw</joint_name>
+  <topic>/arm_yaw</topic>
+  <p_gain>1</p_gain>
+  <i_gain>0.1</i_gain>
+  <d_gain>0.01</d_gain>
+</plugin>
+</gazebo>
+
+<!-- friction -->
+<gazebo reference="wheel_v1_1">
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+</gazebo>
+<gazebo reference="wheel_v1_2">
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+</gazebo>
+
 </robot>
