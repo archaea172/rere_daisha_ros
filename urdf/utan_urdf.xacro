@@ -90,9 +90,9 @@
     <material name="opaque252525"/>
   </visual>
   <collision>
-    <origin xyz="-0.0675 0.12025 -0.012" rpy="0 0 0"/>
+    <origin xyz="0 0.0177 0" rpy="1.57 0 0"/>
     <geometry>
-      <mesh filename="package://rere_daisha_ros/meshes/wheel_v1_1.stl" scale="0.001 0.001 0.001"/>
+      <cylinder radius="0.032" length="0.0354"/>
     </geometry>
   </collision>
 </link>
@@ -111,9 +111,9 @@
     <material name="opaque252525"/>
   </visual>
   <collision>
-    <origin xyz="-0.0675 -0.12025 -0.012" rpy="0 0 0"/>
+    <origin xyz="0 -0.0177 0" rpy="1.57 0 0"/>
     <geometry>
-      <mesh filename="package://rere_daisha_ros/meshes/wheel_v1_2.stl" scale="0.001 0.001 0.001"/>
+      <cylinder radius="0.032" length="0.0354"/>
     </geometry>
   </collision>
 </link>
@@ -298,6 +298,7 @@
   <joint_name>wheel_right</joint_name>
   <topic>/wheel_right</topic>
   <initial_velocity>0</initial_velocity>
+  <!-- <use_force_commands>true</use_force_commands> -->
   <p_gain>1</p_gain>
   <i_gain>0.1</i_gain>
   <d_gain>0.01</d_gain>
@@ -307,6 +308,7 @@
   <joint_name>wheel_left</joint_name>
   <topic>/wheel_left</topic>
   <initial_velocity>0</initial_velocity>
+  <!-- <use_force_commands>true</use_force_commands> -->
   <p_gain>1</p_gain>
   <i_gain>0.1</i_gain>
   <d_gain>0.01</d_gain>
