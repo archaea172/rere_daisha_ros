@@ -265,7 +265,7 @@
     <alwaysOn>1</alwaysOn>
     <visualize>true</visualize>
     <update_rate>10</update_rate>
-    <pose>0 0 -0.034 0 0 0</pose>
+    <pose>0 0 -0.04 0 0 0</pose>
     <ray>
       <scan>
         <horizontal>
@@ -297,7 +297,7 @@
         name="gz::sim::systems::JointController">
   <joint_name>wheel_right</joint_name>
   <topic>/wheel_right</topic>
-  <initial_velocity>1.0</initial_velocity>
+  <initial_velocity>0</initial_velocity>
   <p_gain>1</p_gain>
   <i_gain>0.1</i_gain>
   <d_gain>0.01</d_gain>
@@ -306,7 +306,7 @@
         name="gz::sim::systems::JointController">
   <joint_name>wheel_left</joint_name>
   <topic>/wheel_left</topic>
-  <initial_velocity>1.0</initial_velocity>
+  <initial_velocity>0</initial_velocity>
   <p_gain>1</p_gain>
   <i_gain>0.1</i_gain>
   <d_gain>0.01</d_gain>
