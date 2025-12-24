@@ -202,6 +202,25 @@
   </collision>
 </link>
 
+<link name="caster_ball">
+  <inertial>
+    <mass value="0.05"/>
+    <inertia ixx="1e-5" iyy="1e-5" izz="1e-5" ixy="0" ixz="0" iyz="0"/>
+  </inertial>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <sphere radius="0.015"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <sphere radius="0.015"/>
+    </geometry>
+  </visual>
+</link>
+
 <joint name="rigit1" type="fixed">
   <origin xyz="0.11 0.0 0.08" rpy="0 0 0"/>
   <parent link="base_link"/>
@@ -256,6 +275,13 @@
   <origin xyz="0.043 0.0275 0.3245" rpy="0 0 0"/>
   <parent link="arm_frame_v2_1"/>
   <child link="utan_figure_v2_1"/>
+</joint>
+
+<joint name="caster_ball_joint" type="fixed">
+  <!-- ここは「地面に接する高さ」になるよう調整 -->
+  <origin xyz="0.235484 0 -0.006" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="caster_ball"/>
 </joint>
 
 <gazebo reference="ldlidar_v1_1">
@@ -348,8 +374,12 @@
   <mu2>1.0</mu2>
 </gazebo>
 <gazebo reference="base_link">
-  <mu1>0</mu1>
-  <mu2>0</mu2>
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+</gazebo>
+<gazebo reference="caster_ball">
+  <mu1>0.3</mu1>
+  <mu2>0.3</mu2>
 </gazebo>
 
 </robot>
