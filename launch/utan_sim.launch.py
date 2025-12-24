@@ -81,6 +81,7 @@ def generate_launch_description():
             '/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist',
             '/arm_vertical@std_msgs/msg/Float64@gz.msgs.Double',
             '/arm_horizontal@std_msgs/msg/Float64@gz.msgs.Double',
+            '/arm_yaw@std_msgs/msg/Float64@gz.msgs.Double',
         ],
         output='screen'
     )
