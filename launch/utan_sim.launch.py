@@ -2,7 +2,7 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, SetEnvironmentVariable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
@@ -24,6 +24,13 @@ def generate_launch_description():
     world = os.path.join(
         get_package_share_directory("rere_daisha_ros"), "worlds", "mtg_room.world"
     )
+    models_path = os.path.join(package_dir, "models")  # .../share/rere_daisha_ros/models
+    models_path = os.path.expanduser(models_path)
+    gz_path = os.environ.get("GZ_SIM_RESOURCE_PATH", "")
+    ign_path = os.environ.get("IGN_GAZEBO_RESOURCE_PATH", "")
+
+    new_gz_path = f"{gz_path}:{models_path}".strip(":")
+    new_ign_path = f"{ign_path}:{models_path}".strip(":")
 
     sim_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
@@ -79,6 +86,8 @@ def generate_launch_description():
     )
 
     ld = LaunchDescription()
+    ld.add_action(SetEnvironmentVariable("GZ_SIM_RESOURCE_PATH", new_gz_path))
+    ld.add_action(SetEnvironmentVariable("IGN_GAZEBO_RESOURCE_PATH", new_ign_path))
     ld.add_action(sim_node)
     ld.add_action(node_robot_state_publisher)
     ld.add_action(node_robot_joint_publisher)
