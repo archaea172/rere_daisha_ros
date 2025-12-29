@@ -82,6 +82,7 @@ def generate_launch_description():
             '/arm_vertical@std_msgs/msg/Float64@gz.msgs.Double',
             '/arm_horizontal@std_msgs/msg/Float64@gz.msgs.Double',
             '/arm_yaw@std_msgs/msg/Float64@gz.msgs.Double',
+            '/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry',
         ],
         output='screen'
     )
