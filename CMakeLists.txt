@@ -255,7 +255,7 @@ install(
 
 # add install
 install(
-  DIRECTORY weights images launch config worlds hooks models meshes urdf
+  DIRECTORY weights images launch config worlds hooks models meshes urdf map
   DESTINATION share/${PROJECT_NAME}
 )
 
