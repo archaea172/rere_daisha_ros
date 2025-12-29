@@ -698,9 +698,11 @@ namespace mcl {
             
             // TODO
             // グリッドマップ上の点へ変換する
-            void xy2uv(std::double_t x, std::double_t y, std::int32_t *u, std::int32_t *v) {
-                *u = (std::int32_t)(x / mapResolution_);
-                *v = mapHeight_ - 1 - (std::int32_t)(y / mapResolution_);
+            void xy2uv(double x, double y, int *u, int *v) {
+                const double ox = mapOrigin_[0];
+                const double oy = mapOrigin_[1];
+                *u = (int)((x - ox) / mapResolution_);
+                *v = mapHeight_ - 1 - (int)((y - oy) / mapResolution_);
             }
 
             int computeOutCode(int u, int v) {
