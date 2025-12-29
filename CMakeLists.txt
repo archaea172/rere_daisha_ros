@@ -253,6 +253,28 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# mcl
+add_executable(mcl_node
+  src/mcl_node
+)
+
+ament_target_dependencies(mcl_node
+  rclcpp
+  geometry_msgs
+  sensor_msgs
+  visualization_msgs
+  nav_msgs
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
+  tf2_sensor_msgs
+)
+
+install(
+  TARGETS mcl_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 # add install
 install(
   DIRECTORY weights images launch config worlds hooks models meshes urdf map
