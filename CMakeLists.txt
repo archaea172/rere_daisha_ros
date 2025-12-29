@@ -23,6 +23,10 @@ find_package(backward_ros REQUIRED)
 find_package(OpenMP)
 find_package(nav_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
+find_package(tf2_sensor_msgs REQUIRED)
+find_package(laser_geometry REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/yolo_test.py DESTINATION lib/${PROJECT_NAME})
@@ -268,6 +272,12 @@ ament_target_dependencies(mcl_node
   tf2_ros
   tf2_geometry_msgs
   tf2_sensor_msgs
+  laser_geometry
+)
+
+target_link_libraries(mcl_node
+  yaml-cpp
+  ${OpenCV_LIBS}
 )
 
 install(
